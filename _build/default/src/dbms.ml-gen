@@ -1,0 +1,2 @@
+(** @canonical Dbms.Authors *)
+module Authors = Dbms__Authors

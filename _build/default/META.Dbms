@@ -1,0 +1,6 @@
+description = ""
+requires = ""
+archive(byte) = "dbms.cma"
+archive(native) = "dbms.cmxa"
+plugin(byte) = "dbms.cma"
+plugin(native) = "dbms.cmxs"

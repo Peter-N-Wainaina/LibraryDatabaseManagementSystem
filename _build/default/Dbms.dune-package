@@ -1,0 +1,47 @@
+(lang dune 3.4)
+(name Dbms)
+(sections (lib .) (libexec .) (doc ../../doc/Dbms))
+(files
+ (lib
+  (META
+   authors.ml
+   authors.mli
+   dbms.a
+   dbms.cma
+   dbms.cmi
+   dbms.cmt
+   dbms.cmx
+   dbms.cmxa
+   dbms.ml
+   dbms__Authors.cmi
+   dbms__Authors.cmt
+   dbms__Authors.cmti
+   dbms__Authors.cmx
+   dune-package
+   opam))
+ (libexec (dbms.cmxs))
+ (doc (README.md)))
+(library
+ (name Dbms)
+ (kind normal)
+ (archives (byte dbms.cma) (native dbms.cmxa))
+ (plugins (byte dbms.cma) (native dbms.cmxs))
+ (native_archives dbms.a)
+ (main_module_name Dbms)
+ (modes byte native)
+ (modules
+  (wrapped
+   (main_module_name Dbms)
+   (modules
+    ((name Authors)
+     (obj_name dbms__Authors)
+     (visibility public)
+     (impl)
+     (intf)))
+   (alias_module
+    (name Dbms)
+    (obj_name dbms)
+    (visibility public)
+    (kind alias)
+    (impl))
+   (wrapped true))))
