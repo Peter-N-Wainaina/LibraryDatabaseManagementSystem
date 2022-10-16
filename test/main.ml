@@ -16,3 +16,4 @@ let suite =
   >::: List.flatten [author_tests]
 
 let _ = run_test_tt_main suite
+
