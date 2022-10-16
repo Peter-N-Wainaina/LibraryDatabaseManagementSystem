@@ -1,3 +1,5 @@
+open Command
 open OUnit2
-let tests = "_____ test suite" >::: [ ]
+
+let tests = "test suite for library DB" >::: [ ]
 let _ = run_test_tt_main tests
