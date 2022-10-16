@@ -6,6 +6,8 @@
   (META
    authors.ml
    authors.mli
+   command.ml
+   command.mli
    dbms.a
    dbms.cma
    dbms.cmi
@@ -17,8 +19,24 @@
    dbms__Authors.cmt
    dbms__Authors.cmti
    dbms__Authors.cmx
+   dbms__Command.cmi
+   dbms__Command.cmt
+   dbms__Command.cmti
+   dbms__Command.cmx
+   dbms__Librarian.cmi
+   dbms__Librarian.cmt
+   dbms__Librarian.cmti
+   dbms__Librarian.cmx
+   dbms__Student.cmi
+   dbms__Student.cmt
+   dbms__Student.cmti
+   dbms__Student.cmx
    dune-package
-   opam))
+   librarian.ml
+   librarian.mli
+   opam
+   student.ml
+   student.mli))
  (libexec (dbms.cmxs))
  (doc (README.md)))
 (library
@@ -35,6 +53,21 @@
    (modules
     ((name Authors)
      (obj_name dbms__Authors)
+     (visibility public)
+     (impl)
+     (intf))
+    ((name Command)
+     (obj_name dbms__Command)
+     (visibility public)
+     (impl)
+     (intf))
+    ((name Librarian)
+     (obj_name dbms__Librarian)
+     (visibility public)
+     (impl)
+     (intf))
+    ((name Student)
+     (obj_name dbms__Student)
      (visibility public)
      (impl)
      (intf)))

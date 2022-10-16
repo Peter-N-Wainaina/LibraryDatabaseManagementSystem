@@ -1,2 +1,14 @@
 (** @canonical Dbms.Authors *)
 module Authors = Dbms__Authors
+
+
+(** @canonical Dbms.Command *)
+module Command = Dbms__Command
+
+
+(** @canonical Dbms.Librarian *)
+module Librarian = Dbms__Librarian
+
+
+(** @canonical Dbms.Student *)
+module Student = Dbms__Student
