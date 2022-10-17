@@ -1,4 +1,3 @@
-
 type book = 
 {name : string;
 genre : string;

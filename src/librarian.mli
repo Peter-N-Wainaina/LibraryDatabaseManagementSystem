@@ -12,6 +12,10 @@ type book
 type studentID
 (** The abstract type representing the id number of a student*)
 
+(*(TODO: Write a better spec)*)
+val create_book: string -> string -> string  -> int->string-> book
+(**Creates a new book given*)
+
 val add_book : book list -> book -> book list 
 (** [add_book blst bk] is a new book list with all of blst and bk added. 
     Requires [bk] is a valid book *)
