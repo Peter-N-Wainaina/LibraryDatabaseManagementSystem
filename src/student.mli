@@ -11,14 +11,12 @@ type student
 type book 
 (** The abstract type representing a book*)
 
-type studentID
-(** The abstract type representing the id number of a student*)
 
-val get_borrowed : student -> book list
+val get_borrowed : student -> (book * int) list
 (** [get_borrowed std] is a list of books this student is currently borrowing 
     with no duplicates.*)
   
-val borrow_book: student -> book -> student
+val borrow_book: student -> (book * int) -> student
 (** [borrow_book bk blst] is a new book list with all of blst and bk added. 
     Requires [bk] is a valid book *)
 

@@ -10,11 +10,9 @@ type student = {
   username : string;
   password : string;
   student_id : int; 
-  borrowed_books : book list;
+  borrowed_books : (book*int) list;
   favorite_books : book list;
 }
-
-type studentID = int
 
 let get_borrowed std = std.borrowed_books
 
