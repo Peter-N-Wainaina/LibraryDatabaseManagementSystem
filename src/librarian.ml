@@ -36,4 +36,4 @@ let get_borrowed sid =
      the list of borrowed books for that student*)
   failwith "error"  
 
-let view_books () = all_books
+let view_books ()= all_books

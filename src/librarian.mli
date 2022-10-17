@@ -9,6 +9,7 @@ type lib
 type book 
 (** The abstract type representing a book*)
 
+(*TODO:Change this to Staff ID*)
 type studentID
 (** The abstract type representing the id number of a student*)
 
