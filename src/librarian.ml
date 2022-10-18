@@ -1,5 +1,5 @@
 open Library
-
+open Student
 
 type lib = 
 {username : string;
@@ -9,8 +9,16 @@ staff_id : int;
 
 type studentID = int
 
+exception UnknownStudentID of studentID
+
+exception UnknownBook of book
+
 let add_book l (bk : Library.book) =
 view_books (Library.add_book l bk)
+
+let rec remove_book l (bk : Library.book) =
+  (*view_books (Library.remove_book l bk)*)
+  failwith "error"
 
 let get_first = function
   |(x, y) -> x

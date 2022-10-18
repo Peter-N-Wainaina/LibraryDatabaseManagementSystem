@@ -20,18 +20,22 @@ let add_book_test (name :string) (l : library) (bk : Library.book) (expected_out
   name >:: fun _ ->
     assert_equal true (cmp_set_like_lists expected_output (Librarian.add_book l bk))
 
+(*let remove_book_test (name :string) (l : library) (bk : Library.book) (expected_output) : test = 
+  name >:: fun _ ->
+    assert_equal true (cmp_set_like_lists expected_output (Librarian.remove_book l bk))*)
+
 let book1 = Library.create_book "book1" "fiction" "First Last" 100 "This is book1 written by First Last. It has 100 pages and has the genre of fiction"
 let book2 = Library.create_book "book2" "fiction" "First2 Last2" 100 "This is book2 written by First2 Last2. It has 100 pages and has the genre of fiction"
 let book3 = Library.create_book "book3"  "fantasy" "Greatest Author" 2 "Author was so great, he only needed 2 pages"
 
 let library1 = Library.create_library "Empty Library" 
+let library2 = Library.add_book library1 book1
 let uris = Library.create_library "Uris"
 
-let librarian_tests=
-[
+let librarian_tests=[
   add_book_test "add a book to an empty book list" library1 book1 [book1];
-  add_book_test "add a book to a book list with one element" (add_book (Library.create_library "One book Library") book1) book2 ([book1; book2]);
-  add_book_test "add a book to a book list with the book already in it" (add_book (Library.create_library "One book Library") book1) book1 [book1];
+  add_book_test "add a book to a book list with one element" library2 book2 ([book1; book2]);
+  add_book_test "add a book to a book list with the book already in it" library2 book1 [book1];
 ]
 
 let add_book_test_list (name:string) (l:Library.library)(b:Library.book)(expected_output) : test =
