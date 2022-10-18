@@ -17,8 +17,7 @@ let add_book l (bk : Library.book) =
 view_books (Library.add_book l bk)
 
 let rec remove_book l (bk : Library.book) =
-  (*view_books (Library.remove_book l bk)*)
-  failwith "error"
+  view_books (Library.remove_book l bk)
 
 let get_first = function
   |(x, y) -> x
