@@ -18,7 +18,7 @@ type book =
 type studentID = int
 
 (*TODO: Replace this with the same value from library compilation unit*)
-let  all_books:book list = []
+let  all_books: book list = []
 
 (*[create_book n g a p d] is a book with name n, genre g ,author a , pages p, description d*)
 let create_book n g a p d={
@@ -30,10 +30,12 @@ let create_book n g a p d={
 }
 let add_book all_books bk =
   let nblst = bk :: all_books in List.sort_uniq Stdlib.compare nblst
+let get_first = function
+  |(x, y) -> x
 
-let get_borrowed sid =
+let get_borrowed (sid : Student.student)=
   (* find the student account with the given student ID and then access 
      the list of borrowed books for that student*)
-  failwith "error"  
+  List.map get_first (Student.get_borrowed sid)
 
 let view_books ()= all_books
