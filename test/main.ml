@@ -3,7 +3,6 @@ open Dbms
 open Librarian
 open Library
 
-
 (** [cmp_set_like_lists lst1 lst2] compares two lists to see whether they are
     equivalent set-like lists. That means checking two things. First, they must
     both be "set-like", meaning that they do not contain any duplicates. Second,
@@ -17,34 +16,28 @@ let cmp_set_like_lists lst1 lst2 =
              && List.length lst2 = List.length uniq2
                 && uniq1 = uniq2
 
-
-
-let add_book_test (name :string) (bl : Librarian.book list) (bk : Librarian.book) (expected_output : Librarian.book list) : test = 
+let add_book_test (name :string) (l : library) (bk : Library.book) (expected_output) : test = 
   name >:: fun _ ->
-    assert_equal true (cmp_set_like_lists expected_output (Librarian.add_book bl bk))
+    assert_equal true (cmp_set_like_lists expected_output (Librarian.add_book l bk))
 
-
-let book1 = Librarian.create_book "book1" "fiction" "First Last" 100 "This is book1 written by First Last. It has 100 pages and has the genre of fiction"
-  
-let book2 = Librarian.create_book "book2" "fiction" "First2 Last2" 100 "This is book2 written by First2 Last2. It has 100 pages and has the genre of fiction"
-
-let librarian_tests=
-[
-  add_book_test "add a book to an empty book list" [] book1  [book1];
-  add_book_test "add a book to a book list with one element" [book1] book2  ([book1; book2]);
-  add_book_test "add a book to a book list with the book already in it" [book1] book1 [book1];
-]
 let book1 = Library.create_book "book1" "fiction" "First Last" 100 "This is book1 written by First Last. It has 100 pages and has the genre of fiction"
-  
 let book2 = Library.create_book "book2" "fiction" "First2 Last2" 100 "This is book2 written by First2 Last2. It has 100 pages and has the genre of fiction"
 let book3 = Library.create_book "book3"  "fantasy" "Greatest Author" 2 "Author was so great, he only needed 2 pages"
 
-let uris = Library.create_library "Uris" 
+let library1 = Library.create_library "Empty Library" 
+let library2 = add_book (Library.create_library "One book Library") book1
+let uris = Library.create_library "Uris"
+
+let librarian_tests=
+[
+  add_book_test "add a book to an empty book list" library1 book1 [book1];
+  add_book_test "add a book to a book list with one element" library2 book2 ([book1; book2]);
+  add_book_test "add a book to a book list with the book already in it" library2 book1 [book1];
+]
 
 let add_book_test_list (name:string) (l:Library.library)(b:Library.book)(expected_output) : test =
   name >:: fun _ -> 
     assert_equal true (cmp_set_like_lists expected_output (Library.add_book l b|>Library.view_books))
-
 
 let library_tests=[
   add_book_test_list "Add a book to an empty library" uris book1 [book1];
