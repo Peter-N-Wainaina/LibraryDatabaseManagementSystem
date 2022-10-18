@@ -14,3 +14,8 @@ test:
 
 clean:
 	dune clean
+	
+code:
+	-dune build
+	code .
+	! dune build --watch
