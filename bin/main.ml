@@ -1,9 +1,16 @@
 open Printf
+open Dbms
+open Student
+
+let data_dir_prefix = "data" ^ Filename.dir_sep
+let student_accounts = Yojson.Basic.from_file (data_dir_prefix ^ "student_accounts.json")
+
+let username_lst = student_accounts |> username_list
 
 let rec adduser () = 
   let a = read_line () in
-  let y = [] in 
-  if (List.find_opt (fun x -> a= x) y = None )then 
+  let y = ([] )  in 
+  if (List.find_opt (fun x -> a= x) (y )= None )then 
   (ANSITerminal.(print_string [] ("Choose a Password:")); ()) else 
     (ANSITerminal.(print_string [] ("A user with this username exists.\n
     Please choose a different username:")); adduser ())

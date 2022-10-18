@@ -17,7 +17,7 @@ val add_book : Library.library -> Library.book -> Library.book list
 (** [add_book blst bk] is a new book list with all of blst and bk added. 
     Requires [bk] is a valid book *)
 
-val get_borrowed : Student.student -> Student.book list
+val get_borrowed : Student.student -> Library.book list
 (** [get_borrowed sid] is a list of books this student is currently borrowing 
     with no duplicates.
     Requires [sid] is a valid student*)

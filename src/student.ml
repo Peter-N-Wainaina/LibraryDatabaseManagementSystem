@@ -1,12 +1,5 @@
 open Yojson.Basic.Util
-
-type book = 
-{name : string;
-genre : string;
-author : string;
-pages : int;
-description : string;
-}
+open Library
 
 type student = {
   username : string;
@@ -20,14 +13,16 @@ type t = {
   students : student list
 }
 
-let to_book_list h = 
-  {
-    name = h |> member "name" |> to_string;
-    genre = h |> member "genre" |> to_string;
-    author = h |> member "author" |> to_string;
-    pages = h |> member "pages" |> to_int;
-    description = h |> member " description" |> to_string;
-  }
+type book = Library.book
+
+let to_book_list h  = let
+  name = h |> member "name" |> to_string in let
+  genre = h |> member "genre" |> to_string in let
+  author = (h |> member "author" |> to_string) in let 
+  pages = h |> member "pages" |> to_int in let
+  description = h |> member " description" |> to_string in 
+  create_book name genre author pages description
+
 
 let to_borrowed h = 
   (h|> member "book detail" |> to_book_list, h |> member "Days remaining" |> to_int)
@@ -44,6 +39,11 @@ let from_json json =
   {
     students = json |> member "students" |> to_list |> List.map to_student_list
   }
+
+let get_username_list h = h.students |> List.map (fun h -> h.username)
+
+let username_list json = json |> from_json |> get_username_list
+
 let get_borrowed std = std.borrowed_books
 
 let borrow_book std bk = 
