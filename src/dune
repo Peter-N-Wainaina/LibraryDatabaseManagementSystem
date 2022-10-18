@@ -1,3 +1,4 @@
 (library
  (name dbms)
- (public_name Dbms))
+ (public_name Dbms)
+ (libraries yojson ANSITerminal))

@@ -1,0 +1,11 @@
+{
+  "students": [
+    {
+      "username": "eman",
+      "password": "abdu",
+      "student_id": 5318688,
+      "borrowed_books": [],
+      "favorite_books": []
+    }
+  ]
+}

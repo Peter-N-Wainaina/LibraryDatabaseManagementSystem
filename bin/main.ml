@@ -1,15 +1,30 @@
 open Printf
 
+let rec adduser () = 
+  let a = read_line () in
+  let y = [] in 
+  if (List.find_opt (fun x -> a= x) y = None )then 
+  (ANSITerminal.(print_string [] ("Choose a Password:")); ()) else 
+    (ANSITerminal.(print_string [] ("A user with this username exists.\n
+    Please choose a different username:")); adduser ())
+
+let rec find_user () = 
+  let a = read_line () in 
+  let y = [] in 
+  if (List.find_opt (fun x -> a= x) y = None )then 
+    (ANSITerminal.(print_string [] ("This username does not exist. )
+    Please enter a correct username.\nUsername:"));find_user ()) else 
+      (ANSITerminal.(print_string [] ("Enter password:")); ())
 
 let rec read_new () = 
   ANSITerminal.(print_string [green] (
     "Are you a Student or a Librarian?\n")); 
   print_string "> ";
   match read_line () with
-  | "Student" -> ANSITerminal.(print_string [] ("Choose a Username:"))
-  | "student" -> ANSITerminal.(print_string [] ("Choose a Username:"))
-  | "Librarian" -> ANSITerminal.(print_string [] ("Choose a Username:"))
-  | "librarian" -> ANSITerminal.(print_string [] ("Choose a Username:"))
+  | "Student" -> ANSITerminal.(print_string [] ("Choose a Username:")); adduser ()
+  | "student" -> ANSITerminal.(print_string [] ("Choose a Username:")); adduser()
+  | "Librarian" -> ANSITerminal.(print_string [] ("Choose a Username:")); adduser()
+  | "librarian" -> ANSITerminal.(print_string [] ("Choose a Username:")); adduser()
   | _ -> ANSITerminal.(print_string [red] (
     "please input a valid command\n")); read_new ()
 
@@ -18,16 +33,17 @@ let rec read_old () =
         "Are you a Student or a Librarian?\n")); 
       print_string "> ";
       match read_line () with
-      | "Student" -> ANSITerminal.(print_string [] ("Username:"))
-      | "student" -> ANSITerminal.(print_string [] ("Username:"))
-      | "Librarian" -> ANSITerminal.(print_string [] ("Username:"))
-      | "librarian" -> ANSITerminal.(print_string [] ("Username:"))
+      | "Student" -> ANSITerminal.(print_string [] ("Username:")); find_user ()
+      | "student" -> ANSITerminal.(print_string [] ("Username:")); find_user ()
+      | "Librarian" -> ANSITerminal.(print_string [] ("Username:")); find_user ()
+      | "librarian" -> ANSITerminal.(print_string [] ("Username:")); find_user ()
       | _ -> ANSITerminal.(print_string [red] (
         "please input a valid command\n")); read_old ()
 
 let rec read_login () =
-  print_endline "Please type 'Log in' if you already have an account. Or 
-    type 'Sign up' if you are a new user.\n Type 'QUIT' to exit";
+  print_endline "If you have an account, type 'Log in'."; 
+  print_endline "If you are a new user, type 'Sign up'.";
+  print_endline "To exit, type 'QUIT'.";
   print_string  "> ";
   match read_line () with 
   | exception End_of_file -> ()
