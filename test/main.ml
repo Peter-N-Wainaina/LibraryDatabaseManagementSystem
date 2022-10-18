@@ -18,9 +18,8 @@ let cmp_set_like_lists lst1 lst2 =
 
 
 
-let add_book_test (name :string) (bl : Librarian.book list) (bk : Librarian.book) (expected_output : Librarian.book list) : test = 
-  name >:: fun _ ->
-    assert_equal true (cmp_set_like_lists expected_output (add_book bl bk))
+let add_book_test (name : string) (bl : Librarian.book list) (bk : Librarian.book) (expected_output : Librarian.book list) : test = 
+  name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (add_book bl bk))
 
 
 let book1 = create_book "book1" "fiction" "First Last" 100 "This is book1 written by First Last. It has 100 pages and has the genre of fiction"
