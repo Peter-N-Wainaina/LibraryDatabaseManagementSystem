@@ -14,7 +14,7 @@ exception UnknownStudentID of studentID
     student ID*)
 
 exception UnknownBook of Library.book
-(** Raise when an unknonw book is encountered. It carries the name of the 
+(** Raise when an unknown book is encountered. It carries the name of the 
     unknown book*)
 
 val add_book : Library.library -> Library.book -> Library.book list
@@ -23,9 +23,10 @@ val add_book : Library.library -> Library.book -> Library.book list
 
 val remove_book : Library.library -> Library.book -> Library.book list
 (** [remove_book blst bk] is a new blst with all elements except bk
-    Requires [bk] is a valid book*)
+    Requires [bk] is a valid book
+    Riases [UnknwonBook bk] if there is no book b in blst*)
 
-val get_borrowed : studentID -> Student.book list
+val get_borrowed : Student.student -> Library.book list
 (** [get_borrowed sid] is a list of books this student is currently borrowing 
     with no duplicates.
     Requires [sid] is a valid student

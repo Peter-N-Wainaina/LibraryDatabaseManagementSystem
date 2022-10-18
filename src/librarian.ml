@@ -9,20 +9,16 @@ staff_id : int;
 
 type studentID = int
 
-exception UnknownStudent of studentID
-exception UnknownBook of Library.book
+exception UnknownStudentID of studentID
+
+exception UnknownBook of book
 
 let add_book l (bk : Library.book) =
 view_books (Library.add_book l bk)
 
-let book_in_lib bk  l=
-  List.mem bk l
-
 let rec remove_book l (bk : Library.book) =
-  if (book_in_lib bk l) then match l with 
-    |[] -> raise (UnknownBook bk)
-    |h :: t -> if h = bk then t else h :: remove_book t bk
-  else raise (UnknownBook bk)
+  (*view_books (Library.remove_book l bk)*)
+  failwith "error"
 
 let get_first = function
   |(x, y) -> x
