@@ -25,27 +25,44 @@ let book2 = Library.create_book "book2" "fiction" "First2 Last2" 100 "This is bo
 let book3 = Library.create_book "book3"  "fantasy" "Greatest Author" 2 "Author was so great, he only needed 2 pages"
 
 let library1 = Library.create_library "Empty Library" 
-let library2 = add_book (Library.create_library "One book Library") book1
 let uris = Library.create_library "Uris"
 
 let librarian_tests=
 [
   add_book_test "add a book to an empty book list" library1 book1 [book1];
-  add_book_test "add a book to a book list with one element" library2 book2 ([book1; book2]);
-  add_book_test "add a book to a book list with the book already in it" library2 book1 [book1];
+  add_book_test "add a book to a book list with one element" (add_book (Library.create_library "One book Library") book1) book2 ([book1; book2]);
+  add_book_test "add a book to a book list with the book already in it" (add_book (Library.create_library "One book Library") book1) book1 [book1];
 ]
 
 let add_book_test_list (name:string) (l:Library.library)(b:Library.book)(expected_output) : test =
   name >:: fun _ -> 
     assert_equal true (cmp_set_like_lists expected_output (Library.add_book l b|>Library.view_books))
 
+ let remove_book_test (name:string)(l:Library.library)(bk:Library.book)(expected_output):test = 
+    name >:: fun _ -> 
+       assert_equal true  (cmp_set_like_lists expected_output (Library.remove_book l bk|>Library.view_books))
+
+let remove_book_test_raises (name:string)(l:Library.library)(bk:Library.book):test = 
+  name >:: fun _ -> assert_raises (Library.UnknownBook bk) (fun _ -> Library.remove_book l bk)
+
+
+(*Example libraries for testing. The integer value corresponds to the number of books in the library*)
+let library0 = Library.create_library "Library Name"
+let library1 = Library.add_book library0 book1
+let library2 = Library.add_book library1 book2
+let library3 =Library.add_book library2 book3
+
 let library_tests=[
   add_book_test_list "Add a book to an empty library" uris book1 [book1];
   add_book_test_list "Add two books to a library and test set-like properties" (Library.add_book uris book1) book2 [book1;book2];
   add_book_test_list "Add a book already in library" (Library.add_book uris book1) book1 [book1];
-  add_book_test_list "Add more than two books"(Library.add_book  (Library.add_book uris book1) book2) book3 [book2;book3;book1]
-
-]
+  add_book_test_list "Add more than two books"(Library.add_book  (Library.add_book uris book1) book2) book3 [book2;book3;book1];
+  remove_book_test "Remove a book from from a library with one"  library1 book1 [];
+  remove_book_test "Remove a book from a library with two books" library2 book2 [book1];
+  remove_book_test "Remove a book from a library with more that two books to test set properties" library3 book3 [book2;book1];
+  remove_book_test_raises "Test for an exception" library1 book2;
+  remove_book_test_raises "Test for an exception" library2 book3;
+   ]
 
 (*TODO: Add tests for student.ml*)
 let student_tests=[]

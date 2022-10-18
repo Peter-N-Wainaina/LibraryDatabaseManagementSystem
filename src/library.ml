@@ -7,6 +7,8 @@ type book =
   description : string;
 }
 
+exception UnknownBook of book 
+
 (*name is the name of the library
   all_books is the list of all the books in the library*)
   type library = 
@@ -34,3 +36,7 @@ let add_book l b =
   {l with all_books=List.sort_uniq Stdlib.compare books }
 
 let view_books l = l.all_books
+
+let remove_book l bk =
+  if not (List.mem bk l.all_books) then raise  (UnknownBook bk)
+  else let books = List.filter (fun x -> x <> bk) l.all_books in {l with all_books=books}
