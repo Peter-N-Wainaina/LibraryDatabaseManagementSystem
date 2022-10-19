@@ -17,6 +17,10 @@ exception UnknownBook of Library.book
 (** Raise when an unknown book is encountered. It carries the name of the 
     unknown book*)
 
+val create_lib : string -> string -> int -> lib
+(** [create_lib un pw sid] is a librarian with username [un] password [pw]
+    and staff_id [sid]*)
+
 val add_book : Library.library -> Library.book -> Library.book list
 (** [add_book blst bk] is a new book list with all of blst and bk added. 
     Requires [bk] is a valid book *)

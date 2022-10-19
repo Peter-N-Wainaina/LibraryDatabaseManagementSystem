@@ -13,6 +13,11 @@ exception UnknownStudentID of studentID
 
 exception UnknownBook of book
 
+let create_lib un pw sid =
+  {username = un;
+  password = pw;
+  staff_id = sid}
+
 let add_book l (bk : Library.book) =
 view_books (Library.add_book l bk)
 
