@@ -3,6 +3,8 @@ open Dbms
 open Librarian
 open Library
 open Student
+open Database
+
 
 (** [cmp_set_like_lists lst1 lst2] compares two lists to see whether they are
     equivalent set-like lists. That means checking two things. First, they must
@@ -71,12 +73,33 @@ let library_tests=[
   remove_book_test_raises "Test for an exception" library2 book3;
    ]
 
-(*TODO: Add tests for student.ml*)
-let student_tests=[
+let  add_library_test (name:string)(d:Database.database)(l:Library.library)(expected_output:Library.library list):test =
+name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (l|>Database.add_library d|>Database.view_libraries))
+
+(*Example databases for testing.*)
+let db0 = Database.create_database "Empty Database"
+let db1 = Database.add_library db0 library0
+let db2 = Database.add_library db1 library1
+
+(*TODO: Add tests using this *)
+let add_student_account_test (name:string)(d:Database.database)(s:Student.student)(expected_output:Student.student list):test =
+name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (s|>Database.add_student_account d|>Database.view_student_accounts))
+
+(*TODO: Add tests using this *)
+let add_librarian_account_test (name:string)(d:Database.database)(l:Librarian.lib)(expected_output:Librarian.lib list):test =
+  name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (l|>Database.add_librarian_account d|>Database.view_librarian_accounts))
+
+let database_tests=[
+  add_library_test "Add a library to an empty database" db0 library0 [library0];
+  add_library_test "Add a library to an a database with 1 library" db1 library1 [library0;library1];
+  add_library_test "Add an existing library" db2 library1 [library0;library1]
 ]
+
+(*TODO: Add tests for student.ml*)
+let student_tests=[]
 
 let suite = 
   "test suite for final project"
-  >::: List.flatten [librarian_tests;student_tests;library_tests]
+  >::: List.flatten [librarian_tests;student_tests;library_tests;database_tests]
 
 let _ = run_test_tt_main suite
