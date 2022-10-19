@@ -73,7 +73,6 @@ let library_tests=[
 
 (*TODO: Add tests for student.ml*)
 let student_tests=[
-    test_user_name_list "test for username list" ["eman"] student_accounts
 ]
 
 let suite = 
