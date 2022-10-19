@@ -8,8 +8,9 @@ previous weeks.  *)
 type student
 (**The abstract type representing a student.*)
 
-
-
+val create_student : string -> string -> int -> student
+(**[create_student un pw id] is a student with username un, password pw, 
+    student_id id, and empty borrowed_books and favorite_books list.*)
 
 val get_borrowed : student -> (Library.book * int) list
 (** [get_borrowed std] is a list of books this student is currently borrowing 
