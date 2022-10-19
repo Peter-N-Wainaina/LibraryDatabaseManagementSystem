@@ -8,7 +8,8 @@ let data_dir_prefix = "data" ^ Filename.dir_sep
 let student_accounts = Yojson.Basic.from_file 
 (data_dir_prefix ^ "student_accounts.json")
 
-let username_lst = student_accounts |> username_list
+let students_lst = student_accounts |> from_json
+let username_lst = students_lst |> username_list
 
   let browse () = 
     ANSITerminal. (print_string [magenta] ("\n\tYou can now start browsing \
@@ -84,7 +85,6 @@ let rec read_old () =
       | _ -> ANSITerminal.(print_string [red] (
         "\t\tPlease input a valid command\n")); read_old ()
 
-
 let identify_user () = 
   match read_line () with 
   | exception End_of_file -> print_endline "Goodbye!\n"; exit 0
@@ -122,6 +122,5 @@ let rec read_login () =
       
       read_login ()
     
-
 (* Execute the dbms. *)
 let () = main ()

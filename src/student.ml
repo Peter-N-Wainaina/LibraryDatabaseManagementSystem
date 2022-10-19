@@ -9,12 +9,16 @@ type student = {
   favorite_books : book list;
 }
 
-type t = {
-  students : student list
-}
 
 type book = Library.book
 
+let create_student un pw id = {
+  username = un ;
+  password = pw ;
+  student_id = id ;
+  borrowed_books = [];
+  favorite_books = []
+}
 let to_book_list h  = let
   name = h |> member "name" |> to_string in let
   genre = h |> member "genre" |> to_string in let
@@ -36,13 +40,9 @@ let to_student_list h =
     favorite_books = h |> member "favorite_books" |> to_list|> List.map to_book_list;
   }
 let from_json json = 
-  {
-    students = json |> member "students" |> to_list |> List.map to_student_list
-  }
+   json |> member "students" |> to_list |> List.map to_student_list
 
-let get_username_list h = h.students |> List.map (fun h -> h.username)
-
-let username_list json = json |> from_json |> get_username_list
+let username_list h = h |> List.map (fun h -> h.username)
 
 let get_borrowed std = std.borrowed_books
 

@@ -9,7 +9,6 @@ type student
 (**The abstract type representing a student.*)
 
 
-type t
 
 
 val get_borrowed : student -> (Library.book * int) list
@@ -24,7 +23,9 @@ val mean: float list -> float
 (** [mean week_lst] is the average of the numbers in pages this student 
     has read in the week. *)
 
-val username_list: Yojson.Basic.t -> string list 
+val from_json: Yojson.Basic.t -> student list
+
+val username_list: student list-> string list 
 (** [username json] is the list of usernames of *)
 val progress: float -> float -> float 
 (** [progress pst nw] is the percentage increase or decrease 
