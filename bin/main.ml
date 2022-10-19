@@ -10,6 +10,7 @@ let student_accounts = Yojson.Basic.from_file
 
 let students_lst = student_accounts |> from_json
 let username_lst = students_lst |> username_list
+let id_lst = students_lst |> id_list
 
   let browse () = 
     ANSITerminal. (print_string [magenta] ("\n\tYou can now start browsing \

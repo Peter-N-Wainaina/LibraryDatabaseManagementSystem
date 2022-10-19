@@ -1,6 +1,8 @@
 open Yojson.Basic.Util
 open Library
 
+exception UnknownStudent
+
 type student = {
   username : string;
   password : string;
@@ -43,7 +45,14 @@ let from_json json =
    json |> member "students" |> to_list |> List.map to_student_list
 
 let username_list h = h |> List.map (fun h -> h.username)
+let id_list h =  h |> List.map (fun h -> h.student_id)
 
+let find_student id h = 
+  let x = h |> List.find_opt (fun y -> y.student_id = id) in 
+  match x  with 
+  | None -> raise UnknownStudent
+  | Some k -> k
+  
 let get_borrowed std = std.borrowed_books
 
 let borrow_book std bk = 
