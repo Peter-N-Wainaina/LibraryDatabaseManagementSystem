@@ -5,6 +5,9 @@ save books as favorite, remove books from favorite list, see the average
 number of pages they read in the week, and their progress compared to 
 previous weeks.  *)
 
+exception UnknownStudent 
+(** exception raised when a student with a given student id does not exist in 
+    the database. *)
 type student
 (**The abstract type representing a student.*)
 
@@ -19,6 +22,9 @@ val get_borrowed : student -> (Library.book * int) list
 val borrow_book: student -> (Library.book * int) -> student
 (** [borrow_book bk blst] is a new book list with all of blst and bk added. 
     Requires [bk] is a valid book *)
+
+val id_list : student list -> int list
+(** [id_list h] returns the list of all student ids*)
 
 val mean: float list -> float 
 (** [mean week_lst] is the average of the numbers in pages this student 
