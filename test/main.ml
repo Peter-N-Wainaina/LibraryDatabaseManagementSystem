@@ -96,9 +96,15 @@ name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (l|>Data
 let add_student_account_test (name:string)(d:Database.database)(s:Student.student)(expected_output:Student.student list):test =
 name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (s|>Database.add_student_account d|>Database.view_student_accounts))
 
-(*TODO: Add tests using this *)
+
 let add_librarian_account_test (name:string)(d:Database.database)(l:Librarian.lib)(expected_output:Librarian.lib list):test =
   name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (l|>Database.add_librarian_account d|>Database.view_librarian_accounts))
+
+let add_get_student_test (name:string) (d:Database.database)(id:Student.student_id)(expected_output:Student.student):test =
+  name >:: fun _ -> assert_equal expected_output (Database.get_student d id)
+
+let get_student_raises (name:string) (d:Database.database)(id:Student.student_id):test = 
+  name >:: fun _ -> assert_raises (Database.UnknownID id) (fun _ ->Database.get_student d id)
 
 let database_tests=[
   add_library_test "Add a library to an empty database" db0 library0 [library0];
@@ -109,7 +115,11 @@ let database_tests=[
   add_student_account_test "Add an existing student" ((Database.add_student_account (Database.add_student_account db0 student1)) student2) student2 [student2;student1];
   add_librarian_account_test "Add a librarian to an empty database" db0 librarian1 [librarian1];
   add_librarian_account_test "Add a librarian to a database with 1 librarian" (Database.add_librarian_account db0 librarian1) librarian2 [librarian1;librarian2];
-  add_librarian_account_test "Add an existing librarian" (Database.add_librarian_account db0 librarian1) librarian1 [librarian1]
+  add_librarian_account_test "Add an existing librarian" (Database.add_librarian_account db0 librarian1) librarian1 [librarian1];
+  add_get_student_test "Get a student from a database with one student" (Database.add_student_account db0 student1) (Student.get_id student1) student1;
+  add_get_student_test  "Get a student from a database with more than one student" (Database.add_student_account (Database.add_student_account db0 student1) student2) (Student.get_id student2) student2;
+  get_student_raises "UnknownID"  db0 (Student.get_id student1);
+
 ]
 
 (*TODO: Add tests for student.ml*)
