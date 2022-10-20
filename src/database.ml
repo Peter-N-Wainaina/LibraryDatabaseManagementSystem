@@ -1,3 +1,5 @@
+exception UnknownID of Student.student_id
+
 type database = {
   name:string;
   libraries: Library.library list;
@@ -34,3 +36,7 @@ let view_student_accounts d = d.students
 
 let view_librarian_accounts d  = d.librarians
 
+let get_student d id = 
+  let student = List.filter (fun x -> Student.get_id x = id) (view_student_accounts d)in 
+ if List.length student= 0 then raise (UnknownID id)
+ else List.nth  student  0 
