@@ -18,6 +18,7 @@ let students_lst = student_accounts |> from_json
 let username_lst = students_lst |> List.map get_username
 let id_lst = students_lst |> List.map get_id
 let student_db = create_database "student_db"
+let new_student un pw id = create_student un pw id
 
 let find_student id h =
   let x = h |> List.find_opt (fun y -> y |> get_id = id) in
@@ -35,22 +36,28 @@ let browse () =
         "\n\t\tTo learn about the command options, please type 'HELP'\n"));
   ()
 
-let rec verify_password a =
+let add_student un pw id =
+  let v = create_student un pw id in
+  v |> add_student_account student_db
+
+let rec verify_password un pw id =
   ANSITerminal.(print_string [] "\tRe-enter your Password:");
-  if read_line () = a then (
+  if read_line () = pw then (
     ANSITerminal.(
       print_string [ green ] "\n\tYou have successfully created an account!\n");
+    ignore (student_db = add_student un pw id);
     browse ())
   else raise UnknownInput
 
-let rec add_password () =
+let rec add_password (y : string) (t : int) =
   ANSITerminal.(print_string [] "\tChoose a Password:");
-  match verify_password (read_line ()) with
+  let z = read_line () in
+  match verify_password y z t with
   | exception UnknownInput ->
       ANSITerminal.(
         print_string [ red ]
           "\tThe password does not match. Please enter a new password.\n");
-      add_password ()
+      add_password y t
   | _ -> ()
 
 let rec find_password t =
@@ -63,17 +70,17 @@ let rec find_password t =
       ANSITerminal.(print_string [] "\n\tPassword:");
       find_password t
 
-let rec adduser () =
+let rec adduser (t : int) =
   let a = read_line () in
   let y = username_lst in
-  if List.find_opt (fun x -> a = x) y = None then add_password ()
+  if List.find_opt (fun x -> a = x) y = None then add_password a t
   else
     ANSITerminal.(
       print_string [] "\n\t\t";
       ANSITerminal.(
         print_string [ Background Red ] "A user with this username exists.";
         print_string [] "\n\n\tPlease choose a different username:");
-      adduser ())
+      adduser t)
 
 let rec find_user () =
   let a = read_line () in
@@ -87,6 +94,20 @@ let rec find_user () =
   else ANSITerminal.(print_string [] "\tPassword:"));
   find_password a
 
+let rec take_username () =
+  ANSITerminal.(print_string [] "\tType your student id:");
+  let x = read_line () in
+  match int_of_string x with
+  | exception Failure t ->
+      ANSITerminal.(print_string [ red ] "\n\tPlease type a valid Student ID");
+      take_username ()
+  | exception End_of_file ->
+      print_endline "Goodbye!\n";
+      exit 0
+  | _ ->
+      ANSITerminal.(print_string [] "\n\tChoose a Username:");
+      adduser (int_of_string x)
+
 let rec read_new () =
   ANSITerminal.(
     print_string [ green ] "\n\t\tAre you a Student or a Librarian?\n\n");
@@ -95,18 +116,10 @@ let rec read_new () =
   | exception End_of_file ->
       print_endline "Goodbye!\n";
       exit 0
-  | "Student" ->
-      ANSITerminal.(print_string [] "\n\tChoose a Username:");
-      adduser ()
-  | "student" ->
-      ANSITerminal.(print_string [] "\n\tChoose a Username:");
-      adduser ()
-  | "Librarian" ->
-      ANSITerminal.(print_string [] "\n\tChoose a Username:");
-      adduser ()
-  | "librarian" ->
-      ANSITerminal.(print_string [] "\n\tChoose a Username:");
-      adduser ()
+  | "Student" -> take_username ()
+  | "student" -> take_username ()
+  | "Librarian" -> take_username ()
+  | "librarian" -> take_username ()
   | _ ->
       ANSITerminal.(print_string [ red ] "\t\tPlease input a valid command\n");
       read_new ()

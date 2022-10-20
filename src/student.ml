@@ -27,7 +27,7 @@ let to_book_list h =
   let genre = h |> member "genre" |> to_string in
   let author = h |> member "author" |> to_string in
   let pages = h |> member "pages" |> to_int in
-  let description = h |> member " description" |> to_string in
+  let description = h |> member "description" |> to_string in
   create_book name genre author pages description
 
 let to_borrowed h =
