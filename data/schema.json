@@ -82,8 +82,8 @@
   "required": [
     "username",
     "password",
-    "student id",
-    "borrowed books",
-    "favorite books"
+    "student_id",
+    "borrowed_books",
+    "favorite_books"
   ]
 }
