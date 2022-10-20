@@ -11,6 +11,9 @@ exception UnknownStudent
 type student
 (**The abstract type representing a student.*)
 
+type student_id 
+(** The abstract type representing  the StudentID of a student*)
+
 val to_student_list : Yojson.Basic.t -> student
 
 val create_student : string -> string -> int -> student

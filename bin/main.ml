@@ -18,6 +18,8 @@ let students_lst = student_accounts |> from_json
 let username_lst = students_lst |> List.map get_username
 let id_lst = students_lst |> List.map get_id
 
+let student_db  = create_database "student_db"
+
 
 let find_student id h = 
   let x = h |> List.find_opt (fun y ->  (y |> get_id) = id) in 

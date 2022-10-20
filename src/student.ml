@@ -11,7 +11,7 @@ type student = {
   favorite_books : book list;
 }
 
-type book = Library.book
+type student_id = int
 
 let create_student un pw id = {
   username = un ;
