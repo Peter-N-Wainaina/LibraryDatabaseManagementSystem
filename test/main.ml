@@ -30,6 +30,12 @@ let remove_book_test (name : string) (l : library) (bk : Library.book)
   assert_equal true
     (cmp_set_like_lists expected_output (Librarian.remove_book l bk))
 
+let get_borrowed_test (name : string) (input : Student.student)
+    (expected_output : book list) : test =
+  name >:: fun _ ->
+  assert_equal true
+    (cmp_set_like_lists expected_output (Librarian.get_borrowed input))
+
 let book1 =
   Library.create_book "book1" "fiction" "First Last" 100
     "This is book1 written by First Last. It has 100 pages and has the genre \
@@ -37,8 +43,7 @@ let book1 =
 
 let book2 =
   Library.create_book "book2" "fiction" "First2 Last2" 100
-    "This is book2 written by First2 Last2. It has 100 pages and has the genre \
-     of fiction"
+    "This is book2 written by First2 Last2. It has 100 page fiction book"
 
 let book3 =
   Library.create_book "book3" "fantasy" "Greatest Author" 2
@@ -47,6 +52,7 @@ let book3 =
 let library1 = Library.create_library "Empty Library"
 let library2 = Library.add_book library1 book1
 let uris = Library.create_library "Uris"
+let random_student = Student.create_student "user1" "abc123" 123
 
 (*TODO:Modify tests to use create_librarian method*)
 let librarian_tests =
@@ -61,6 +67,7 @@ let librarian_tests =
     remove_book_test "Remove a book from a library with two books"
       (Library.add_book library2 book2)
       book2 [ book1 ];
+    get_borrowed_test "Get borrowed list of random student" random_student [];
   ]
 
 let add_book_test_list (name : string) (l : Library.library) (b : Library.book)

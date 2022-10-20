@@ -1,1 +1,87 @@
-
+{
+  "type": "object",
+  "properties": {
+    "student": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "student id": {
+            "type": "int"
+          },
+          "borrowed books": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "genre": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "pages": {
+                  "type": "int"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "genre",
+                "author",
+                "pages",
+                "description"
+              ]
+            }
+          },
+          "favorite books": {
+            "type": "array",
+            "items": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "genre": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "pages": {
+                "type": "int"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "name",
+          "genre",
+          "author",
+          "pages",
+          "description"
+        ]
+      }
+    }
+  },
+  "required": [
+    "username",
+    "password",
+    "student id",
+    "borrowed books",
+    "favorite books"
+  ]
+}

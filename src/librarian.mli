@@ -28,8 +28,8 @@ val remove_book : Library.library -> Library.book -> Library.book list
     [bk] is a valid book Riases [UnknownBook bk] if there is no book b in blst*)
 
 val get_borrowed : Student.student -> Library.book list
-(** [get_borrowed sid] is a list of books this student is currently borrowing
-    with no duplicates. Requires [sid] is a student in the database.*)
+(** [get_borrowed s] is a list of books this student is currently borrowing with
+    no duplicates. Requires [s] is a student in the database.*)
 
 val view_books : Library.library -> Library.book list
 (** [view_books] is a list of all the books from the module Library*)

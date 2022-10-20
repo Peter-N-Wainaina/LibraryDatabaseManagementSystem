@@ -19,7 +19,7 @@ let rec remove_book l (bk : Library.book) =
 let get_first = function
   | x, y -> x
 
-let get_borrowed (sid : Student.student) =
-  List.map get_first (Student.get_borrowed sid)
+let get_borrowed (s : Student.student) =
+  List.map get_first (Student.get_borrowed s)
 
 let view_books l = Library.view_books l
