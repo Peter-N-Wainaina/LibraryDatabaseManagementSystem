@@ -13,7 +13,7 @@
             "type": "string"
           },
           "student_id": {
-            "type": "int"
+            "type": "integer"
           },
           "borrowed_books": {
             "type": "array",
@@ -30,7 +30,7 @@
                   "type": "string"
                 },
                 "pages": {
-                  "type": "int"
+                  "type": "integer"
                 },
                 "description": {
                   "type": "string"
@@ -60,7 +60,7 @@
                   "type": "string"
                 },
                 "pages": {
-                  "type": "int"
+                  "type": "integer"
                 },
                 "description": {
                   "type": "string"
@@ -80,10 +80,6 @@
     }
   },
   "required": [
-    "username",
-    "password",
-    "student_id",
-    "borrowed_books",
-    "favorite_books"
+    "students"
   ]
 }
