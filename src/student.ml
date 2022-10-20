@@ -11,7 +11,6 @@ type student = {
   favorite_books : book list;
 }
 
-
 type book = Library.book
 
 let create_student un pw id = {
@@ -41,22 +40,20 @@ let to_student_list h =
     borrowed_books = h |> member "borrowed_books" |> to_list |> List.map to_borrowed;
     favorite_books = h |> member "favorite_books" |> to_list|> List.map to_book_list;
   }
-let from_json json = 
-   json |> member "students" |> to_list |> List.map to_student_list
 
-let username_list h = h |> List.map (fun h -> h.username)
-let id_list h =  h |> List.map (fun h -> h.student_id)
+let get_favorite std = std.favorite_books
 
-let find_student id h = 
-  let x = h |> List.find_opt (fun y -> y.student_id = id) in 
-  match x  with 
-  | None -> raise UnknownStudent
-  | Some k -> k
-  
 let get_borrowed std = std.borrowed_books
+
+let get_username std = std.username
+
+let get_id std = std.student_id
 
 let borrow_book std bk = 
   let books= std.borrowed_books in {std with borrowed_books=bk::books}
+
+let add_favorite std bk = 
+  let books = std.favorite_books in {std with favorite_books = bk :: books}
 
 let mean week_lst = 
   let sum = List.fold_left (fun x y-> x +. y) 0. week_lst 

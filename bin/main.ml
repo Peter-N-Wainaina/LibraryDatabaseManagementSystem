@@ -1,17 +1,29 @@
 open Printf
 open Dbms
+open Database
 open Student
 
+open Yojson.Basic.Util
 exception UnknownInput
+
+
+let from_json json = 
+  json |> member "students" |> to_list |> List.map to_student_list
 
 let data_dir_prefix = "data" ^ Filename.dir_sep
 let student_accounts = Yojson.Basic.from_file 
 (data_dir_prefix ^ "student_accounts.json")
 
 let students_lst = student_accounts |> from_json
-let username_lst = students_lst |> username_list
-let id_lst = students_lst |> id_list
+let username_lst = students_lst |> List.map get_username
+let id_lst = students_lst |> List.map get_id
 
+
+let find_student id h = 
+  let x = h |> List.find_opt (fun y ->  (y |> get_id) = id) in 
+  match x  with 
+  | None -> raise UnknownStudent
+  | Some k -> k
   let browse () = 
     ANSITerminal. (print_string [magenta] ("\n\tYou can now start browsing \
     through the Cornell University Database.\n");

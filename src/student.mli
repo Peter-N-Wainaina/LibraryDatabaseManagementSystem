@@ -11,30 +11,36 @@ exception UnknownStudent
 type student
 (**The abstract type representing a student.*)
 
+val to_student_list : Yojson.Basic.t -> student
+
 val create_student : string -> string -> int -> student
 (**[create_student un pw id] is a student with username un, password pw, 
     student_id id, and empty borrowed_books and favorite_books list.*)
 
+val get_favorite : student -> Library.book list 
+(** [get_favorite std]  is the list of the favorite books of student std.*)
 val get_borrowed : student -> (Library.book * int) list
 (** [get_borrowed std] is a list of books this student is currently borrowing 
     with no duplicates.*)
+
+val get_username : student -> string 
+(** [get_username std] is the username of the student std.*)
+
+val get_id : student -> int
+(** [get_id std] is the student id of the student std*)
   
 val borrow_book: student -> (Library.book * int) -> student
 (** [borrow_book bk blst] is a new book list with all of blst and bk added. 
     Requires [bk] is a valid book *)
 
-val id_list : student list -> int list
-(** [id_list h] returns the list of all student ids*)
-
+val add_favorite : student -> Library.book -> student 
+(** [add_favorite std bk] is a new book list with all of favorite books of std
+    and bk.*)
+    
 val mean: float list -> float 
 (** [mean week_lst] is the average of the numbers in pages this student 
     has read in the week. *)
 
-val from_json: Yojson.Basic.t -> student list
-
-val username_list: student list-> string list 
-(** [username json] is the list of usernames of *)
 val progress: float -> float -> float 
 (** [progress pst nw] is the percentage increase or decrease 
 in the number of pages from pst to nw*)
-
