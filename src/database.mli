@@ -3,6 +3,7 @@
 This module represents Library Management System. It contains all available libraries, student and librarian accounts
 and methods to access, and edit this information. 
 *)
+exception UnknownID of Student.student_id
 
 type database
 (**The abstract type representing the database*)
@@ -27,4 +28,9 @@ val view_student_accounts : database ->  Student.student list
 
 val view_librarian_accounts: database -> Librarian.lib list
 (**[view_librarian_accounts d] is a set-like list of all librarians in [d]*)
+
+val get_student : database -> Student.student_id -> Student.student
+(**[get_student d id] is the student in [d] with StudentID [id] raises 
+    [UnknownID id] if a student with StudentID [id] is not in [d] requires
+   there can be at most one student with StudentID [id]  *)
 
