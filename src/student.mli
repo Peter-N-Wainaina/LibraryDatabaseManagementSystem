@@ -22,6 +22,7 @@ val create_student : string -> string -> int -> student
 
 val get_favorite : student -> Library.book list 
 (** [get_favorite std]  is the list of the favorite books of student std.*)
+
 val get_borrowed : student -> (Library.book * int) list
 (** [get_borrowed std] is a list of books this student is currently borrowing 
     with no duplicates.*)
@@ -29,7 +30,7 @@ val get_borrowed : student -> (Library.book * int) list
 val get_username : student -> string 
 (** [get_username std] is the username of the student std.*)
 
-val get_id : student -> int
+val get_id : student -> student_id
 (** [get_id std] is the student id of the student std*)
   
 val borrow_book: student -> (Library.book * int) -> student
