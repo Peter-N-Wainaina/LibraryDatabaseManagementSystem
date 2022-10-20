@@ -15,8 +15,18 @@ let add_library d l =
   let new_libraries =l:: d.libraries in 
   {d with libraries = List.sort_uniq Stdlib.compare new_libraries}
 
-let add_student_account d l = raise  (Failure "Unimplemented:add_student_account")
-let add_librarian_account  d l= raise  (Failure "Unimplemented:add_librarian_account") 
+
+(*TODO: Reduce code redundancy perhaps? *)
+(*TODO:No two students can have the same username *)
+
+let add_student_account d l =
+   let new_students =l:: d.students in 
+  {d with students= List.sort_uniq Stdlib.compare new_students}
+
+(*TODO:No two librarians can have the same username*)
+let add_librarian_account  d l= 
+  let new_librarians =l:: d.librarians in 
+  {d with librarians= List.sort_uniq Stdlib.compare new_librarians}
 
 let view_libraries d = d.libraries
 

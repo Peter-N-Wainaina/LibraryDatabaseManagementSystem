@@ -35,6 +35,7 @@ let library1 = Library.create_library "Empty Library"
 let library2 = Library.add_book library1 book1
 let uris = Library.create_library "Uris"
 
+(*TODO:Modify tests to use create_librarian method*)
 let librarian_tests=[
   add_book_test "add a book to an empty book list" library1 book1 [book1];
   add_book_test "add a book to a book list with one element" library2 book2 ([book1; book2]);
@@ -73,15 +74,25 @@ let library_tests=[
   remove_book_test_raises "Test for an exception" library2 book3;
    ]
 
-let  add_library_test (name:string)(d:Database.database)(l:Library.library)(expected_output:Library.library list):test =
-name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (l|>Database.add_library d|>Database.view_libraries))
 
 (*Example databases for testing.*)
 let db0 = Database.create_database "Empty Database"
 let db1 = Database.add_library db0 library0
 let db2 = Database.add_library db1 library1
 
-(*TODO: Add tests using this *)
+(*Example student accounts*)
+let student1= Student.create_student "Eman" "Abdu" 29062003
+let student2 = Student.create_student "Peter" "W" 20022002
+let student3 = Student.create_student "Eman" "W" 29062003 
+
+(*Example librarian accounts*)
+
+let librarian1 =Librarian.create_lib "Iqra" "Yousof" 123456
+let librarian2 = Librarian.create_lib "Name" "Name2" 00000
+
+let  add_library_test (name:string)(d:Database.database)(l:Library.library)(expected_output:Library.library list):test =
+name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (l|>Database.add_library d|>Database.view_libraries))
+
 let add_student_account_test (name:string)(d:Database.database)(s:Student.student)(expected_output:Student.student list):test =
 name >:: fun _ -> assert_equal true (cmp_set_like_lists expected_output (s|>Database.add_student_account d|>Database.view_student_accounts))
 
@@ -92,7 +103,13 @@ let add_librarian_account_test (name:string)(d:Database.database)(l:Librarian.li
 let database_tests=[
   add_library_test "Add a library to an empty database" db0 library0 [library0];
   add_library_test "Add a library to an a database with 1 library" db1 library1 [library0;library1];
-  add_library_test "Add an existing library" db2 library1 [library0;library1]
+  add_library_test "Add an existing library" db2 library1 [library0;library1];
+  add_student_account_test "Add a student to an empty database" db0 student1 [student1];
+  add_student_account_test "Add a student to a database with 1 student" (Database.add_student_account db0 student1) student2 [student1;student2];
+  add_student_account_test "Add an existing student" ((Database.add_student_account (Database.add_student_account db0 student1)) student2) student2 [student2;student1];
+  add_librarian_account_test "Add a librarian to an empty database" db0 librarian1 [librarian1];
+  add_librarian_account_test "Add a librarian to a database with 1 librarian" (Database.add_librarian_account db0 librarian1) librarian2 [librarian1;librarian2];
+  add_librarian_account_test "Add an existing librarian" (Database.add_librarian_account db0 librarian1) librarian1 [librarian1]
 ]
 
 (*TODO: Add tests for student.ml*)
