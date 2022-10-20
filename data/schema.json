@@ -12,10 +12,10 @@
           "password": {
             "type": "string"
           },
-          "student id": {
+          "student_id": {
             "type": "int"
           },
-          "borrowed books": {
+          "borrowed_books": {
             "type": "array",
             "items": {
               "type": "object",
@@ -45,7 +45,7 @@
               ]
             }
           },
-          "favorite books": {
+          "favorite_books": {
             "type": "array",
             "items": {
               "type": "object",
