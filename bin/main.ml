@@ -38,6 +38,7 @@ let printer_fav lst =
   if lst = [] then
     ANSITerminal.(print_string)
       [] "\tYou currently don't have books in the favorite section.\n"
+  else printer lst
 
 let rec parse_options (t : string) =
   print_string "\t> ";
@@ -55,7 +56,7 @@ let rec parse_options (t : string) =
            \tBorrowed books - see the name of the books you have borrowed \
            fromCornell Libraries\n\
            \tFavorite books - see the name of the booksyou have marked as \
-           favorite before.");
+           favorite before.\n");
       parse_options t
   | Borrowed_books ->
       t |> find_student students_lst |> borrowed_books |> printer_bw;
