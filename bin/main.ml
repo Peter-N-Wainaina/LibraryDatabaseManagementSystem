@@ -139,7 +139,7 @@ let rec find_user () =
   find_password a
 
 let rec take_username () =
-  ANSITerminal.(print_string [] "\tType your student id:");
+  ANSITerminal.(print_string [] "\tType your id:");
   let x = read_line () in
   match int_of_string x with
   | exception Failure t ->

@@ -1,3 +1,5 @@
+(*For use in the demo. All functionality will be moved to Command*)
+
 type command =
   | Sign_up
   | Login
