@@ -54,9 +54,9 @@ let rec parse_options (t : string) =
           "\n\
            \tBorrowed books - see the name of the books you have borrowed \
            fromCornell Libraries\n\
-           Favorite books - see the name of the booksyou have marked as \
+           \tFavorite books - see the name of the booksyou have marked as \
            favorite before.");
-      ()
+      parse_options t
   | Borrowed_books ->
       t |> find_student students_lst |> borrowed_books |> printer_bw;
       parse_options t
