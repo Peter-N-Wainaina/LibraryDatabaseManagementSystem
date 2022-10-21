@@ -1,5 +1,16 @@
 Build instructions: 
 1. run- 'make clean'
 2. run- 'make build'
+
 To use this database:
 1. run- 'make run'
+  -Current student accounts that can be accessed using 'Log in', followed 
+   by 'Student' command:
+      a) username : iqra
+         password : yousuf
+      b) username : eman
+         password : abdu
+      c) username : peter
+         password : wainaina 
+  -Commmand 'Help' will tell you which commands can be used 
+  -Command 'Quit' will log you out

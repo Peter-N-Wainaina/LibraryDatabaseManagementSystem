@@ -53,9 +53,9 @@ let rec parse_options (t : string) =
       ANSITerminal.(
         print_string []
           "\n\
-           \tBorrowed books - see the name of the books you have borrowed \
-           fromCornell Libraries\n\
-           \tFavorite books - see the name of the booksyou have marked as \
+           \tBorrowed books - see the name of the books you have borrowed from \
+           Cornell Libraries\n\
+           \tFavorite books - see the name of the books you have marked as \
            favorite before.\n");
       parse_options t
   | Borrowed_books ->
