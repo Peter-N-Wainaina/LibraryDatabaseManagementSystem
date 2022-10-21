@@ -1,1 +1,5 @@
+Build instructions: 
+1. run- 'make clean'
+2. run- 'make build'
 To use this database:
+1. run- 'make run'
