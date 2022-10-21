@@ -1,4 +1,3 @@
-open Dbms
 open Database
 open Student
 open Command
