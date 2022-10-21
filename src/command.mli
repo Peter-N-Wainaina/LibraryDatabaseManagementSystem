@@ -1,7 +1,16 @@
 (** A representation of a command This module represents all available commands*)
 
-type command
-(**The abstract representation of a command*)
+type command =
+  | Sign_up
+  | Login
+  | Quit
+  | UnknownInput
+  | Student
+  | Librarian
+  | Options
+  | Borrowed_books
+  | Favorite_books
+  | Help  (**The abstract representation of a command*)
 
 val logging : string -> command
 (***)

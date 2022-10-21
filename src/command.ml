@@ -21,6 +21,7 @@ let logging t =
 let user_type t =
   match t with
   | exception End_of_file -> Quit
+  | exception a -> UnknownInput
   | "QUIT" | "Quit" | "quit" -> Quit
   | "student" | "Student" -> Student
   | "librarian" | "Librarian" -> Librarian

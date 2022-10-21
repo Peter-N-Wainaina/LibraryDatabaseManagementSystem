@@ -1,7 +1,7 @@
 open Dbms
 open Database
 open Student
-open Demo
+open Command
 open Yojson.Basic.Util
 
 exception UnknownInput
@@ -184,8 +184,11 @@ let rec read_old () =
       ANSITerminal.(print_string [ red ] "\t\tPlease input a valid command\n");
       read_old ()
 
-let identify_user () =
+let rec identify_user () =
   match logging (read_line ()) with
+  | UnknownInput ->
+      ANSITerminal.(print_string [ red ] "please input a valid command\n\t>");
+      identify_user ()
   | Quit ->
       print_endline "Goodbye!\n";
       exit 0
@@ -206,12 +209,8 @@ let rec read_login () =
     print_string [ cyan ] "'Sign up'\n\n");
   print_endline "\tTo exit, type 'QUIT' or press 'Ctrl' + 'D'.\n";
   print_string "\t> ";
-  let x = identify_user () in
-  match x with
-  | exception UnknownInput ->
-      ANSITerminal.(print_string [ red ] "please input a valid command\n");
-      read_login ()
-  | _ -> x
+  identify_user ();
+  ()
 
 (* [main ()] prompts the user to log in to their account or create an account if
    its their first time. And then calls read_input to check if their input is
