@@ -77,7 +77,8 @@ let browse t =
       print_string []
         "\n\
          \t\tType 'Options' to see the options \n\
-         \tTo learn about the command options, please type 'HELP'\n"));
+         \tTo learn about the command options, please type 'HELP'\n\
+         \tTo log out, type 'Log out' or 'Quit'"));
   parse_options t
 
 let add_student un pw id =
@@ -97,6 +98,9 @@ let rec add_password (y : string) (t : int) =
   ANSITerminal.(print_string [] "\tChoose a Password:");
   let z = read_line () in
   match verify_password y z t with
+  | "Quit" ->
+      print_endline "Goodbye!\n";
+      exit 0
   | exception UnknownInput ->
       ANSITerminal.(
         print_string [ red ]
@@ -141,16 +145,22 @@ let rec find_user () =
 let rec take_username () =
   ANSITerminal.(print_string [] "\tType your id:");
   let x = read_line () in
-  match int_of_string x with
-  | exception Failure t ->
-      ANSITerminal.(print_string [ red ] "\n\tPlease type a valid Student ID");
-      take_username ()
-  | exception End_of_file ->
+  match x with
+  | "Quit" ->
       print_endline "Goodbye!\n";
       exit 0
-  | _ ->
-      ANSITerminal.(print_string [] "\n\tChoose a Username:");
-      adduser (int_of_string x)
+  | _ -> (
+      match int_of_string x with
+      | exception Failure t ->
+          ANSITerminal.(
+            print_string [ red ] "\n\tPlease type a valid Student ID");
+          take_username ()
+      | exception End_of_file ->
+          print_endline "Goodbye!\n";
+          exit 0
+      | _ ->
+          ANSITerminal.(print_string [] "\n\tChoose a Username:");
+          adduser (int_of_string x))
 
 let rec read_new () =
   ANSITerminal.(
@@ -186,9 +196,6 @@ let rec read_old () =
 
 let rec identify_user () =
   match logging (read_line ()) with
-  | UnknownInput ->
-      ANSITerminal.(print_string [ red ] "please input a valid command\n\t>");
-      identify_user ()
   | Quit ->
       print_endline "Goodbye!\n";
       exit 0
@@ -198,7 +205,9 @@ let rec identify_user () =
   | Sign_up ->
       ANSITerminal.(print_string [ green ] "\t\t\tWelcome new user!\n");
       read_new ()
-  | _ -> raise UnknownInput
+  | _ ->
+      ANSITerminal.(print_string [ red ] "please input a valid command\n\t>");
+      identify_user ()
 
 let rec read_login () =
   ANSITerminal.(

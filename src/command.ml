@@ -22,7 +22,7 @@ let user_type t =
   match t with
   | exception End_of_file -> Quit
   | exception a -> UnknownInput
-  | "QUIT" | "Quit" | "quit" -> Quit
+  | "QUIT" | "Quit" | "quit" | "Log out" -> Quit
   | "student" | "Student" -> Student
   | "librarian" | "Librarian" -> Librarian
   | _ -> UnknownInput
