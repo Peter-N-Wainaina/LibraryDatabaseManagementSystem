@@ -13,7 +13,7 @@ type command =
 let logging t =
   match t with
   | exception End_of_file -> Quit
-  | "QUIT" | "Quit" | "quit" -> Quit
+  | "QUIT" | "Quit" | "quit" | "Log out" -> Quit
   | "Sign Up" | "Sign up" -> Sign_up
   | "Login" | "Log in" | "Log In" -> Login
   | _ -> UnknownInput
@@ -29,7 +29,7 @@ let user_type t =
 
 let options t =
   match t with
-  | "QUIT" | "Quit" | "quit" -> Quit
+  | "QUIT" | "Quit" | "quit" | "Log out" -> Quit
   | "Options" | "options" -> Options
   | "Borrowed books" | "Borrowed Books" -> Borrowed_books
   | "Favorite books" | "Favorite Books" -> Favorite_books
