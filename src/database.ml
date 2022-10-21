@@ -14,7 +14,6 @@ let add_library d l =
   let new_libraries = l :: d.libraries in
   { d with libraries = List.sort_uniq Stdlib.compare new_libraries }
 
-(*TODO: Reduce code redundancy perhaps? *)
 (*TODO:No two students can have the same username *)
 
 let add_student_account d l =
