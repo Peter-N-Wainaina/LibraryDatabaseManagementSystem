@@ -1,14 +1,12 @@
-open Printf
 open Dbms
 open Database
 open Student
+open Demo
 open Yojson.Basic.Util
 
 exception UnknownInput
 
-let from_json json =
-  json |> member "students" |> to_list |> List.map to_student_list
-
+let from_json json = json |> member "students" |> to_list |> List.map to_student
 let data_dir_prefix = "data" ^ Filename.dir_sep
 
 let student_accounts =
@@ -16,25 +14,70 @@ let student_accounts =
 
 let students_lst = student_accounts |> from_json
 let username_lst = students_lst |> List.map get_username
-let id_lst = students_lst |> List.map get_id
 let student_db = create_database "student_db"
-let new_student un pw id = create_student un pw id
 
-let find_student id h =
-  let x = h |> List.find_opt (fun y -> y |> get_id = id) in
-  match x with
-  | None -> raise UnknownStudent
-  | Some k -> k
+let show_options () =
+  ANSITerminal.(print_string [] "\n\t\tBorrowed Books\n\t\tFavorite Books\n")
 
-let browse () =
+let rec printer lst =
+  match lst with
+  | [] ->
+      ANSITerminal.(print_string [] "\n");
+      ()
+  | h :: t ->
+      ANSITerminal.(print_string [ blue ] ("\n\t" ^ h));
+      printer t;
+      ()
+
+let printer_bw lst =
+  if lst = [] then
+    ANSITerminal.(print_string [] "\tYou currently have no borrowed books.\n")
+  else printer lst
+
+let printer_fav lst =
+  if lst = [] then
+    ANSITerminal.(print_string)
+      [] "\tYou currently don't have books in the favorite section.\n"
+
+let rec parse_options (t : string) =
+  print_string "\t> ";
+  match options (read_line ()) with
+  | Quit ->
+      print_endline "Goodbye!\n";
+      exit 0
+  | Options ->
+      show_options ();
+      parse_options t
+  | Help ->
+      ANSITerminal.(
+        print_string []
+          "\n\
+           \tBorrowed books - see the name of the books you have borrowed \
+           fromCornell Libraries\n\
+           Favorite books - see the name of the booksyou have marked as \
+           favorite before.");
+      ()
+  | Borrowed_books ->
+      t |> find_student students_lst |> borrowed_books |> printer_bw;
+      parse_options t
+  | Favorite_books ->
+      t |> find_student students_lst |> favorite_books |> printer_fav;
+      parse_options t
+  | _ ->
+      ANSITerminal.(print_string [] "\tPlease type a valid command.\n");
+      parse_options t
+
+let browse t =
   ANSITerminal.(
     print_string [ magenta ]
       "\n\
        \tYou can now start browsing through the Cornell University Database.\n";
     ANSITerminal.(
-      print_string [ magenta ]
-        "\n\t\tTo learn about the command options, please type 'HELP'\n"));
-  ()
+      print_string []
+        "\n\
+         \t\tType 'Options' to see the options \n\
+         \tTo learn about the command options, please type 'HELP'\n"));
+  parse_options t
 
 let add_student un pw id =
   let v = create_student un pw id in
@@ -46,7 +89,7 @@ let rec verify_password un pw id =
     ANSITerminal.(
       print_string [ green ] "\n\tYou have successfully created an account!\n");
     ignore (student_db = add_student un pw id);
-    browse ())
+    browse un)
   else raise UnknownInput
 
 let rec add_password (y : string) (t : int) =
@@ -61,10 +104,10 @@ let rec add_password (y : string) (t : int) =
   | _ -> ()
 
 let rec find_password t =
-  match read_line () = t with
+  match read_line () = find_pw students_lst t with
   | true ->
       ANSITerminal.(print_string [ green ] "\t\tWelcome");
-      browse ()
+      ignore (browse t)
   | _ ->
       ANSITerminal.(print_string [ red ] "\tIncorrect pasword. Try again!");
       ANSITerminal.(print_string [] "\n\tPassword:");
@@ -112,14 +155,12 @@ let rec read_new () =
   ANSITerminal.(
     print_string [ green ] "\n\t\tAre you a Student or a Librarian?\n\n");
   print_string "\t> ";
-  match read_line () with
-  | exception End_of_file ->
+  match user_type (read_line ()) with
+  | Quit ->
       print_endline "Goodbye!\n";
       exit 0
-  | "Student" -> take_username ()
-  | "student" -> take_username ()
-  | "Librarian" -> take_username ()
-  | "librarian" -> take_username ()
+  | Student -> take_username ()
+  | Librarian -> take_username ()
   | _ ->
       ANSITerminal.(print_string [ red ] "\t\tPlease input a valid command\n");
       read_new ()
@@ -128,20 +169,14 @@ let rec read_old () =
   ANSITerminal.(
     print_string [ green ] "\n\t\tAre you a Student or a Librarian?\n\n");
   print_string "\t> ";
-  match read_line () with
-  | exception End_of_file ->
+  match user_type (read_line ()) with
+  | Quit ->
       print_endline "Goodbye!\n";
       exit 0
-  | "Student" ->
+  | Student ->
       ANSITerminal.(print_string [] "\n\tUsername:");
       find_user ()
-  | "student" ->
-      ANSITerminal.(print_string [] "\n\tUsername:");
-      find_user ()
-  | "Librarian" ->
-      ANSITerminal.(print_string [] "\n\tUsername:");
-      find_user ()
-  | "librarian" ->
+  | Librarian ->
       ANSITerminal.(print_string [] "\n\tUsername:");
       find_user ()
   | _ ->
@@ -149,23 +184,14 @@ let rec read_old () =
       read_old ()
 
 let identify_user () =
-  match read_line () with
-  | exception End_of_file ->
+  match logging (read_line ()) with
+  | Quit ->
       print_endline "Goodbye!\n";
       exit 0
-  | "QUIT" ->
-      print_endline "Goodbye!\n";
-      exit 0
-  | "Log in" ->
+  | Login ->
       ANSITerminal.(print_string [ green ] "\t\t\tWelcome back!\n");
       read_old ()
-  | "Log In" ->
-      ANSITerminal.(print_string [ green ] "\t\t\tWelcome back!\n");
-      read_old ()
-  | "Sign up" ->
-      ANSITerminal.(print_string [ green ] "\t\t\tWelcome new user!\n");
-      read_new ()
-  | "Sign Up" ->
+  | Sign_up ->
       ANSITerminal.(print_string [ green ] "\t\t\tWelcome new user!\n");
       read_new ()
   | _ -> raise UnknownInput

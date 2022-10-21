@@ -7,7 +7,7 @@
       "borrowed_books": [
         {
           "book detail": {
-            "name": "righteous mind",
+            "name": "Righteous Mind",
             "genre": "philosopohy",
             "author": "Jonathan Haidt",
             "pages": 419,
@@ -17,7 +17,7 @@
         },
         {
           "book detail": {
-            "name": "outliers",
+            "name": "Outliers",
             "genre": "philosopohy",
             "author": "Jonathan Haidt",
             "pages": 419,
@@ -42,7 +42,7 @@
           "description": "The book combines illuminating personal anecdotes with Trebek’s thoughts on a range of topics, including marriage, parenthood, education, success, spirituality, and philanthropy. Trebek also addresses the questions he gets asked most often by Jeopardy! fans, such as what prompted him to shave his signature mustache, his insights on legendary players like Ken Jennings and James Holzhauer, and his opinion of Will Ferrell’s Saturday Night Live impersonation. The book uses a novel structure inspired by Jeopardy!, with each chapter title in the form of a question, and features dozens of never-before-seen photos that candidly capture Trebek over the years."
         },
         {
-          "name": "the shoe dog",
+          "name": "The shoe dog",
           "genre": "memoir",
           "author": "Phil Knight",
           "pages": 386,

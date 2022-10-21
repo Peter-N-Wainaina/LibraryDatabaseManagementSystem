@@ -3,15 +3,15 @@ open Library
 
 exception UnknownStudent
 
+type student_id = int
+
 type student = {
   username : string;
   password : string;
-  student_id : int;
+  student_id : student_id;
   borrowed_books : (book * int) list;
   favorite_books : book list;
 }
-
-type student_id = int
 
 let create_student un pw id =
   {
@@ -34,7 +34,7 @@ let to_borrowed h =
   ( h |> member "book detail" |> to_book_list,
     h |> member "Days remaining" |> to_int )
 
-let to_student_list h =
+let to_student h =
   {
     username = h |> member "username" |> to_string;
     password = h |> member "password" |> to_string;
@@ -45,8 +45,14 @@ let to_student_list h =
       h |> member "favorite_books" |> to_list |> List.map to_book_list;
   }
 
-let get_favorite std = std.favorite_books
+let favorite_books std =
+  std.favorite_books |> List.map (fun x -> x |> book_name)
+
 let get_borrowed std = std.borrowed_books
+
+let borrowed_books std =
+  std.borrowed_books |> List.map (fun x -> fst x |> book_name)
+
 let get_username std = std.username
 let get_id std = std.student_id
 
@@ -57,6 +63,14 @@ let borrow_book std bk =
 let add_favorite std bk =
   let books = std.favorite_books in
   { std with favorite_books = bk :: books }
+
+let find_pw lst username =
+  let x = List.find (fun x -> x.username = username) lst in
+  x.password
+
+let find_student lst username =
+  let x = List.find (fun x -> x.username = username) lst in
+  x
 
 let mean week_lst =
   let sum = List.fold_left (fun x y -> x +. y) 0. week_lst in
