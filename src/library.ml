@@ -21,7 +21,6 @@ let create_book n g a p d =
 let book_name (bk : book) = bk.name
 let create_library n = { name = n; all_books = [] }
 
-(*TODO: Make all_books a set-like list*)
 let add_book l b =
   let books = b :: l.all_books in
   { l with all_books = List.sort_uniq Stdlib.compare books }

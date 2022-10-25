@@ -54,7 +54,7 @@ let library2 = Library.add_book library1 book1
 let uris = Library.create_library "Uris"
 let random_student = Student.create_student "user1" "abc123" 123
 
-(*TODO:Modify tests to use create_librarian method*)
+
 let librarian_tests =
   [
     add_book_test "add a book to an empty book list" library1 book1 [ book1 ];
@@ -68,7 +68,6 @@ let librarian_tests =
       (Library.add_book library2 book2)
       book2 [ book1 ];
     get_borrowed_test "Get borrowed list of random student" random_student [];
-  ]
 
 let add_book_test_list (name : string) (l : Library.library) (b : Library.book)
     expected_output : test =
