@@ -187,8 +187,86 @@ let database_tests =
       librarian1 [ librarian1 ];
   ]
 
-(*TODO: Add tests for student.ml*)
-let student_tests = []
+let random_student_2 =
+  Student.add_favorite (Student.create_student "user1" "abc123" 123) book1
+
+let random_student_3 =
+  Student.borrow_book (Student.create_student "user1" "abc123" 123) (book1, 1)
+
+let random_student_4 = Student.add_favorite random_student_2 book2
+let random_student_5 = Student.borrow_book random_student_3 (book2, 4)
+let one_student_lst = [ random_student ]
+let student_lst = [ random_student; student1; student2 ]
+
+let favorite_book_tests (name : string) (input : student)
+    (expected_output : string list) : test =
+  name >:: fun _ ->
+  assert_equal true (cmp_set_like_lists expected_output (favorite_books input))
+
+let get_borrowed_tests (name : string) (input : student)
+    (expected_output : (book * int) list) : test =
+  name >:: fun _ ->
+  assert_equal true (cmp_set_like_lists expected_output (get_borrowed input))
+
+let borrowed_books_tests (name : string) (input : student)
+    (expected_output : string list) : test =
+  name >:: fun _ ->
+  assert_equal true (cmp_set_like_lists expected_output (borrowed_books input))
+
+let find_pw_tests (name : string) (lst : student list) (username : string)
+    (expected_output : string) : test =
+  name >:: fun _ -> assert_equal expected_output (find_pw lst username)
+
+let find_student_tests (name : string) (lst : student list) (username : string)
+    (expected_output : student) : test =
+  name >:: fun _ -> assert_equal expected_output (find_student lst username)
+
+let mean_tests (name : string) (input : float list) (expected_output : float) :
+    test =
+  name >:: fun _ -> assert_equal expected_output (Student.mean input)
+
+let student_tests =
+  [
+    (*implement favorite books as set*)
+    favorite_book_tests "Favorites of empty list" random_student [];
+    favorite_book_tests "Favorites of student with a non-empty favorites list"
+      random_student_2 [ "book1" ];
+    favorite_book_tests
+      "Favorite books of student with more than one element favorite book list"
+      random_student_4 [ "book1"; "book2" ];
+    get_borrowed_tests "Borrowed books with deadline of empty list"
+      random_student [];
+    get_borrowed_tests
+      "Borrowed books with deadline of student with single element borrowed \
+       book list"
+      random_student_3
+      [ (book1, 1) ];
+    get_borrowed_tests
+      "Borrowed book with deadline of student with more than one element \
+       borrowed book list"
+      random_student_5
+      [ (book1, 1); (book2, 4) ];
+    borrowed_books_tests
+      "Borrowed books of student with empty borrowed book list" random_student
+      [];
+    borrowed_books_tests
+      "Borrowed books of student wtih single element borrowed book list"
+      random_student_3 [ "book1" ];
+    borrowed_books_tests
+      "Borrowed books of student with multiple element borrowed book list"
+      random_student_5 [ "book1"; "book2" ];
+    find_pw_tests "Password of student in single element list" one_student_lst
+      "user1" "abc123";
+    find_pw_tests "Password of student in multiple element list" student_lst
+      "Eman" "Abdu";
+    find_student_tests "Find student given username in single element list"
+      one_student_lst "user1" random_student;
+    find_student_tests "Find student given username in multiple element list"
+      student_lst "Eman" student1;
+    (*mean_tests "Get mean of empty list" [] 0.0;*)
+    mean_tests "Get mean of single element list" [ 1. ] 1.;
+    mean_tests "Get mean of multiple element list" [ 1.; 3.; 5. ] 3.;
+  ]
 
 let suite =
   "test suite for final project"
