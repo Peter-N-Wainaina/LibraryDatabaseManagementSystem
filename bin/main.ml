@@ -78,7 +78,7 @@ let browse t =
         "\n\
          \t\tType 'Options' to see the options \n\
          \tTo learn about the command options, please type 'HELP'\n\
-         \tTo log out, type 'Log out' or 'Quit'"));
+         \tTo log out, type 'Log out' or 'Quit'\n"));
   parse_options t
 
 let add_student un pw id =
