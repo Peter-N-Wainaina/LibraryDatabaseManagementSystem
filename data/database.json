@@ -1,0 +1,110 @@
+{
+    "name": "Database1",
+    "students": [
+        {
+            "username": "eman",
+            "password": "abdu",
+            "student_id": 5318688,
+            "borrowed_books": [
+                {
+                    "book detail": {
+                        "name": "Righteous Mind",
+                        "genre": "philosopohy",
+                        "author": "Jonathan Haidt",
+                        "pages": 419,
+                        "description": ""
+                    },
+                    "Days remaining": 4
+                },
+                {
+                    "book detail": {
+                        "name": "Outliers",
+                        "genre": "philosopohy",
+                        "author": "Jonathan Haidt",
+                        "pages": 419,
+                        "description": "Why can't our political leaders work together as threats loom and problems mount? Why do people so readily assume the worst about the motives of their fellow citizens? In The Righteous Mind, social psychologist Jonathan Haidt explores the origins of our divisions and points the way forward to mutual understanding."
+                    },
+                    "Days remaining": 2
+                }
+            ],
+            "favorite_books": []
+        },
+        {
+            "username": "iqra",
+            "password": "yousuf",
+            "student_id": 5260152,
+            "borrowed_books": [],
+            "favorite_books": [
+                {
+                    "name": "The answer is",
+                    "genre": "Autobiography",
+                    "author": "Alex Trebek",
+                    "pages": 419,
+                    "description": "The book combines illuminating personal anecdotes with Trebek’s thoughts on a range of topics, including marriage, parenthood, education, success, spirituality, and philanthropy. Trebek also addresses the questions he gets asked most often by Jeopardy! fans, such as what prompted him to shave his signature mustache, his insights on legendary players like Ken Jennings and James Holzhauer, and his opinion of Will Ferrell’s Saturday Night Live impersonation. The book uses a novel structure inspired by Jeopardy!, with each chapter title in the form of a question, and features dozens of never-before-seen photos that candidly capture Trebek over the years."
+                },
+                {
+                    "name": "The shoe dog",
+                    "genre": "memoir",
+                    "author": "Phil Knight",
+                    "pages": 386,
+                    "description": "Shoe Dog is a memoir by Nike co-founder Phil Knight. The memoir chronicles the history of Nike from its founding as Blue Ribbon Sports and its early challenges to its evolution into one of the world’s most recognized and profitable companies"
+                }
+            ]
+        },
+        {
+            "username": "peter",
+            "password": "wainaina",
+            "student_id": 5322557,
+            "borrowed_books": [],
+            "favorite_books": [
+                {
+                    "name": "The Bhagavad Gita",
+                    "genre": "Religion",
+                    "author": "Vyasa",
+                    "pages": 700,
+                    "description": "The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata, dated to the second half of the first millennium BCE and is typical of the Hindu synthesis. It is considered to be one of the holy scriptures for Hinduism."
+                }
+            ]
+        }
+    ],
+    "libraries": [
+        {
+            "libraryname": "library1",
+            "all_books": [
+                {
+                    "name": "The Bhagavad Gita",
+                    "genre": "Religion",
+                    "author": "Vyasa",
+                    "pages": 700,
+                    "description": "The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata, dated to the second half of the first millennium BCE and is typical of the Hindu synthesis. It is considered to be one of the holy scriptures for Hinduism."
+                },
+                {
+                    "name": "The shoe dog",
+                    "genre": "memoir",
+                    "author": "Phil Knight",
+                    "pages": 386,
+                    "description": "Shoe Dog is a memoir by Nike co-founder Phil Knight. The memoir chronicles the history of Nike from its founding as Blue Ribbon Sports and its early challenges to its evolution into one of the world’s most recognized and profitable companies"
+                }
+            ]
+        },
+        {
+            "libraryname": "library2",
+            "all_books": [
+                {
+                    "name": "The answer is",
+                    "genre": "Autobiography",
+                    "author": "Alex Trebek",
+                    "pages": 419,
+                    "description": "The book combines illuminating personal anecdotes with Trebek’s thoughts on a range of topics, including marriage, parenthood, education, success, spirituality, and philanthropy. Trebek also addresses the questions he gets asked most often by Jeopardy! fans, such as what prompted him to shave his signature mustache, his insights on legendary players like Ken Jennings and James Holzhauer, and his opinion of Will Ferrell’s Saturday Night Live impersonation. The book uses a novel structure inspired by Jeopardy!, with each chapter title in the form of a question, and features dozens of never-before-seen photos that candidly capture Trebek over the years."
+                }
+            ]
+        }
+    ],
+    "librarians": [
+        {
+            "username": "librarian1",
+            "password": "password1",
+            "staff_id": 1111
+        }
+    ]
+}

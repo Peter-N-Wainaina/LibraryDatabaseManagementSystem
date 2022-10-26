@@ -1,0 +1,165 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "student": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "student_id": {
+                        "type": "integer"
+                    },
+                    "borrowed_books": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "genre": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "pages": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "genre",
+                                "author",
+                                "pages",
+                                "description"
+                            ]
+                        }
+                    },
+                    "favorite_books": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "genre": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "pages": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "genre",
+                                "author",
+                                "pages",
+                                "description"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "username",
+                    "password",
+                    "student_id",
+                    "borrowed_books",
+                    "favorite_books"
+                ]
+            }
+        },
+        "libraries": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "libraryname": {
+                        "type": "string"
+                    },
+                    "all_books": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "genre": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "pages": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "genre",
+                                "author",
+                                "pages",
+                                "description"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "libraryname",
+                    "all_books"
+                ]
+            }
+        },
+        "librarians": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "stafd_id": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password",
+                    "staff_id"
+                ]
+            }
+        }
+    },
+    "required": [
+        "name",
+        "students",
+        "libraries",
+        "librarians"
+    ]
+}
