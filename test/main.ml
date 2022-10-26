@@ -68,6 +68,7 @@ let librarian_tests =
       (Library.add_book library2 book2)
       book2 [ book1 ];
     get_borrowed_test "Get borrowed list of random student" random_student [];
+  ]
 
 let add_book_test_list (name : string) (l : Library.library) (b : Library.book)
     expected_output : test =
