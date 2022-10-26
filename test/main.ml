@@ -54,7 +54,6 @@ let library2 = Library.add_book library1 book1
 let uris = Library.create_library "Uris"
 let random_student = Student.create_student "user1" "abc123" 123
 
-
 let librarian_tests =
   [
     add_book_test "add a book to an empty book list" library1 book1 [ book1 ];
@@ -227,7 +226,6 @@ let mean_tests (name : string) (input : float list) (expected_output : float) :
 
 let student_tests =
   [
-    (*implement favorite books as set*)
     favorite_book_tests "Favorites of empty list" random_student [];
     favorite_book_tests "Favorites of student with a non-empty favorites list"
       random_student_2 [ "book1" ];
@@ -263,7 +261,7 @@ let student_tests =
       one_student_lst "user1" random_student;
     find_student_tests "Find student given username in multiple element list"
       student_lst "Eman" student1;
-    (*mean_tests "Get mean of empty list" [] 0.0;*)
+    mean_tests "Get mean of empty list" [] 0.0;
     mean_tests "Get mean of single element list" [ 1. ] 1.;
     mean_tests "Get mean of multiple element list" [ 1.; 3.; 5. ] 3.;
   ]
