@@ -73,7 +73,9 @@ let find_student lst username =
   x
 
 let mean week_lst =
-  let sum = List.fold_left (fun x y -> x +. y) 0. week_lst in
-  sum /. float_of_int (List.length week_lst)
+  if week_lst = [] then 0.
+  else
+    let sum = List.fold_left (fun x y -> x +. y) 0. week_lst in
+    sum /. float_of_int (List.length week_lst)
 
 let progress pst nw = ((nw /. pst) -. 1.) *. 100.
