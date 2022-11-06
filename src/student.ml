@@ -28,7 +28,7 @@ let to_book_list h =
   let author = h |> member "author" |> to_string in
   let pages = h |> member "pages" |> to_int in
   let description = h |> member "description" |> to_string in
-  create_book name genre author pages description
+  create_book name (Library.create_genre genre) author pages description
 
 let to_borrowed h =
   ( h |> member "book detail" |> to_book_list,
@@ -49,6 +49,7 @@ let favorite_books std =
   std.favorite_books |> List.map (fun x -> x |> book_name)
 
 let get_borrowed std = std.borrowed_books
+let get_favorites std = std.favorite_books
 
 let borrowed_books std =
   std.borrowed_books |> List.map (fun x -> fst x |> book_name)

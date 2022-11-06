@@ -8,12 +8,18 @@ type library
 
 type book
 (**The abstract type representing a book*)
+type genre 
+(**The abstract type representing a genre*)
 
 exception UnknownBook of book
 (** Raise when an unknown book is encountered. It carries the name of the
     unknown book.*)
+    
+val create_genre : string -> genre 
+(** [create_genre s] is the genre of string s. If [s] is not a valid genre, 
+    [create_genre s] fails with invalid genre*)
 
-val create_book : string -> string -> string -> int -> string -> book
+val create_book : string -> genre -> string -> int -> string -> book
 (**[create_book n g a p d] is a book with name n, genre g ,author a , pages p,
    description d*)
 
@@ -32,3 +38,18 @@ val view_books : library -> book list
 val remove_book : library -> book -> library
 (**[remove_book l bk] is the library with all books except bk Raises
    [UnknownBook b] if there is no book b in the library l*)
+
+val genre_to_int : genre -> int 
+(**[genre_to_int g2] assigns an int i based on the alphabetical order of
+     genres. Starts at i = 1*)
+
+val compare_genre : genre -> genre -> int 
+(**[compare_genre g1 g2] compares genres based on Stdlib compare function. 
+    Orders genres in alphabetical order.*)
+
+val compare_books : book -> book -> int 
+(**[compare_books b1 b2] compares books based on their genre.*)
+
+val sort_books : book list -> book list 
+(**[sort_books b] is list of books without any duplicates, in sorted order 
+    with respect to the alphabetical ordering of their genre.*)

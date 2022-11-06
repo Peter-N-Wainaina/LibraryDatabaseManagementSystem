@@ -29,6 +29,9 @@ val get_borrowed : student -> (Library.book * int) list
 (** [get_borrowed std] is a list of books this student is currently borrowing
     with no duplicates, with the deadline.*)
 
+val get_favorites : student -> Library.book list
+(** [ get_favorite std] is the list of books the student has favorited*)
+
 val borrowed_books : student -> string list
 (** [borrowed_books std] is a list of the names of books the student is
     currently borrowing.*)

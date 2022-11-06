@@ -1,10 +1,40 @@
+type genre =
+  | Autobiography
+  | Biography
+  | Fantasy
+  | Fiction
+  | HistoricalFiction
+  | Memoir
+  | Mystery
+  | NonFiction
+  | Philosophy
+  | Religion
+  | ScienceFiction
+  | Thriller
+
 type book = {
   name : string;
-  genre : string;
+  genre : genre;
   author : string;
   pages : int;
   description : string;
 }
+
+let create_genre s =
+  match String.lowercase_ascii s with
+  | "nonfiction" -> NonFiction
+  | "fiction" -> Fiction
+  | "memoir" -> Memoir
+  | "philosophy" -> Philosophy
+  | "autobiography" -> Autobiography
+  | "religion" -> Religion
+  | "sciencefiction" -> ScienceFiction
+  | "mystery" -> Mystery
+  | "thriller" -> Thriller
+  | "biography" -> Biography
+  | "historicalfiction" -> HistoricalFiction
+  | "fantasy" -> Fantasy
+  | _ -> failwith "invalid"
 
 exception UnknownBook of book
 
@@ -32,3 +62,29 @@ let remove_book l bk =
   else
     let books = List.filter (fun x -> x <> bk) l.all_books in
     { l with all_books = books }
+
+let genre_to_int = function
+  | Autobiography -> 1
+  | Biography -> 2
+  | Fantasy -> 3
+  | Fiction -> 4
+  | HistoricalFiction -> 5
+  | Memoir -> 6
+  | Mystery -> 7
+  | NonFiction -> 8
+  | Philosophy -> 9
+  | Religion -> 10
+  | ScienceFiction -> 11
+  | Thriller -> 12
+
+let compare_genre g1 g2 =
+  let i1, i2 = (genre_to_int g1, genre_to_int g2) in
+  i1 - i2
+
+let compare_books b1 b2 =
+  match (b1, b2) with
+  | ( { name; genre = g1; author; pages; description },
+      { name = n; genre = g2; author = a2; pages = p; description = d } ) ->
+      compare_genre g1 g2
+
+let sort_books blst = List.sort_uniq compare_books blst

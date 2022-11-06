@@ -9,7 +9,7 @@
                 {
                     "book detail": {
                         "name": "Righteous Mind",
-                        "genre": "philosopohy",
+                        "genre": "philosophy",
                         "author": "Jonathan Haidt",
                         "pages": 419,
                         "description": ""
@@ -19,7 +19,7 @@
                 {
                     "book detail": {
                         "name": "Outliers",
-                        "genre": "philosopohy",
+                        "genre": "philosophy",
                         "author": "Jonathan Haidt",
                         "pages": 419,
                         "description": "Why can't our political leaders work together as threats loom and problems mount? Why do people so readily assume the worst about the motives of their fellow citizens? In The Righteous Mind, social psychologist Jonathan Haidt explores the origins of our divisions and points the way forward to mutual understanding."
@@ -105,6 +105,11 @@
             "username": "librarian1",
             "password": "password1",
             "staff_id": 1111
+        },
+        {
+            "username": "librarian2",
+            "password": "password2",
+            "staff_id": 2222
         }
     ]
 }

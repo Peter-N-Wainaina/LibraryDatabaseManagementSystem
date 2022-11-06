@@ -30,7 +30,7 @@ let view_books l = Library.view_books l
 
 let from_json j =
   {
-    username = j |> member "librarians" |> member "username" |> to_string;
-    password = j |> member "librarians" |> member "password" |> to_string;
-    staff_id = j |> member "librarians" |> member "staff_id" |> to_int;
+    username = j |> member "username" |> to_string;
+    password = j |> member "password" |> to_string;
+    staff_id = j |> member "staff_id" |> to_int;
   }

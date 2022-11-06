@@ -4,6 +4,7 @@ open Librarian
 open Library
 open Student
 open Database
+open Yojson.Basic.Util
 
 (** [cmp_set_like_lists lst1 lst2] compares two lists to see whether they are
     equivalent set-like lists. That means checking two things. First, they must
@@ -13,7 +14,17 @@ open Database
 let data_dir_prefix = "data" ^ Filename.dir_sep
 
 let database_json = Yojson.Basic.from_file (data_dir_prefix ^ "/database.json")
-(*let librarian_json = from_json database_json*)
+let accounts = Yojson.Basic.from_file (data_dir_prefix ^ "database.json")
+
+let from_json_librarians json =
+  json |> member "librarians" |> to_list |> List.map Librarian.from_json
+
+let librarians_lst = accounts |> from_json_librarians
+
+let from_json_students json =
+  json |> member "students" |> to_list |> List.map to_student
+
+let students_lst = accounts |> from_json_students
 
 let cmp_set_like_lists lst1 lst2 =
   let uniq1 = List.sort_uniq compare lst1 in
@@ -44,19 +55,32 @@ let get_username_tests (name : string) (input : Librarian.lib)
     (expected_output : string) : test =
   name >:: fun _ -> assert_equal expected_output (Librarian.get_username input)
 
+let fiction = Library.create_genre "fiction"
+let nonfiction = Library.create_genre "nonfiction"
+let mystery = Library.create_genre "mystery"
+let autob = Library.create_genre "autobiography"
+let bio = Library.create_genre "biography"
+let fantasy = Library.create_genre "fantasy"
+let philosophy = Library.create_genre "philosophy"
+let autobiography = Library.create_genre "autobiography"
+let memoir = Library.create_genre "memoir"
+
 let book1 =
-  Library.create_book "book1" "fiction" "First Last" 100
+  Library.create_book "book1" fiction "First Last" 100
     "This is book1 written by First Last. It has 100 pages and has the genre \
      of fiction"
 
 let book2 =
-  Library.create_book "book2" "fiction" "First2 Last2" 100
+  Library.create_book "book2" nonfiction "First2 Last2" 100
     "This is book2 written by First2 Last2. It has 100 page fiction book"
 
 let book3 =
-  Library.create_book "book3" "fantasy" "Greatest Author" 2
+  Library.create_book "book3" mystery "Greatest Author" 2
     "Author was so great, he only needed 2 pages"
 
+let book4 = Library.create_book "book4" autob "a4" 100 "This is book4"
+let book5 = Library.create_book "book5" bio "a5" 100 "This is book5"
+let book6 = Library.create_book "book6" fantasy "a6" 100 "This is book6"
 let library1 = Library.create_library "Empty Library"
 let library2 = Library.add_book library1 book1
 let uris = Library.create_library "Uris"
@@ -75,9 +99,12 @@ let librarian_tests =
     remove_book_test "Remove a book from a library with two books"
       (Library.add_book library2 book2)
       book2 [ book1 ];
-    get_borrowed_test "Get borrowed list of random student" random_student []
-    (*get_username_tests "Username of librarian from json is librarian1"
-      librarian_json "librarian1";*);
+    get_borrowed_test "Get borrowed list of random student" random_student [];
+    get_username_tests "Username of first librarian in database is librarian1"
+      (List.hd librarians_lst) "librarian1";
+    get_username_tests "Username of second librarian in database is librarian2"
+      (librarians_lst |> List.tl |> List.hd)
+      "librarian2";
   ]
 
 let add_book_test_list (name : string) (l : Library.library) (b : Library.book)
@@ -99,12 +126,17 @@ let remove_book_test_raises (name : string) (l : Library.library)
   name >:: fun _ ->
   assert_raises (Library.UnknownBook bk) (fun _ -> Library.remove_book l bk)
 
+let sort_books_tests (name : string) (b : book list)
+    (expected_output : book list) : test =
+  name >:: fun _ -> assert_equal expected_output (Library.sort_books b)
+
 (*Example libraries for testing. The integer value corresponds to the number of
   books in the library*)
 let library0 = Library.create_library "Library Name"
 let library1 = Library.add_book library0 book1
 let library2 = Library.add_book library1 book2
 let library3 = Library.add_book library2 book3
+let six_bk_lst = [ book1; book2; book3; book4; book5; book6 ]
 
 let library_tests =
   [
@@ -128,6 +160,10 @@ let library_tests =
       library3 book3 [ book2; book1 ];
     remove_book_test_raises "Test for an exception" library1 book2;
     remove_book_test_raises "Test for an exception" library2 book3;
+    sort_books_tests "Sort empty list of books" [] [];
+    sort_books_tests "Sort single element list of books" [ book1 ] [ book1 ];
+    sort_books_tests "Sort list of 6 books" six_bk_lst
+      [ book4; book5; book6; book1; book3; book2 ];
   ]
 
 (*Example databases for testing.*)
@@ -142,7 +178,7 @@ let student3 = Student.create_student "Eman" "W" 29062003
 
 (*Example librarian accounts*)
 
-let librarian1 = Librarian.create_lib "Iqra" "Yousof" 123456
+let librarian1 = Librarian.create_lib "Iqra" "Yousuf" 123456
 let librarian2 = Librarian.create_lib "Name" "Name2" 00000
 
 let add_library_test (name : string) (d : Database.database)
@@ -235,6 +271,53 @@ let mean_tests (name : string) (input : float list) (expected_output : float) :
     test =
   name >:: fun _ -> assert_equal expected_output (Student.mean input)
 
+let std_username_tests (name : string) (input : Student.student)
+    (expected_output : string) : test =
+  name >:: fun _ -> assert_equal expected_output (Student.get_username input)
+
+let favorite_sorted_tests (name : string) (input : student)
+    (expected_output : book list) : test =
+  name >:: fun _ ->
+  assert_equal true
+    (cmp_set_like_lists expected_output
+       (Library.sort_books (get_favorites input)))
+
+let database_book1 =
+  Library.create_book "Righteous Mind" philosophy "Jonathan Haidt" 419 ""
+
+let database_book2 =
+  Library.create_book "Outliers" philosophy "Jonathan Haidt" 419
+    "Why can't our political leaders work together as threats loom and \
+     problems mount? Why do people so readily assume the worst about the \
+     motives of their fellow citizens? In The Righteous Mind, social \
+     psychologist Jonathan Haidt explores the origins of our divisions and \
+     points the way forward to mutual understanding."
+
+let db_std2 =
+  match students_lst with
+  | h :: h2 :: t -> h2
+  | _ -> failwith "error"
+
+let database_book3 =
+  Library.create_book "The answer is" autobiography "Alex Trebek" 419
+    "The book combines illuminating personal anecdotes with Trebek’s thoughts \
+     on a range of topics, including marriage, parenthood, education, success, \
+     spirituality, and philanthropy. Trebek also addresses the questions he \
+     gets asked most often by Jeopardy! fans, such as what prompted him to \
+     shave his signature mustache, his insights on legendary players like Ken \
+     Jennings and James Holzhauer, and his opinion of Will Ferrell’s Saturday \
+     Night Live impersonation. The book uses a novel structure inspired by \
+     Jeopardy!, with each chapter title in the form of a question, and \
+     features dozens of never-before-seen photos that candidly capture Trebek \
+     over the years."
+
+let database_book4 =
+  Library.create_book "The shoe dog" memoir "Phil Knight" 386
+    "Shoe Dog is a memoir by Nike co-founder Phil Knight. The memoir \
+     chronicles the history of Nike from its founding as Blue Ribbon Sports \
+     and its early challenges to its evolution into one of the world’s most \
+     recognized and profitable companies"
+
 let student_tests =
   [
     favorite_book_tests "Favorites of empty list" random_student [];
@@ -275,6 +358,11 @@ let student_tests =
     mean_tests "Get mean of empty list" [] 0.0;
     mean_tests "Get mean of single element list" [ 1. ] 1.;
     mean_tests "Get mean of multiple element list" [ 1.; 3.; 5. ] 3.;
+    std_username_tests "Username of first student in database"
+      (List.hd students_lst) "eman";
+    favorite_sorted_tests "Favorite books of second student in database sorted"
+      db_std2
+      [ database_book3; database_book4 ];
   ]
 
 let suite =
