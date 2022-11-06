@@ -23,6 +23,13 @@ val add_book : Library.library -> Library.book -> Library.book list
 (** [add_book blst bk] is a new book list with all of blst and bk added.
     Requires [bk] is a valid book *)
 
+val get_username : lib -> string 
+(** [get_username l] is the username of librarian [l]*)
+val get_password : lib -> string 
+(** [get_password l] is the password of librarian [l]*)
+val get_staff_id : lib -> int 
+(** [get_staff_id l] is the staff id of librarian [l]*)
+
 val remove_book : Library.library -> Library.book -> Library.book list
 (** [remove_book blst bk] is a new blst with all elements except bk Requires
     [bk] is a valid book Riases [UnknownBook bk] if there is no book b in blst*)
@@ -33,3 +40,7 @@ val get_borrowed : Student.student -> Library.book list
 
 val view_books : Library.library -> Library.book list
 (** [view_books] is a list of all the books from the module Library*)
+
+val from_json : Yojson.Basic.t -> lib
+(**[from_json j] is a librarian that [j] represents. Requires: [j] is a valid
+   JSON database representation. *)

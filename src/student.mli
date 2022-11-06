@@ -15,6 +15,8 @@ type student_id
 (** The abstract type representing the StudentID of a student*)
 
 val to_student : Yojson.Basic.t -> student
+(**[to_student j] is a student that [j] represents. Requires: [j] is a valid
+   JSON database representation. *)
 
 val create_student : string -> string -> int -> student
 (**[create_student un pw id] is a student with username un, password pw,
@@ -25,9 +27,11 @@ val favorite_books : student -> string list
 
 val get_borrowed : student -> (Library.book * int) list
 (** [get_borrowed std] is a list of books this student is currently borrowing
-    with no duplicates.*)
+    with no duplicates, with the deadline.*)
 
 val borrowed_books : student -> string list
+(** [borrowed_books std] is a list of the names of books the student is
+    currently borrowing.*)
 
 val get_username : student -> string
 (** [get_username std] is the username of the student std.*)

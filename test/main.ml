@@ -10,6 +10,10 @@ open Database
     both be "set-like", meaning that they do not contain any duplicates. Second,
     they must contain the same elements, though not necessarily in the same
     order. *)
+let data_dir_prefix = "data" ^ Filename.dir_sep
+
+let database_json = Yojson.Basic.from_file (data_dir_prefix ^ "/database.json")
+(*let librarian_json = from_json database_json*)
 
 let cmp_set_like_lists lst1 lst2 =
   let uniq1 = List.sort_uniq compare lst1 in
@@ -36,6 +40,10 @@ let get_borrowed_test (name : string) (input : Student.student)
   assert_equal true
     (cmp_set_like_lists expected_output (Librarian.get_borrowed input))
 
+let get_username_tests (name : string) (input : Librarian.lib)
+    (expected_output : string) : test =
+  name >:: fun _ -> assert_equal expected_output (Librarian.get_username input)
+
 let book1 =
   Library.create_book "book1" "fiction" "First Last" 100
     "This is book1 written by First Last. It has 100 pages and has the genre \
@@ -53,6 +61,7 @@ let library1 = Library.create_library "Empty Library"
 let library2 = Library.add_book library1 book1
 let uris = Library.create_library "Uris"
 let random_student = Student.create_student "user1" "abc123" 123
+let json_lib = create_lib "librarian1" "password1" 1111
 
 let librarian_tests =
   [
@@ -66,7 +75,9 @@ let librarian_tests =
     remove_book_test "Remove a book from a library with two books"
       (Library.add_book library2 book2)
       book2 [ book1 ];
-    get_borrowed_test "Get borrowed list of random student" random_student [];
+    get_borrowed_test "Get borrowed list of random student" random_student []
+    (*get_username_tests "Username of librarian from json is librarian1"
+      librarian_json "librarian1";*);
   ]
 
 let add_book_test_list (name : string) (l : Library.library) (b : Library.book)
