@@ -7,12 +7,17 @@ type student = Student.student
 let from_json json = json |> member "students" |> to_list |> List.map to_student
 let data_dir_prefix = "data" ^ Filename.dir_sep
 
-let student_accounts =
-  Yojson.Basic.from_file (data_dir_prefix ^ "student_accounts.json")
+let database =
+  Database.to_database
+    (Yojson.Basic.from_file (data_dir_prefix ^ "database.json"))
 
-let students_lst = student_accounts |> from_json
+let students_lst = Database.view_student_accounts database
+let librarians_lst = Database.view_librarian_accounts database
 let username_lst = students_lst |> List.map get_username
-let student_db = create_database "student_db"
+
+let student_db =
+  Database.to_database
+    (Yojson.Basic.from_file (data_dir_prefix ^ "database.json"))
 
 let find_a_user a =
   let y = username_lst in

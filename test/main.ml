@@ -167,9 +167,11 @@ let library_tests =
   ]
 
 (*Example databases for testing.*)
-let db0 = Database.create_database "Empty Database"
+let db0 = Database.create_database "Database0"
 let db1 = Database.add_library db0 library0
 let db2 = Database.add_library db1 library1
+let db3 = Database.to_database (Yojson.Basic.from_file (data_dir_prefix ^ "database.json"))
+
 
 (*Example student accounts*)
 let student1 = Student.create_student "Eman" "Abdu" 29062003

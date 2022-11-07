@@ -8,17 +8,13 @@ open Yojson.Basic.Util
 exception UnknownInput
 
 let data_dir_prefix = "data" ^ Filename.dir_sep
-let accounts = Yojson.Basic.from_file (data_dir_prefix ^ "database.json")
 
-let from_json_students json =
-  json |> member "students" |> to_list |> List.map to_student
+let database =
+  Database.to_database
+    (Yojson.Basic.from_file (data_dir_prefix ^ "database.json"))
 
-let students_lst = accounts |> from_json_students
-
-let from_json_librarians json =
-  json |> member "librarians" |> to_list |> List.map Librarian.from_json
-
-let librarians_lst = accounts |> from_json_librarians
+let students_lst = Database.view_student_accounts database
+let librarians_lst = Database.view_librarian_accounts database
 
 (*Really needs to be fixed. Same with all the ones above. We don't need to store
   students in main.ml Also is there a way where we can print out written stuff

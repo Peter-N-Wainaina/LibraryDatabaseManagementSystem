@@ -1,36 +1,41 @@
-(** Representation of a database: 
+(** Representation of a database:
 
-This module represents Library Management System. It contains all available libraries, student and librarian accounts
-and methods to access, and edit this information. 
-*)
+    This module represents Library Management System. It contains all available
+    libraries, student and librarian accounts and methods to access, and edit
+    this information. *)
+
 exception UnknownID of Student.student_id
 
 type database
 (**The abstract type representing the database*)
 
-val create_database : string->database 
+val create_database : string -> database
 (**[create_database n] is a database with name [n]*)
 
+val to_database : Yojson.Basic.t -> database
+(**[to_database j] is a database made from [j]*)
+
 val add_library : database -> Library.library -> database
-(**[add_student_account d l] is a database [d]  with library [l] added to it. *)
+(**[add_student_account d l] is a database [d] with library [l] added to it. *)
 
-val add_student_account : database-> Student.student -> database
-(**[add_student_account d s] is a database [d] with student account [s] added to it. *)
+val add_student_account : database -> Student.student -> database
+(**[add_student_account d s] is a database [d] with student account [s] added to
+   it. *)
 
-val add_librarian_account : database -> Librarian.lib  -> database
-(**[add_librarian_account d l] is a database [d] with librarian account [l] added to it. *)
+val add_librarian_account : database -> Librarian.lib -> database
+(**[add_librarian_account d l] is a database [d] with librarian account [l]
+   added to it. *)
 
-val view_libraries : database -> Library.library list  
+val view_libraries : database -> Library.library list
 (**[view_libraries d] is a set-like list of all libraries in [d]*)
 
-val view_student_accounts : database ->  Student.student list 
+val view_student_accounts : database -> Student.student list
 (**[view_student_accounts d] is a set-like list of all students in [d]*)
 
-val view_librarian_accounts: database -> Librarian.lib list
+val view_librarian_accounts : database -> Librarian.lib list
 (**[view_librarian_accounts d] is a set-like list of all librarians in [d]*)
 
 val get_student : database -> Student.student_id -> Student.student
-(**[get_student d id] is the student in [d] with StudentID [id] raises 
-    [UnknownID id] if a student with StudentID [id] is not in [d] requires
-   there can be at most one student with StudentID [id]  *)
-
+(**[get_student d id] is the student in [d] with StudentID [id] raises
+   [UnknownID id] if a student with StudentID [id] is not in [d] requires there
+   can be at most one student with StudentID [id] *)

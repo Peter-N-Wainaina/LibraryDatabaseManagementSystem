@@ -1,3 +1,5 @@
+open Yojson.Basic.Util
+
 type genre =
   | Autobiography
   | Biography
@@ -45,11 +47,27 @@ type library = {
   all_books : book list;
 }
 
+let create_library n = { name = n; all_books = [] }
+
 let create_book n g a p d =
   { name = n; genre = g; author = a; pages = p; description = d }
 
 let book_name (bk : book) = bk.name
-let create_library n = { name = n; all_books = [] }
+
+let to_book j =
+  {
+    name = j |> member "name " |> to_string;
+    genre = j |> member "genre" |> to_string |> create_genre;
+    author = j |> member "author" |> to_string;
+    pages = j |> member "pages" |> to_int;
+    description = j |> member "description" |> to_string;
+  }
+
+let to_library j =
+  {
+    name = j |> member "libraryname" |> to_string;
+    all_books = j |> member "all_books" |> to_list |> List.map to_book;
+  }
 
 let add_book l b =
   let books = b :: l.all_books in

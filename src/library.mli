@@ -26,8 +26,11 @@ val create_book : string -> genre -> string -> int -> string -> book
 val book_name : book -> string
 (**[book_name bk] returns the name of the book*)
 
-val create_library : string -> library
-(**[create_library n ] is a library with name[n] and no books*)
+val create_library :string -> library
+(**[create_library n] is a library with name [n]*)
+
+val to_library : Yojson.Basic.t -> library
+(**[to_library n ] is a library with name[n]*)
 
 val add_book : library -> book -> library
 (**[add_book l b] is library [l] with book [b] added to it's list of books*)

@@ -1,5 +1,7 @@
 exception UnknownID of Student.student_id
 
+open Yojson.Basic.Util
+
 type database = {
   name : string;
   libraries : Library.library list;
@@ -9,6 +11,15 @@ type database = {
 
 let create_database n =
   { name = n; libraries = []; librarians = []; students = [] }
+
+let to_database (json : Yojson.Basic.t) =
+  {
+    name = json |> member "name" |> to_string;
+    libraries = [];
+    librarians = [];
+    students =
+      json |> member "students" |> to_list |> List.map Student.to_student;
+  }
 
 let add_library d l =
   let new_libraries = l :: d.libraries in
