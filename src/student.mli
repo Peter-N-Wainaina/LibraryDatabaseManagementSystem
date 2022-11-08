@@ -64,3 +64,7 @@ val mean : float list -> float
 val progress : float -> float -> float
 (** [progress pst nw] is the percentage increase or decrease in the number of
     pages from pst to nw*)
+
+val get_login_details : student -> string * string
+(**[get_login_details std] is a pair of the username and password of student
+   [std]*)

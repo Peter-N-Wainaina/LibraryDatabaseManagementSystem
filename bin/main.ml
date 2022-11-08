@@ -2,7 +2,7 @@ open Dbms
 open Database
 open Student
 open Command
-open Demo
+open Execute
 open Yojson.Basic.Util
 
 exception UnknownInput
@@ -140,7 +140,7 @@ let rec find_password t =
     user in the database with username of the user's input*)
 let rec adduser (t : int) =
   let a = read_line () in
-  match find_a_user a with
+  match find_a_user a database with
   | None -> add_password a t
   | _ ->
       print_endline "\n\t\t";
@@ -153,11 +153,10 @@ let rec adduser (t : int) =
     user in the database with username of the user's input.*)
 let rec find_user () =
   let a = read_line () in
-  match find_a_user a with
+  match Execute.find_a_user a database with
   | None ->
       print_endline
-        "This username does not exist.Please enter a correct username.\n\
-         Username:";
+        "This username does not exist.Please enter a valid username.\nUsername:";
       find_user ()
   | _ -> find_password a
 
@@ -235,7 +234,7 @@ let rec identify_user () =
       ANSITerminal.(print_string [ green ] "\t\t\tWelcome new user!\n");
       read_new ()
   | _ ->
-      ANSITerminal.(print_string [ red ] "please input a valid command\n\t>");
+      ANSITerminal.(print_string [ red ] "Please input a valid command\n\t>");
       identify_user ()
 
 (** [read login ()] takes in unit and returns unit. It prints out the

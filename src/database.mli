@@ -13,7 +13,7 @@ val create_database : string -> database
 (**[create_database n] is a database with name [n]*)
 
 val to_database : Yojson.Basic.t -> database
-(**[to_database j] is a database made from [j]*)
+(**[to_database j] is a database made from json [j]*)
 
 val add_library : database -> Library.library -> database
 (**[add_student_account d l] is a database [d] with library [l] added to it. *)
@@ -35,7 +35,15 @@ val view_student_accounts : database -> Student.student list
 val view_librarian_accounts : database -> Librarian.lib list
 (**[view_librarian_accounts d] is a set-like list of all librarians in [d]*)
 
-val get_student : database -> Student.student_id -> Student.student
-(**[get_student d id] is the student in [d] with StudentID [id] raises
-   [UnknownID id] if a student with StudentID [id] is not in [d] requires there
-   can be at most one student with StudentID [id] *)
+val student_user_names : database -> string list
+(**[student_user_names d] is a list of the usernames of the students in database
+   [d]*)
+
+val students_login : database -> (string * string) list
+(**[students_login] is a list of the [usernames-password pairs] of the students
+   in database [d]*)
+
+val get_student : string -> database -> Student.student
+(**[get_student un  d ] is the student in [d] with username [un] raises
+   [InvalidUserName un] ifstudent is not in [d] Requires: There is at most one
+   student with username [un] *)

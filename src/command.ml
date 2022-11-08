@@ -9,13 +9,15 @@ type command =
   | Borrowed_books
   | Favorite_books
   | Help
+  | Logout
 
 let logging t =
   match t with
   | exception End_of_file -> Quit
-  | "QUIT" | "Quit" | "quit" | "Log out" -> Quit
+  | "QUIT" | "Quit" | "quit" -> Quit
   | "Sign Up" | "Sign up" -> Sign_up
   | "Login" | "Log in" | "Log In" -> Login
+  | "Log out" -> Logout
   | _ -> UnknownInput
 
 let user_type t =

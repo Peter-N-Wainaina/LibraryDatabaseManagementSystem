@@ -40,8 +40,13 @@ let view_libraries d = d.libraries
 let view_student_accounts d = d.students
 let view_librarian_accounts d = d.librarians
 
-let get_student d id =
-  let student =
-    List.filter (fun x -> Student.get_id x = id) (view_student_accounts d)
-  in
-  if List.length student = 0 then raise (UnknownID id) else List.nth student 0
+(**TODO:DELETE after changing main to get usernames and passwords at the same
+   time*)
+let student_user_names d =
+  view_student_accounts d |> List.map Student.get_username
+
+let students_login (d : database) =
+  view_student_accounts d |> List.map Student.get_login_details
+
+let get_student un d =
+  List.find (fun x -> Student.get_username x = un) (view_student_accounts d)

@@ -10,7 +10,8 @@ type command =
   | Options
   | Borrowed_books
   | Favorite_books
-  | Help  (**The abstract representation of a command*)
+  | Help
+  | Logout  (**The abstract representation of a command*)
 
 val logging : string -> command
 (***)

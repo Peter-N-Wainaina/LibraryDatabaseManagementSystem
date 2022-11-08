@@ -80,3 +80,4 @@ let mean week_lst =
     sum /. float_of_int (List.length week_lst)
 
 let progress pst nw = ((nw /. pst) -. 1.) *. 100.
+let get_login_details std = (std.username, std.password)
