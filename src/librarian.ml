@@ -26,6 +26,7 @@ let get_first = function
 let get_borrowed (s : Student.student) =
   List.map get_first (Student.get_borrowed s)
 
+let get_login_details lib = (lib.username, lib.password)
 let view_books l = Library.view_books l
 
 let from_json j =

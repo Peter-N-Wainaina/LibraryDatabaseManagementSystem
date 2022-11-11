@@ -11,5 +11,8 @@ val get_student : string -> string -> Database.database -> Student.student
    if username [un] is not in [d] Raises [IncorrectPassword pw] if [pw] does not
    match [un]*)
 
-(**methods to : return student given username and password return favoorite and
-   borrowed books given student *)
+val get_librarian : string -> string -> Database.database -> Librarian.lib
+(**[get_librarian un pw db] is a librarian with username [un] and password [pw]
+   in database [db]. Requires:[db] is a valid database Raises [UserNameNotFound]
+   un if username [un] is not in [d] Raises [IncorrectPassword pw] if [pw] does
+   not match [un]*)

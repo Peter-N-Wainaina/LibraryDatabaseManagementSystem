@@ -1,5 +1,4 @@
 type command =
-  | Sign_up
   | Login
   | Quit
   | UnknownInput
@@ -11,11 +10,24 @@ type command =
   | Help
   | Logout
 
+let student_options () = [ "Borrowed Books"; "Favorite Books" ]
+
+let student_help () =
+  [
+    "\n\
+    \         Borrowed books - see the name of the books you have borrowed from \n\
+    \        Cornell Libraries";
+    "Favorite books - see the name of the books you have marked as favorite \n\
+    \        before.";
+  ]
+
+let librarian_options () = []
+let librarian_help () = []
+
 let logging t =
   match t with
   | exception End_of_file -> Quit
   | "QUIT" | "Quit" | "quit" -> Quit
-  | "Sign Up" | "Sign up" -> Sign_up
   | "Login" | "Log in" | "Log In" -> Login
   | "Log out" -> Logout
   | _ -> UnknownInput

@@ -38,6 +38,9 @@ val get_borrowed : Student.student -> Library.book list
 (** [get_borrowed s] is a list of books this student is currently borrowing with
     no duplicates. Requires [s] is a student in the database.*)
 
+val get_login_details : lib -> string * string
+(**[get_login_details lib] is a pair of the username and password of librarian
+   [std]*)
 val view_books : Library.library -> Library.book list
 (** [view_books] is a list of all the books from the module Library*)
 

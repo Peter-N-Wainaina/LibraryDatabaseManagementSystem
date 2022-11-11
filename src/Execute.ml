@@ -16,3 +16,11 @@ let get_student un pw db =
   | pw' ->
       if pw = pw' then Database.get_student un db
       else raise (IncorrectPassword pw)
+
+let get_librarian un pw db =
+  let logins = Database.librarians_login db in
+  match List.assoc un logins with
+  | exception Not_found -> raise (UserNameNotFound un)
+  | pw' ->
+      if pw = pw' then Database.get_librarian un db
+      else raise (IncorrectPassword pw)
