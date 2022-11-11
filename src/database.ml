@@ -56,3 +56,28 @@ let get_student un d =
 
 let get_librarian un d =
   List.find (fun x -> Librarian.get_username x = un) (view_librarian_accounts d)
+
+let rec sort_helper blst acc =
+  match blst with
+  | [] -> acc
+  | h :: t -> sort_helper t (Library.sort_books (h @ acc))
+
+let sort_all_books d =
+  let bll = List.map (fun x -> Library.view_books x) d.libraries in
+  sort_helper bll []
+
+let subset_by_genre d g =
+  let list_with_dup =
+    List.fold_left
+      (fun acc x -> (Library.subset_genre (Library.view_books x)) g @ acc)
+      [] d.libraries
+  in
+  Library.sort_books list_with_dup
+
+let subset_by_author d a =
+  let list_with_dup =
+    List.fold_left
+      (fun acc x -> Library.subset_author (Library.view_books x) a @ acc)
+      [] d.libraries
+  in
+  Library.sort_books list_with_dup

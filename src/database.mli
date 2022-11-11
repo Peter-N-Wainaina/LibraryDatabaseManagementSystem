@@ -56,3 +56,18 @@ val get_librarian : string -> database -> Librarian.lib
 (**[get_librarian un  d ] is the librarian in [d] with username [un] raises
    [InvalidUserName un] if librarian is not in [d] Requires: There is at most
    one librarian with username [un] *)
+
+val sort_all_books : database -> Library.book list
+(**[sort_all_books d] is the list of all books in database d in sorted order
+   based on alphabetical order of genre. The list returned contains no
+   duplicates. *)
+
+val subset_by_genre : database -> Library.genre -> Library.book list
+(**[genre_subset d g] is the list of all books with genre g in the database. The
+   list returned contains no duplicates. If there are no books with genre g, the
+   empty list is returned.*)
+
+val subset_by_author : database -> string -> Library.book list
+(**[subset_by_author d a] is the list of all books written by author a in the
+   database. The list returned contains no duplicates. If there are no books
+   written by author a, the empty list is returned.*)
