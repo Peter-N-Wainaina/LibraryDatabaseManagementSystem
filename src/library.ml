@@ -9,6 +9,7 @@ type genre =
   | Memoir
   | Mystery
   | NonFiction
+  | Novel
   | Philosophy
   | Religion
   | ScienceFiction
@@ -36,6 +37,7 @@ let create_genre s =
   | "biography" -> Biography
   | "historicalfiction" -> HistoricalFiction
   | "fantasy" -> Fantasy
+  | "novel" -> Novel
   | _ -> failwith "invalid"
 
 exception UnknownBook of book
@@ -90,10 +92,11 @@ let genre_to_int = function
   | Memoir -> 6
   | Mystery -> 7
   | NonFiction -> 8
-  | Philosophy -> 9
-  | Religion -> 10
-  | ScienceFiction -> 11
-  | Thriller -> 12
+  | Novel -> 9
+  | Philosophy -> 10
+  | Religion -> 11
+  | ScienceFiction -> 12
+  | Thriller -> 13
 
 let compare_genre g1 g2 =
   let i1, i2 = (genre_to_int g1, genre_to_int g2) in
@@ -106,3 +109,5 @@ let compare_books b1 b2 =
       compare_genre g1 g2
 
 let sort_books blst = List.sort_uniq compare_books blst
+let subset_genre bl gen = List.filter (fun x -> x.genre = gen) bl
+let subset_author bl auth = List.filter (fun x -> x.author = auth) bl

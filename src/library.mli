@@ -56,3 +56,13 @@ val compare_books : book -> book -> int
 val sort_books : book list -> book list 
 (**[sort_books b] is list of books without any duplicates, in sorted order 
     with respect to the alphabetical ordering of their genre.*)
+
+val subset_genre : book list -> genre -> book list
+(**[subset_genre blst gen] is a list of books in booklist blst with the genre gen. 
+    Returns the empty list if there are no books with genre [gen] in 
+    book list [blst]*)
+
+val subset_author : book list -> string -> book list 
+(**[subset_author blst auth] is a list of books in the booklist with author auth.
+    Returns the empty list if there are no books with author [auth] in book list 
+    [blst]*)

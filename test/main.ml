@@ -58,28 +58,22 @@ let get_username_tests (name : string) (input : Librarian.lib)
 let fiction = Library.create_genre "fiction"
 let nonfiction = Library.create_genre "nonfiction"
 let mystery = Library.create_genre "mystery"
-let autob = Library.create_genre "autobiography"
-let bio = Library.create_genre "biography"
+let autobiography = Library.create_genre "autobiography"
+let biography = Library.create_genre "biography"
 let fantasy = Library.create_genre "fantasy"
 let philosophy = Library.create_genre "philosophy"
-let autobiography = Library.create_genre "autobiography"
 let memoir = Library.create_genre "memoir"
-
-let book1 =
-  Library.create_book "book1" fiction "First Last" 100
-    "This is book1 written by First Last. It has 100 pages and has the genre \
-     of fiction"
+let book1 = Library.create_book "book1" fiction "First Last" 100 "This is book1"
 
 let book2 =
-  Library.create_book "book2" nonfiction "First2 Last2" 100
-    "This is book2 written by First2 Last2. It has 100 page fiction book"
+  Library.create_book "book2" nonfiction "First2 Last2" 100 "This is book2"
 
 let book3 =
   Library.create_book "book3" mystery "Greatest Author" 2
     "Author was so great, he only needed 2 pages"
 
-let book4 = Library.create_book "book4" autob "a4" 100 "This is book4"
-let book5 = Library.create_book "book5" bio "a5" 100 "This is book5"
+let book4 = Library.create_book "book4" autobiography "a4" 100 "This is book4"
+let book5 = Library.create_book "book5" biography "a4" 100 "This is book5"
 let book6 = Library.create_book "book6" fantasy "a6" 100 "This is book6"
 let library1 = Library.create_library "Empty Library"
 let library2 = Library.add_book library1 book1
@@ -137,6 +131,8 @@ let library1 = Library.add_book library0 book1
 let library2 = Library.add_book library1 book2
 let library3 = Library.add_book library2 book3
 let six_bk_lst = [ book1; book2; book3; book4; book5; book6 ]
+let library4 = Library.add_book library3 book4
+let library5 = Library.add_book library4 book5
 
 let library_tests =
   [
@@ -170,8 +166,11 @@ let library_tests =
 let db0 = Database.create_database "Database0"
 let db1 = Database.add_library db0 library0
 let db2 = Database.add_library db1 library1
-let db3 = Database.to_database (Yojson.Basic.from_file (data_dir_prefix ^ "database.json"))
+let db_test = Database.add_library db2 library5
 
+let db3 =
+  Database.to_database
+    (Yojson.Basic.from_file (data_dir_prefix ^ "database.json"))
 
 (*Example student accounts*)
 let student1 = Student.create_student "Eman" "Abdu" 29062003
@@ -277,13 +276,6 @@ let std_username_tests (name : string) (input : Student.student)
     (expected_output : string) : test =
   name >:: fun _ -> assert_equal expected_output (Student.get_username input)
 
-let favorite_sorted_tests (name : string) (input : student)
-    (expected_output : book list) : test =
-  name >:: fun _ ->
-  assert_equal true
-    (cmp_set_like_lists expected_output
-       (Library.sort_books (get_favorites input)))
-
 let database_book1 =
   Library.create_book "Righteous Mind" philosophy "Jonathan Haidt" 419 ""
 
@@ -362,14 +354,75 @@ let student_tests =
     mean_tests "Get mean of multiple element list" [ 1.; 3.; 5. ] 3.;
     std_username_tests "Username of first student in database"
       (List.hd students_lst) "eman";
+  ]
+
+let favorite_sorted_tests (name : string) (input : student)
+    (expected_output : book list) : test =
+  name >:: fun _ ->
+  assert_equal true
+    (cmp_set_like_lists expected_output
+       (Library.sort_books (get_favorites input)))
+
+let subset_genre_tests (name : string) (input : book list) (gen : genre)
+    (expected_output : book list) : test =
+  name >:: fun _ ->
+  assert_equal expected_output (Library.subset_genre input gen)
+
+let subset_author_tests (name : string) (input : book list) (auth : string)
+    (expected_output : book list) : test =
+  name >:: fun _ -> assert_equal expected_output (subset_author input auth)
+
+let sort_all_books_tests (name : string) (input : Database.database)
+    (expected_output : book list) : test =
+  name >:: fun _ -> assert_equal expected_output (Database.sort_all_books input)
+
+let subset_by_genre_tests (name : string) (input : Database.database)
+    (gen : Library.genre) (expected_output : book list) : test =
+  name >:: fun _ ->
+  assert_equal expected_output (Database.subset_by_genre input gen)
+
+let subset_by_author_tests (name : string) (input : Database.database)
+    (auth : string) (expected_output : book list) : test =
+  name >:: fun _ ->
+  assert_equal expected_output (Database.subset_by_author input auth)
+
+let library2_tests =
+  [
     favorite_sorted_tests "Favorite books of second student in database sorted"
       db_std2
       [ database_book3; database_book4 ];
+    subset_genre_tests "List of autobiographies in three element book list"
+      [ database_book2; database_book4; database_book3 ]
+      autobiography [ database_book3 ];
+    subset_genre_tests "List of memoirs in list with no memoirs"
+      [ database_book1; database_book2; database_book3 ]
+      memoir [];
+    subset_author_tests "List of books written by Alex Trebek"
+      [ database_book2; database_book4; database_book3 ]
+      "Alex Trebek" [ database_book3 ];
+    subset_author_tests "List of books written by Charles Darwin"
+      [ database_book2; database_book4; database_book3 ]
+      "Charles Darwin" [];
+    sort_all_books_tests "List of books sorted in a database with one book" db2
+      [ book1 ];
+    sort_all_books_tests "List of books sorted in database with 5 unique books"
+      db_test
+      [ book4; book5; book1; book3; book2 ];
+    subset_by_genre_tests "List of books with genre fiction in database" db_test
+      fiction [ book1 ];
+    subset_by_author_tests "List of books written by a4 in database" db_test
+      "a4" [ book4; book5 ];
   ]
 
 let suite =
   "test suite for final project"
   >::: List.flatten
-         [ librarian_tests; student_tests; library_tests; database_tests ]
+         [
+           librarian_tests;
+           student_tests;
+           library_tests;
+           database_tests;
+           library2_tests;
+         ]
 
 let _ = run_test_tt_main suite
