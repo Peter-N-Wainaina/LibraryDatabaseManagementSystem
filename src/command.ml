@@ -24,28 +24,35 @@ let student_help () =
 let librarian_options () = []
 let librarian_help () = []
 
+let parse_commands s =
+  let str_lst =
+    List.filter (fun x -> String.length x > 0) (String.split_on_char ' ' s)
+  in
+  List.fold_left (fun acc x -> acc ^ " " ^ String.lowercase_ascii x) "" str_lst
+  |> String.trim
+
 let logging t =
-  match t with
+  match parse_commands t with
   | exception End_of_file -> Quit
-  | "QUIT" | "Quit" | "quit" -> Quit
-  | "Login" | "Log in" | "Log In" -> Login
-  | "Log out" -> Logout
+  | "quit" -> Quit
+  | "log in" -> Login
+  | "log out" -> Logout
   | _ -> UnknownInput
 
 let user_type t =
-  match t with
+  match parse_commands t with
   | exception End_of_file -> Quit
   | exception a -> UnknownInput
-  | "QUIT" | "Quit" | "quit" | "Log out" -> Quit
-  | "student" | "Student" -> Student
-  | "librarian" | "Librarian" -> Librarian
+  | "quit" -> Quit
+  | "student" -> Student
+  | "librarian" -> Librarian
   | _ -> UnknownInput
 
 let options t =
-  match t with
-  | "QUIT" | "Quit" | "quit" | "Log out" -> Quit
-  | "Options" | "options" -> Options
-  | "Borrowed books" | "Borrowed Books" -> Borrowed_books
-  | "Favorite books" | "Favorite Books" -> Favorite_books
-  | "Help" | "HELP" -> Help
+  match parse_commands t with
+  | "quit" | "log out" -> Quit
+  | "options" -> Options
+  | "borrowed books" -> Borrowed_books
+  | "favorite books" -> Favorite_books
+  | "help" -> Help
   | _ -> UnknownInput

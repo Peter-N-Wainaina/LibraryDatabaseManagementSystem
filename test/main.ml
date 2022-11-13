@@ -4,6 +4,7 @@ open Librarian
 open Library
 open Student
 open Database
+open Command
 open Yojson.Basic.Util
 
 (** [cmp_set_like_lists lst1 lst2] compares two lists to see whether they are
@@ -414,10 +415,25 @@ let library2_tests =
       "a4" [ book4; book5 ];
   ]
 
+  let parse_commands_test (name:string)(input:string)(expected_output:string):test=
+  name >:: fun _ -> assert_equal expected_output (Command.parse_commands input)~printer:Fun.id
+
+  let command_tests=[
+    parse_commands_test "Test empty string" "        " "";
+    parse_commands_test "Test string with one word all lowercase" "    quit " "quit";
+    parse_commands_test "Test string with one word mixed case " "   QuIt " "quit";
+    parse_commands_test "Test string with two words mixed case "  "    Borrowed  Books " "borrowed books";
+    parse_commands_test "Test string with three words mixed case "  "  GeT  Borrowed  Books  " "get borrowed books";
+
+
+  ]
+
+
 let suite =
   "test suite for final project"
   >::: List.flatten
          [
+command_tests;
            librarian_tests;
            student_tests;
            library_tests;

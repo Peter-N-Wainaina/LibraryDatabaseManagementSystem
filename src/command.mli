@@ -37,3 +37,8 @@ val librarian_options : unit -> string list
 val librarian_help : unit -> string list
 (** [librarian_help ()] is the list of valid librarian commands and their
     descriptions.*)
+
+val parse_commands : string -> string
+(**[parse_commands s] is a string with all the words in [s] separated by a
+   single space converted to lowecase Example:
+   [parse_commands  "    Borrowed  Books "] is ["borrowed books"]*)

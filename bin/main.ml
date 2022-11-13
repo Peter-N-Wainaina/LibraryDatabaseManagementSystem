@@ -75,10 +75,10 @@ let rec student_login () =
   print_endline "\n\tPassword:";
   let password = read_line () in
   match Execute.get_student username password database with
-  | exception UserNameNotFound _ ->
+  | exception UserNameNotFound ->
       print_endline "Incorrect Username";
       student_login ()
-  | exception IncorrectPassword _ ->
+  | exception IncorrectPassword ->
       print_endline "Incorrect Password";
       student_login ()
   | student -> student_browse student
@@ -119,10 +119,10 @@ let rec librarian_login () =
   print_endline "\n\tPassword:";
   let password = read_line () in
   match Execute.get_librarian username password database with
-  | exception UserNameNotFound _ ->
+  | exception UserNameNotFound ->
       print_endline "Incorrect Username";
       librarian_login ()
-  | exception IncorrectPassword _ ->
+  | exception IncorrectPassword ->
       print_endline "Incorrect Password";
       librarian_login ()
   | librarian -> librarian_browse librarian
