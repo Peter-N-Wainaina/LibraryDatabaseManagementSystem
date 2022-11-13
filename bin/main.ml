@@ -28,12 +28,6 @@ let rec printer lst =
       printer t;
       ()
 
-(** [printer_bw] takes in a string list and returns unit. It prints out the
-    borrowed books of a user.*)
-let printer_bw lst =
-  if lst = [] then print_endline "\tYou currently have no borrowed books.\n"
-  else printer lst
-
 (** [print_books lst s] prints out the books in [lst] in section [s].*)
 let print_books s lst =
   if lst = [] then
@@ -148,7 +142,7 @@ let rec identify_user () =
 (** [read login ()] prints out the instruction on how to log in to the system.*)
 let rec read_login () =
   ANSITerminal.(
-    print_string [ cyan ] "'Type Log in to continue'\n\n";
+    print_string [ cyan ] "'Are you a Student or a Librarian'\n\n";
     print_string [] "\tTo exit, type 'QUIT' or press 'Ctrl' + 'D'.\n\t> ");
   identify_user ();
   ()
