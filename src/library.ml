@@ -62,7 +62,7 @@ let book_genre (bk : book) = bk.genre
 
 let to_book j =
   {
-    name = j |> member "name " |> to_string;
+    name = j |> member "name" |> to_string;
     genre = j |> member "genre" |> to_string |> create_genre;
     author = j |> member "author" |> to_string;
     pages = j |> member "pages" |> to_int;

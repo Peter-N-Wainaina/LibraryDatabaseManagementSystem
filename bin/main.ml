@@ -41,21 +41,22 @@ let print_book_details_helper t d =
 
 (**[print_book_details] prints all [books] in [l]*)
 let print_book_details (l : Library.book list) =
+  let rec print_all_books = function
+    | [] -> print_endline ""
+    | h :: t ->
+        print_book_details_helper "Name" (Library.book_name h);
+        print_book_details_helper "Author" (Library.book_author h);
+        print_book_details_helper "Description" (Library.book_description h);
+        print_book_details_helper "Number of pages"
+          (Library.book_length h |> string_of_int);
+        print_all_books t
+  in
   match l with
   | [] ->
       ANSITerminal.(
         print_string [ red ]
           ("\n\t" ^ " There are currently no books of this genre"))
-  | h :: t ->
-      let map_helper x =
-        print_book_details_helper "Name" (Library.book_name x);
-        print_book_details_helper "Author" (Library.book_author x);
-        print_book_details_helper "Description" (Library.book_description x);
-        print_book_details_helper "Number of pages"
-          (Library.book_length x |> string_of_int)
-      in
-      List.map (fun x -> map_helper x) t |> ignore;
-      ()
+  | h :: t as all -> print_all_books all
 
 (** [student_browse s] allows student [s] to browse through the database.*)
 let student_browse s =

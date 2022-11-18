@@ -15,8 +15,10 @@ let create_database n =
 let to_database (json : Yojson.Basic.t) =
   {
     name = json |> member "name" |> to_string;
-    libraries = [];
-    librarians = [];
+    libraries =
+      json |> member "libraries" |> to_list |> List.map Library.to_library;
+    librarians =
+      json |> member "librarians" |> to_list |> List.map Librarian.from_json;
     students =
       json |> member "students" |> to_list |> List.map Student.to_student;
   }
