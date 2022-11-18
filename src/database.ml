@@ -71,7 +71,7 @@ let sort_all_books d =
 let subset_by_genre d g =
   let list_with_dup =
     List.fold_left
-      (fun acc x -> (Library.subset_genre (Library.view_books x)) g @ acc)
+      (fun acc x -> Library.subset_genre (Library.view_books x) g @ acc)
       [] d.libraries
   in
   Library.sort_books list_with_dup

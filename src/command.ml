@@ -1,6 +1,8 @@
 type command =
+  | Back
   | Login
   | Quit
+  | Log_out
   | UnknownInput
   | Student
   | Librarian
@@ -83,7 +85,10 @@ let user_type t =
 
 let options t =
   match parse_commands t with
-  | "quit" | "log out" -> Quit
+  | exception End_of_file -> Quit
+  | "back" -> Back
+  | "quit" -> Quit
+  | "log out" -> Log_out
   | "options" -> Options
   | "borrowed books" -> Borrowed_books
   | "favorite books" -> Favorite_books

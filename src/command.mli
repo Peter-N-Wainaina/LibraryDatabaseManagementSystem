@@ -1,8 +1,12 @@
-(** A representation of a command This module represents all available commands*)
+(** A representation of a command
+
+    This module represents all available commands*)
 
 type command =
+  | Back
   | Login
   | Quit
+  | Log_out
   | UnknownInput
   | Student
   | Librarian
@@ -11,7 +15,7 @@ type command =
   | Favorite_books
   | Genre of Library.genre
   | Help
-  | Logout  (**The abstract representation of a command*)
+  | Logout  (**The representation of a command*)
 
 val logging : string -> command
 (**[logging t] parses the user input and returns a [command]. Raises

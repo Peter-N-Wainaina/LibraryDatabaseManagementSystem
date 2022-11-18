@@ -1,7 +1,6 @@
 (** CS 3110 Fall 2022 Final Project Alpha
-    @author Eman Abdu (ema88), Iqra Yousuf (iy45), 
-    Peter Wainaina (pnw6)
-*)
+
+    @author (Eman Abdu (ema88), Iqra Yousuf (iy45), Peter Wainaina (pnw6) *)
 
 (************************************************************ 
    Academic Integrity Statement
@@ -17,10 +16,10 @@
    understanding that being honest about our mistakes is more honorable than
    lying about my intellectual work:
    - none
- ************************************************************)  
+ ************************************************************)
 
-(** [hours_worked] is the number of hours you worked on this assignment. *)
 val hours_worked : int list
+(** [hours_worked] is the number of hours you worked on this assignment. *)
 
 (*TODO:Delete this function*)
 val total_hours : int list -> int
