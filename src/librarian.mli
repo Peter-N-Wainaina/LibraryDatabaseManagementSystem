@@ -25,8 +25,10 @@ val add_book : Library.library -> Library.book -> Library.book list
 
 val get_username : lib -> string 
 (** [get_username l] is the username of librarian [l]*)
+
 val get_password : lib -> string 
 (** [get_password l] is the password of librarian [l]*)
+
 val get_staff_id : lib -> int 
 (** [get_staff_id l] is the staff id of librarian [l]*)
 

@@ -62,7 +62,7 @@ val sort_all_books : database -> Library.book list
    based on alphabetical order of genre. The list returned contains no
    duplicates. *)
 
-val subset_by_genre : database -> Library.genre -> Library.book list
+val subset_by_genre : database -> string -> Library.book list
 (**[genre_subset d g] is the list of all books with genre g in the database. The
    list returned contains no duplicates. If there are no books with genre g, the
    empty list is returned.*)

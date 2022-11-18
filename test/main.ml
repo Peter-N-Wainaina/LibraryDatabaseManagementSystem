@@ -1,3 +1,31 @@
+(** We tested modules: Database.ml, Librarian.ml, Library.ml, Student.ml, and
+    some functions in Command.ml. These modules implemented the functionality
+    needed to create commands and use the database. To test the functions, we
+    used glass box and black box testing. For functions that could be tested
+    without using the json file, we tested by creating books, libraries,
+    students, databases, students, and librarians. For example, add_book in
+    librarian tested adding a book, created in the file, to a library, also
+    created in this file.
+
+    For modules such as database, and library, we used the json file to create
+    librarians, and students from the json file of their accounts. With this, we
+    tested things such as sorting their borrowed books, getting the list of
+    favorite books, or getting a subset of a certain subset based on the desired
+    author. We did not test commands or functions in bin/main.ml as we mannually
+    tested those in the terminal and made sure we got the expected results. For
+    example, once logged into an account in the database, from the terminal, we
+    tested the command, Borrowed Books, and made sure that the output were the
+    names of the books in the borrowed_books list.
+
+    names of the books in the borrowed_books list. it allowed us to first test
+    the functionality in test/main.ml, before creating the commands, and writing
+    the code in bin/main.ml to allow the user to use the functionality. Then in
+    the terminal, we tested if the commands were implemented correctly, and we
+    got the expected results for the accounts in the json. Using both OUnit
+    testing and manual testing allowed us to track any regressions as we
+    continued to add functionality, commands, and code in bin/main.ml for the
+    user's use*)
+
 open OUnit2
 open Dbms
 open Librarian
@@ -7,13 +35,7 @@ open Database
 open Command
 open Yojson.Basic.Util
 
-(** [cmp_set_like_lists lst1 lst2] compares two lists to see whether they are
-    equivalent set-like lists. That means checking two things. First, they must
-    both be "set-like", meaning that they do not contain any duplicates. Second,
-    they must contain the same elements, though not necessarily in the same
-    order. *)
 let data_dir_prefix = "data" ^ Filename.dir_sep
-
 let database_json = Yojson.Basic.from_file (data_dir_prefix ^ "/database.json")
 let accounts = Yojson.Basic.from_file (data_dir_prefix ^ "database.json")
 
@@ -27,6 +49,11 @@ let from_json_students json =
 
 let students_lst = accounts |> from_json_students
 
+(** [cmp_set_like_lists lst1 lst2] compares two lists to see whether they are
+    equivalent set-like lists. That means checking two things. First, they must
+    both be "set-like", meaning that they do not contain any duplicates. Second,
+    they must contain the same elements, though not necessarily in the same
+    order. *)
 let cmp_set_like_lists lst1 lst2 =
   let uniq1 = List.sort_uniq compare lst1 in
   let uniq2 = List.sort_uniq compare lst2 in
@@ -56,6 +83,15 @@ let get_username_tests (name : string) (input : Librarian.lib)
     (expected_output : string) : test =
   name >:: fun _ -> assert_equal expected_output (Librarian.get_username input)
 
+let view_books_tests (name : string) (input : Library.library)
+    (expected_output : Library.book list) : test =
+  name >:: fun _ -> assert_equal expected_output (Librarian.view_books input)
+
+let get_login_details_tests (name : string) (input : Librarian.lib)
+    (expected_output : string * string) : test =
+  name >:: fun _ ->
+  assert_equal expected_output (Librarian.get_login_details input)
+
 let fiction = Library.create_genre "fiction"
 let nonfiction = Library.create_genre "nonfiction"
 let mystery = Library.create_genre "mystery"
@@ -78,6 +114,7 @@ let book5 = Library.create_book "book5" biography "a4" 100 "This is book5"
 let book6 = Library.create_book "book6" fantasy "a6" 100 "This is book6"
 let library1 = Library.create_library "Empty Library"
 let library2 = Library.add_book library1 book1
+let library3 = Library.add_book library2 book3
 let uris = Library.create_library "Uris"
 let random_student = Student.create_student "user1" "abc123" 123
 let json_lib = create_lib "librarian1" "password1" 1111
@@ -100,6 +137,18 @@ let librarian_tests =
     get_username_tests "Username of second librarian in database is librarian2"
       (librarians_lst |> List.tl |> List.hd)
       "librarian2";
+    view_books_tests "View books in an empty library is the empty list" library1
+      [];
+    view_books_tests
+      "View the books in library with one book is single element list" library2
+      [ book1 ];
+    view_books_tests
+      "View books in library with multiple books is multiple element list"
+      library3 [ book1; book3 ];
+    get_login_details_tests
+      "Login details of librarian created with un librarian1 and pw password1"
+      json_lib
+      ("librarian1", "password1");
   ]
 
 let add_book_test_list (name : string) (l : Library.library) (b : Library.book)
@@ -364,7 +413,7 @@ let favorite_sorted_tests (name : string) (input : student)
     (cmp_set_like_lists expected_output
        (Library.sort_books (get_favorites input)))
 
-let subset_genre_tests (name : string) (input : book list) (gen : genre)
+let subset_genre_tests (name : string) (input : book list) (gen : string)
     (expected_output : book list) : test =
   name >:: fun _ ->
   assert_equal expected_output (Library.subset_genre input gen)
@@ -378,7 +427,7 @@ let sort_all_books_tests (name : string) (input : Database.database)
   name >:: fun _ -> assert_equal expected_output (Database.sort_all_books input)
 
 let subset_by_genre_tests (name : string) (input : Database.database)
-    (gen : Library.genre) (expected_output : book list) : test =
+    (gen : string) (expected_output : book list) : test =
   name >:: fun _ ->
   assert_equal expected_output (Database.subset_by_genre input gen)
 
@@ -394,13 +443,13 @@ let library2_tests =
       [ database_book3; database_book4 ];
     subset_genre_tests "List of autobiographies in three element book list"
       [ database_book2; database_book4; database_book3 ]
-      autobiography [ database_book3 ];
+      "autobiography" [ database_book3 ];
     subset_genre_tests "List of memoirs in list with no memoirs"
       [ database_book1; database_book2; database_book3 ]
-      memoir [];
+      "memoir" [];
     subset_author_tests "List of books written by Alex Trebek"
       [ database_book2; database_book4; database_book3 ]
-      "Alex Trebek" [ database_book3 ];
+      "alex trebek" [ database_book3 ];
     subset_author_tests "List of books written by Charles Darwin"
       [ database_book2; database_book4; database_book3 ]
       "Charles Darwin" [];
@@ -410,31 +459,37 @@ let library2_tests =
       db_test
       [ book4; book5; book1; book3; book2 ];
     subset_by_genre_tests "List of books with genre fiction in database" db_test
-      fiction [ book1 ];
+      "fiction" [ book1 ];
     subset_by_author_tests "List of books written by a4 in database" db_test
       "a4" [ book4; book5 ];
+    subset_by_genre_tests "List of autobiographies in json database" db3
+      "autobiography" [ database_book3 ];
   ]
 
-  let parse_commands_test (name:string)(input:string)(expected_output:string):test=
-  name >:: fun _ -> assert_equal expected_output (Command.parse_commands input)~printer:Fun.id
+let parse_commands_test (name : string) (input : string)
+    (expected_output : string) : test =
+  name >:: fun _ ->
+  assert_equal expected_output (Command.parse_commands input) ~printer:Fun.id
 
-  let command_tests=[
+let command_tests =
+  [
     parse_commands_test "Test empty string" "        " "";
-    parse_commands_test "Test string with one word all lowercase" "    quit " "quit";
-    parse_commands_test "Test string with one word mixed case " "   QuIt " "quit";
-    parse_commands_test "Test string with two words mixed case "  "    Borrowed  Books " "borrowed books";
-    parse_commands_test "Test string with three words mixed case "  "  GeT  Borrowed  Books  " "get borrowed books";
-
-
+    parse_commands_test "Test string with one word all lowercase" "    quit "
+      "quit";
+    parse_commands_test "Test string with one word mixed case " "   QuIt "
+      "quit";
+    parse_commands_test "Test string with two words mixed case "
+      "    Borrowed  Books " "borrowed books";
+    parse_commands_test "Test string with three words mixed case "
+      "  GeT  Borrowed  Books  " "get borrowed books";
   ]
-
 
 let suite =
   "test suite for final project"
   >::: List.flatten
          [
-command_tests;
            librarian_tests;
+           command_tests;
            student_tests;
            library_tests;
            database_tests;

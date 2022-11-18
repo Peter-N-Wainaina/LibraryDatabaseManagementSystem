@@ -29,7 +29,7 @@ let create_genre s =
   | "fiction" -> Fiction
   | "memoir" -> Memoir
   | "philosophy" -> Philosophy
-  | "autobiography" -> Autobiography
+  | "autobiography" | "Autobiography" -> Autobiography
   | "religion" -> Religion
   | "sciencefiction" -> ScienceFiction
   | "mystery" -> Mystery
@@ -38,7 +38,7 @@ let create_genre s =
   | "historicalfiction" -> HistoricalFiction
   | "fantasy" -> Fantasy
   | "novel" -> Novel
-  | _ -> failwith "invalid"
+  | _ -> raise (Failure "invalid")
 
 exception UnknownBook of book
 
@@ -113,5 +113,7 @@ let compare_books b1 b2 =
       compare_genre g1 g2
 
 let sort_books blst = List.sort_uniq compare_books blst
-let subset_genre bl gen = List.filter (fun x -> x.genre = gen) bl
-let subset_author bl auth = List.filter (fun x -> x.author = auth) bl
+let subset_genre bl sgen = List.filter (fun x -> x.genre = create_genre sgen) bl
+
+let subset_author bl auth =
+  List.filter (fun x -> String.lowercase_ascii x.author = auth) bl
