@@ -413,7 +413,7 @@ let favorite_sorted_tests (name : string) (input : student)
     (cmp_set_like_lists expected_output
        (Library.sort_books (get_favorites input)))
 
-let subset_genre_tests (name : string) (input : book list) (gen : string)
+let subset_genre_tests (name : string) (input : book list) (gen : Library.genre)
     (expected_output : book list) : test =
   name >:: fun _ ->
   assert_equal expected_output (Library.subset_genre input gen)
@@ -427,7 +427,7 @@ let sort_all_books_tests (name : string) (input : Database.database)
   name >:: fun _ -> assert_equal expected_output (Database.sort_all_books input)
 
 let subset_by_genre_tests (name : string) (input : Database.database)
-    (gen : string) (expected_output : book list) : test =
+    (gen : Library.genre) (expected_output : book list) : test =
   name >:: fun _ ->
   assert_equal expected_output (Database.subset_by_genre input gen)
 
@@ -443,10 +443,10 @@ let library2_tests =
       [ database_book3; database_book4 ];
     subset_genre_tests "List of autobiographies in three element book list"
       [ database_book2; database_book4; database_book3 ]
-      "autobiography" [ database_book3 ];
+      autobiography [ database_book3 ];
     subset_genre_tests "List of memoirs in list with no memoirs"
       [ database_book1; database_book2; database_book3 ]
-      "memoir" [];
+      memoir [];
     subset_author_tests "List of books written by Alex Trebek"
       [ database_book2; database_book4; database_book3 ]
       "alex trebek" [ database_book3 ];
@@ -459,11 +459,11 @@ let library2_tests =
       db_test
       [ book4; book5; book1; book3; book2 ];
     subset_by_genre_tests "List of books with genre fiction in database" db_test
-      "fiction" [ book1 ];
+      fiction [ book1 ];
     subset_by_author_tests "List of books written by a4 in database" db_test
       "a4" [ book4; book5 ];
     subset_by_genre_tests "List of autobiographies in json database" db3
-      "autobiography" [ database_book3 ];
+      autobiography [ database_book3 ];
   ]
 
 let parse_commands_test (name : string) (input : string)

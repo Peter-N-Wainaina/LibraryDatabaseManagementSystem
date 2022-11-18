@@ -113,7 +113,7 @@ let compare_books b1 b2 =
       compare_genre g1 g2
 
 let sort_books blst = List.sort_uniq compare_books blst
-let subset_genre bl sgen = List.filter (fun x -> x.genre = create_genre sgen) bl
+let subset_genre bl gen = List.filter (fun x -> x.genre = gen) bl
 
 let subset_author bl auth =
   List.filter (fun x -> String.lowercase_ascii x.author = auth) bl
