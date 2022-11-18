@@ -3,8 +3,10 @@
     This module represents all available commands*)
 
 type command =
+  | Back
   | Login
   | Quit
+  | Log_out
   | UnknownInput
   | Student
   | Librarian

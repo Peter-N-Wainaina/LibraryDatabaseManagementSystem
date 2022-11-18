@@ -1,6 +1,6 @@
 (** CS 3110 Fall 2022 Final Project Alpha
 
-    @author Eman Abdu (ema88), Iqra Yousuf (iy45), Peter Wainaina (pnw6) *)
+    @author (Eman Abdu (ema88), Iqra Yousuf (iy45), Peter Wainaina (pnw6) *)
 
 (************************************************************ 
    Academic Integrity Statement

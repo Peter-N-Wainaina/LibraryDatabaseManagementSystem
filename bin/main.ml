@@ -59,106 +59,131 @@ let print_book_details (l : Library.book list) =
   | h :: t as all -> print_all_books all
 
 (** [student_browse s] allows student [s] to browse through the database.*)
-let student_browse s =
-  ANSITerminal.(
-    print_string [ magenta ]
-      "\n\
-       \tYou can now start browsing through the Cornell University Database.\n");
-  let rec rec_student_browse s =
-    print_endline
-      "\n\
-       \t\tType 'Options' to see the options \n\
-       \tTo learn about the command options, please type 'HELP'\n\
-       \tTo log out, type 'Log out' or 'Quit'\n";
-    print_string "\t> ";
-    match Command.options (read_line ()) with
-    | Quit -> exit_db ()
-    | Options ->
-        Command.student_options () |> printer;
-        rec_student_browse s
-    | Help ->
-        Command.student_help () |> printer;
-        rec_student_browse s
-    | Favorite_books ->
-        s |> Student.favorite_books |> print_books "favorite";
-        rec_student_browse s
-    | Borrowed_books ->
-        s |> Student.borrowed_books |> print_books "borrowed";
-        rec_student_browse s
-    | Genre g ->
-        Database.subset_by_genre database g |> print_book_details;
-        rec_student_browse s
-    | _ ->
-        print_endline "Please type a valid command";
-        rec_student_browse s
-  in
-  rec_student_browse s
+let rec student_browse s =
+  try
+    ANSITerminal.(
+      print_string [ magenta ]
+        "\n\
+         \tYou can now start browsing through the Cornell University Database.\n");
+    let rec rec_student_browse s =
+      print_endline
+        "\n\
+         \t\tType 'Options' to see the options \n\
+         \tTo learn about the command options, please type 'HELP'\n\
+         \tTo log out, type 'Log out' or 'Quit'\n";
+      print_string "\t> ";
+      match Command.options (read_line ()) with
+      | Quit -> exit_db ()
+      | Log_out ->
+          print_endline "Goodbye!";
+          read_login ()
+      | Options ->
+          Command.student_options () |> printer;
+          rec_student_browse s
+      | Help ->
+          Command.student_help () |> printer;
+          rec_student_browse s
+      | Favorite_books ->
+          s |> Student.favorite_books |> print_books "favorite";
+          rec_student_browse s
+      | Borrowed_books ->
+          s |> Student.borrowed_books |> print_books "borrowed";
+          rec_student_browse s
+      | _ ->
+          print_endline "Please type a valid command";
+          rec_student_browse s
+    in
+    rec_student_browse s
+  with end_of_file -> exit_db ()
 
 (** [student_login ()] prompts the student for username and password and allows
     them to browse if the login details are valid.*)
-let rec student_login () =
+and student_login () =
   print_endline "\n\tUsername:";
-  let username = read_line () in
-  print_endline "\n\tPassword:";
-  let password = read_line () in
-  match Execute.get_student username password database with
-  | exception UserNameNotFound ->
-      print_endline "Incorrect Username";
-      student_login ()
-  | exception IncorrectPassword ->
-      print_endline "Incorrect Password";
-      student_login ()
-  | student -> student_browse student
+  try
+    let username = read_line () in
+    match options username with
+    | Back -> read_login ()
+    | _ -> (
+        print_endline "\n\tPassword:";
+        let password = read_line () in
+        match options password with
+        | Back -> read_login ()
+        | _ -> (
+            match Execute.get_student username password database with
+            | exception UserNameNotFound ->
+                print_endline "Incorrect Username";
+                student_login ()
+            | exception IncorrectPassword ->
+                print_endline "Incorrect Password";
+                student_login ()
+            | student -> student_browse student))
+  with end_of_file -> exit_db ()
 
 (** [librarian_browse l] allows librarian [l] to browse through the database.*)
-let librarian_browse l =
-  ANSITerminal.(
-    print_string [ magenta ]
-      "\n\
-       \tYou can now start browsing through the Cornell University Database.\n");
-  let rec rec_librarian_browse l =
-    print_endline
-      "\n\
-       \t\tType 'Options' to see the options \n\
-       \tTo learn about the command options, please type 'HELP'\n\
-       \tTo log out, type 'Log out' or 'Quit'\n";
-    print_string "\t> ";
-    match Command.options (read_line ()) with
-    | Quit -> exit_db ()
-    | Options ->
-        Command.librarian_options () |> printer;
-        rec_librarian_browse l
-    | Help ->
-        Command.librarian_help () |> printer;
-        rec_librarian_browse l;
-        rec_librarian_browse l
-    | _ ->
-        print_endline "Please type a valid command";
-        rec_librarian_browse l
-  in
-  rec_librarian_browse l
+and librarian_browse l =
+  try
+    ANSITerminal.(
+      print_string [ magenta ]
+        "\n\
+         \tYou can now start browsing through the Cornell University Database.\n");
+    let rec rec_librarian_browse l =
+      print_endline
+        "\n\
+         \t\tType 'Options' to see the options \n\
+         \tTo learn about the command options, please type 'HELP'\n\
+         \tTo log out, type 'Log out' or 'Quit'\n";
+      print_string "\t> ";
+      match Command.options (read_line ()) with
+      | Quit -> exit_db ()
+      | Log_out ->
+          print_endline "Goodbye!";
+          read_login ()
+      | Options ->
+          Command.librarian_options () |> printer;
+          rec_librarian_browse l
+      | Help ->
+          Command.librarian_help () |> printer;
+          rec_librarian_browse l;
+          rec_librarian_browse l
+      | _ ->
+          print_endline "Please type a valid command";
+          rec_librarian_browse l
+    in
+    rec_librarian_browse l
+  with end_of_file -> exit_db ()
 
 (** [librarians_login ()] prompts the librarian for username and password and
     allows them to browse if the login details are valid.*)
-let rec librarian_login () =
+and librarian_login () =
   print_endline "\n\tUsername:";
-  let username = read_line () in
-  print_endline "\n\tPassword:";
-  let password = read_line () in
-  match Execute.get_librarian username password database with
-  | exception UserNameNotFound ->
-      print_endline "Incorrect Username";
-      librarian_login ()
-  | exception IncorrectPassword ->
-      print_endline "Incorrect Password";
-      librarian_login ()
-  | librarian -> librarian_browse librarian
+  try
+    let username = read_line () in
+    match options username with
+    | Back -> read_login ()
+    | Quit -> exit_db ()
+    | _ -> (
+        print_endline "\n\tPassword:";
+        let password = read_line () in
+        match options password with
+        | Quit -> exit_db ()
+        | Back -> read_login ()
+        | _ -> (
+            match Execute.get_librarian username password database with
+            | exception UserNameNotFound ->
+                print_endline "Incorrect Username";
+                librarian_login ()
+            | exception IncorrectPassword ->
+                print_endline "Incorrect Password";
+                librarian_login ()
+            | librarian -> librarian_browse librarian))
+  with end_of_file -> exit_db ()
 
 (** [identify_user ()] parses a user type.*)
-let rec identify_user () =
+and identify_user () =
   match Command.user_type (read_line ()) with
   | exception End_of_file -> exit_db ()
-  | Quit -> exit_db ()
+  | Quit | Back | Log_out -> exit_db ()
   | Student -> student_login ()
   | Librarian -> librarian_login ()
   | _ ->
@@ -167,9 +192,9 @@ let rec identify_user () =
       ()
 
 (** [read login ()] prints out the instruction on how to log in to the system.*)
-let rec read_login () =
+and read_login () =
   ANSITerminal.(
-    print_string [ cyan ] "'Are you a Student or a Librarian'\n\n";
+    print_string [ cyan ] "\t'Are you a Student or a Librarian'\n\n";
     print_string [] "\tTo exit, type 'QUIT' or press 'Ctrl' + 'D'.\n\t> ");
   identify_user ();
   ()
