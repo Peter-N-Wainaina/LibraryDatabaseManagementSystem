@@ -26,6 +26,18 @@ val create_book : string -> genre -> string -> int -> string -> book
 val book_name : book -> string
 (**[book_name bk] returns the name of the book*)
 
+val book_author :book -> string
+(**[book_author bk] returns the author of book [bk]*)
+
+val book_description :book -> string
+(**[book_description bk] returns the description of book [bk]*)
+
+val book_genre :book -> genre
+(**[book_genre bk] returns the genre of book [bk]*)
+
+val book_length :book -> int
+(**[book_length bk] returns the number of pages of book [bk]*)
+
 val create_library :string -> library
 (**[create_library n] is a library with name [n]*)
 

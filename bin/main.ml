@@ -34,6 +34,29 @@ let print_books s lst =
     print_endline ("\tYou currently don't have books in " ^ s ^ " section.\n")
   else printer lst
 
+(**[print_book_details_helper] prints out title [t] and description [d] in the
+   format [t] :[d]*)
+let print_book_details_helper t d =
+  ANSITerminal.(print_string [ blue ] ("\n\t" ^ t ^ " : " ^ d))
+
+(**[print_book_details] prints all [books] in [l]*)
+let print_book_details (l : Library.book list) =
+  match l with
+  | [] ->
+      ANSITerminal.(
+        print_string [ red ]
+          ("\n\t" ^ " There are currently no books of this genre"))
+  | h :: t ->
+      let map_helper x =
+        print_book_details_helper "Name" (Library.book_name x);
+        print_book_details_helper "Author" (Library.book_author x);
+        print_book_details_helper "Description" (Library.book_description x);
+        print_book_details_helper "Number of pages"
+          (Library.book_length x |> string_of_int)
+      in
+      List.map (fun x -> map_helper x) t |> ignore;
+      ()
+
 (** [student_browse s] allows student [s] to browse through the database.*)
 let student_browse s =
   ANSITerminal.(
@@ -60,6 +83,9 @@ let student_browse s =
         rec_student_browse s
     | Borrowed_books ->
         s |> Student.borrowed_books |> print_books "borrowed";
+        rec_student_browse s
+    | Genre g ->
+        Database.subset_by_genre database g |> print_book_details;
         rec_student_browse s
     | _ ->
         print_endline "Please type a valid command";

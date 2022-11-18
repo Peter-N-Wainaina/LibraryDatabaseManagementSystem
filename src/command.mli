@@ -9,6 +9,7 @@ type command =
   | Options
   | Borrowed_books
   | Favorite_books
+  | Genre of Library.genre
   | Help
   | Logout  (**The abstract representation of a command*)
 

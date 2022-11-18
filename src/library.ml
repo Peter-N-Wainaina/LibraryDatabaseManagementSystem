@@ -55,6 +55,10 @@ let create_book n g a p d =
   { name = n; genre = g; author = a; pages = p; description = d }
 
 let book_name (bk : book) = bk.name
+let book_author (bk : book) = bk.author
+let book_description (bk : book) = bk.description
+let book_length (bk : book) = bk.pages
+let book_genre (bk : book) = bk.genre
 
 let to_book j =
   {

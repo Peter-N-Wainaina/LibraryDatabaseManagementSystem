@@ -7,10 +7,28 @@ type command =
   | Options
   | Borrowed_books
   | Favorite_books
+  | Genre of Library.genre
   | Help
   | Logout
 
-let student_options () = [ "Borrowed Books"; "Favorite Books" ]
+let student_options () =
+  [
+    "Borrowed Books";
+    "Favorite Books";
+    "Fiction";
+    "Autobiography";
+    "Biography";
+    "Fantasy";
+    " HistoricalFiction";
+    "Memoir";
+    "Mystery";
+    "NonFiction";
+    "Novel";
+    "Philosophy";
+    "Religion";
+    "ScienceFiction";
+    "Thriller";
+  ]
 
 let student_help () =
   [
@@ -19,6 +37,11 @@ let student_help () =
     \        Cornell Libraries";
     "Favorite books - see the name of the books you have marked as favorite \n\
     \        before.";
+    "You can access books by any of the following genre by typing :  \
+     Autobiography,  Biography,  Fantasy , Fiction , HistoricalFiction , Memoir\n\
+    \    , Mystery , NonFiction , Novel , Philosophy , Religion , \
+     ScienceFiction ,\n\
+    \    Thriller. ";
   ]
 
 let librarian_options () = []
@@ -54,5 +77,20 @@ let options t =
   | "options" -> Options
   | "borrowed books" -> Borrowed_books
   | "favorite books" -> Favorite_books
+  | "fiction" as g -> Genre (Library.create_genre g)
+  | "autobiography" as g -> Genre (Library.create_genre g)
+  | "biography" as g -> Genre (Library.create_genre g)
+  | "fantasy" as g -> Genre (Library.create_genre g)
+  | "historicalfiction " as g -> Genre (Library.create_genre g)
+  | "nonfiction" as g -> Genre (Library.create_genre g)
+  | "mystery" as g -> Genre (Library.create_genre g)
+  | "novel" as g -> Genre (Library.create_genre g)
+  | "memoir" as g -> Genre (Library.create_genre g)
+  | "philosophy" as g -> Genre (Library.create_genre g)
+  | "religion" as g -> Genre (Library.create_genre g)
+  | "sciencefiction" as g -> Genre (Library.create_genre g)
+  | "thriller" as g -> Genre (Library.create_genre g)
   | "help" -> Help
   | _ -> UnknownInput
+
+(** Philosophy | Religion | ScienceFiction | Thriller*)
