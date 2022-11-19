@@ -34,13 +34,11 @@ let print_books s lst =
     print_endline ("\tYou currently don't have books in " ^ s ^ " section.\n")
   else printer lst
 
-(**[print_book_details_helper] prints out title [t] and description [d] in the
-   format [t] :[d]*)
-let print_book_details_helper t d =
-  ANSITerminal.(print_string [ blue ] ("\n\t" ^ t ^ " : " ^ d))
-
 (**[print_book_details] prints all [books] in [l]*)
 let print_book_details (l : Library.book list) =
+  let print_book_details_helper t d =
+    ANSITerminal.(print_string [ blue ] ("\n\t" ^ t ^ " : " ^ d))
+  in
   let rec print_all_books = function
     | [] -> print_endline ""
     | h :: t ->
@@ -88,6 +86,9 @@ let rec student_browse s =
           rec_student_browse s
       | Borrowed_books ->
           s |> Student.borrowed_books |> print_books "borrowed";
+          rec_student_browse s
+      | Genre g ->
+          Database.subset_by_genre database g |> print_book_details;
           rec_student_browse s
       | _ ->
           print_endline "Please type a valid command";

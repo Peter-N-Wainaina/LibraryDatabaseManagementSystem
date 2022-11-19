@@ -107,5 +107,3 @@ let options t =
   | "thriller" as g -> Genre (Library.create_genre g)
   | "help" -> Help
   | _ -> UnknownInput
-
-(** Philosophy | Religion | ScienceFiction | Thriller*)
