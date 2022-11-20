@@ -10,14 +10,15 @@ type command =
   | Borrowed_books
   | Favorite_books
   | Genre of Library.genre
+  | Author of string
   | Help
   | Logout
 
 let book_categories =
-  "To access book categories: \n\t\t Borrowed Books\n \t\t Favorite Books\n"
+  "1. To access book categories: \n\t\t Borrowed Books\n \t\t Favorite Books\n"
 
 let genres =
-  "To access books be genre: \n\
+  "2. To access books be genre: \n\
   \ \t\tFiction \n\
   \  \t\tAutobiography\n\
   \ \t\tBiography \n\
@@ -33,7 +34,12 @@ let genres =
   \ \t\tThriller\n\n\
   \   "
 
-let student_options () = [ book_categories; genres ]
+let author_books =
+  "3. To access books by a specific author, type in the author's name prefaced \
+   by Author e.g \n\
+   \t\t Author Alex Trebek"
+
+let student_options () = [ book_categories; genres; author_books ]
 
 let student_help () =
   [
@@ -83,6 +89,22 @@ let user_type t =
   | "librarian" -> Librarian
   | _ -> UnknownInput
 
+(*[parse_author_name s] is command Author (name) where name is the author's name
+  in [s] or command UnknownInput if [s] is not a valid author command*)
+let parse_author_name s =
+  match String.split_on_char ' ' s with
+  | h1 :: h2 :: t ->
+      if h1 = "author" then
+        let name =
+          List.fold_left
+            (fun acc x -> acc ^ " " ^ String.lowercase_ascii x)
+            "" (h2 :: t)
+          |> String.trim
+        in
+        Author name
+      else UnknownInput
+  | _ -> UnknownInput
+
 let options t =
   match parse_commands t with
   | exception End_of_file -> Quit
@@ -106,4 +128,4 @@ let options t =
   | "sciencefiction" as g -> Genre (Library.create_genre g)
   | "thriller" as g -> Genre (Library.create_genre g)
   | "help" -> Help
-  | _ -> UnknownInput
+  | x -> parse_author_name x

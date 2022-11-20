@@ -35,10 +35,6 @@ val view_student_accounts : database -> Student.student list
 val view_librarian_accounts : database -> Librarian.lib list
 (**[view_librarian_accounts d] is a set-like list of all librarians in [d]*)
 
-val student_user_names : database -> string list
-(**[student_user_names d] is a list of the usernames of the students in database
-   [d]*)
-
 val students_login : database -> (string * string) list
 (**[students_login] is a list of the [usernames-password pairs] of the students
    in database [d]*)
@@ -71,3 +67,7 @@ val subset_by_author : database -> string -> Library.book list
 (**[subset_by_author d a] is the list of all books written by author a in the
    database. The list returned contains no duplicates. If there are no books
    written by author a, the empty list is returned.*)
+
+val author_names : string -> database -> string list option
+(**[author_names n d] is a optional list of all authors with name [n] in
+   database [d]*)

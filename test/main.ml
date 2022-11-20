@@ -54,30 +54,35 @@ let students_lst = accounts |> from_json_students
     both be "set-like", meaning that they do not contain any duplicates. Second,
     they must contain the same elements, though not necessarily in the same
     order. *)
-let cmp_set_like_lists lst1 lst2 =
-  let uniq1 = List.sort_uniq compare lst1 in
-  let uniq2 = List.sort_uniq compare lst2 in
+let cmp_set_like_lists lst1 lst2 comp =
+  let uniq1 = List.sort_uniq comp lst1 in
+  let uniq2 = List.sort_uniq comp lst2 in
   List.length lst1 = List.length uniq1
   && List.length lst2 = List.length uniq2
   && uniq1 = uniq2
+
+let rec string_of_pairs l = 
+  match l with
+  | [] -> ""
+  | h :: t -> fst h ^ ":" ^ snd h ^ ", " ^ string_of_pairs t
 
 let add_book_test (name : string) (l : library) (bk : Library.book)
     expected_output : test =
   name >:: fun _ ->
   assert_equal true
-    (cmp_set_like_lists expected_output (Librarian.add_book l bk))
+    (cmp_set_like_lists expected_output (Librarian.add_book l bk) compare)
 
 let remove_book_test (name : string) (l : library) (bk : Library.book)
     expected_output : test =
   name >:: fun _ ->
   assert_equal true
-    (cmp_set_like_lists expected_output (Librarian.remove_book l bk))
+    (cmp_set_like_lists expected_output (Librarian.remove_book l bk) compare)
 
 let get_borrowed_test (name : string) (input : Student.student)
     (expected_output : book list) : test =
   name >:: fun _ ->
   assert_equal true
-    (cmp_set_like_lists expected_output (Librarian.get_borrowed input))
+    (cmp_set_like_lists expected_output (Librarian.get_borrowed input) compare)
 
 let get_username_tests (name : string) (input : Librarian.lib)
     (expected_output : string) : test =
@@ -156,14 +161,16 @@ let add_book_test_list (name : string) (l : Library.library) (b : Library.book)
   name >:: fun _ ->
   assert_equal true
     (cmp_set_like_lists expected_output
-       (Library.add_book l b |> Library.view_books))
+       (Library.add_book l b |> Library.view_books)
+       compare)
 
 let remove_book_test (name : string) (l : Library.library) (bk : Library.book)
     expected_output : test =
   name >:: fun _ ->
   assert_equal true
     (cmp_set_like_lists expected_output
-       (Library.remove_book l bk |> Library.view_books))
+       (Library.remove_book l bk |> Library.view_books)
+       compare)
 
 let remove_book_test_raises (name : string) (l : Library.library)
     (bk : Library.book) : test =
@@ -237,16 +244,17 @@ let add_library_test (name : string) (d : Database.database)
   name >:: fun _ ->
   assert_equal true
     (cmp_set_like_lists expected_output
-       (l |> Database.add_library d |> Database.view_libraries))
+       (l |> Database.add_library d |> Database.view_libraries)
+       compare)
 
 let add_student_account_test (name : string) (d : Database.database)
     (s : Student.student) (expected_output : Student.student list) : test =
   name >:: fun _ ->
   assert_equal true
     (cmp_set_like_lists expected_output
-       (s |> Database.add_student_account d |> Database.view_student_accounts))
+       (s |> Database.add_student_account d |> Database.view_student_accounts)
+       compare)
 
-(*TODO: Add tests using this *)
 let add_librarian_account_test (name : string) (d : Database.database)
     (l : Librarian.lib) (expected_output : Librarian.lib list) : test =
   name >:: fun _ ->
@@ -254,7 +262,16 @@ let add_librarian_account_test (name : string) (d : Database.database)
     (cmp_set_like_lists expected_output
        (l
        |> Database.add_librarian_account d
-       |> Database.view_librarian_accounts))
+       |> Database.view_librarian_accounts)
+       compare)
+
+let rec string_of_list =function 
+|None|Some []->""
+|Some(h::t)-> h^ (string_of_list (Some t))
+
+let author_names_test (name:string)(key:string)(d:Database.database)(expected_output:string list option):test =
+  name >:: fun _ -> assert_equal expected_output (Database.author_names key d)~printer:string_of_list
+
 
 let database_tests =
   [
@@ -282,6 +299,11 @@ let database_tests =
     add_librarian_account_test "Add an existing librarian"
       (Database.add_librarian_account db0 librarian1)
       librarian1 [ librarian1 ];
+      author_names_test "Author not there" "peter" db3 None;
+      author_names_test "Author present, access by firstname" "phil" db3 (Some (["Phil Knight"]));
+      author_names_test "Author present, access by fullname" "phil knight" db3 (Some (["Phil Knight"]));
+      author_names_test "Author present, access by lastname" "knight" db3 (Some (["Phil Knight"]));
+      author_names_test "Author present with one name" "vyasa" db3 (Some (["Vyasa"]));
   ]
 
 let random_student_2 =
@@ -298,17 +320,20 @@ let student_lst = [ random_student; student1; student2 ]
 let favorite_book_tests (name : string) (input : student)
     (expected_output : string list) : test =
   name >:: fun _ ->
-  assert_equal true (cmp_set_like_lists expected_output (favorite_books input))
+  assert_equal true
+    (cmp_set_like_lists expected_output (favorite_books input) compare)
 
 let get_borrowed_tests (name : string) (input : student)
     (expected_output : (book * int) list) : test =
   name >:: fun _ ->
-  assert_equal true (cmp_set_like_lists expected_output (get_borrowed input))
+  assert_equal true
+    (cmp_set_like_lists expected_output (get_borrowed input) compare)
 
 let borrowed_books_tests (name : string) (input : student)
     (expected_output : string list) : test =
   name >:: fun _ ->
-  assert_equal true (cmp_set_like_lists expected_output (borrowed_books input))
+  assert_equal true
+    (cmp_set_like_lists expected_output (borrowed_books input) compare)
 
 let find_pw_tests (name : string) (lst : student list) (username : string)
     (expected_output : string) : test =
@@ -411,7 +436,8 @@ let favorite_sorted_tests (name : string) (input : student)
   name >:: fun _ ->
   assert_equal true
     (cmp_set_like_lists expected_output
-       (Library.sort_books (get_favorites input)))
+       (Library.sort_books (get_favorites input))
+       compare)
 
 let subset_genre_tests (name : string) (input : book list) (gen : Library.genre)
     (expected_output : book list) : test =
@@ -436,6 +462,35 @@ let subset_by_author_tests (name : string) (input : Database.database)
   name >:: fun _ ->
   assert_equal expected_output (Database.subset_by_author input auth)
 
+
+
+let parse_author_names_test (name : string) (l : Library.library)
+    expected_output : test =
+    let sort_pairs p1 p2 =
+      match
+        (String.compare (fst p1) (fst p2), String.compare (snd p1) (snd p2))
+      with
+      | 0, 0 -> 0
+      | 0, k -> k 
+      | k, _ -> k in
+  name >:: fun _ ->
+  assert_equal true
+    (cmp_set_like_lists expected_output
+       (Library.parse_author_names l)
+       sort_pairs)
+
+let book_same_author =
+  Library.create_book "book1" fiction "First Last" 100 "This is book1"
+let library_with_2books_1author = Library.add_book library3 book_same_author
+
+let book_same_first_name =   Library.create_book "book1" fiction "First Last2" 100 "This is book1"
+let library_same_first_name = Library.add_book library1 book_same_first_name
+
+let book_author_6names =   Library.create_book "book1" fiction "My Name is is Slim Shady   " 100 "This is book1"
+let library_with_long_name_author =  Library.add_book library0 book_author_6names
+
+
+
 let library2_tests =
   [
     favorite_sorted_tests "Favorite books of second student in database sorted"
@@ -449,7 +504,7 @@ let library2_tests =
       memoir [];
     subset_author_tests "List of books written by Alex Trebek"
       [ database_book2; database_book4; database_book3 ]
-      "alex trebek" [ database_book3 ];
+      "Alex Trebek" [ database_book3 ];
     subset_author_tests "List of books written by Charles Darwin"
       [ database_book2; database_book4; database_book3 ]
       "Charles Darwin" [];
@@ -464,6 +519,30 @@ let library2_tests =
       "a4" [ book4; book5 ];
     subset_by_genre_tests "List of autobiographies in json database" db3
       autobiography [ database_book3 ];
+    parse_author_names_test "library with no books" library0 [];
+    parse_author_names_test "library with 1 book" library1
+      [ ("First", "First Last"); ("Last", "First Last") ];
+    parse_author_names_test "library with more than 1 book" library3
+      [
+        ("Author", "Greatest Author");
+        ("First", "First Last");
+        ("First2", "First2 Last2");
+        ("Greatest", "Greatest Author");
+        ("Last", "First Last");
+        ("Last2", "First2 Last2");
+      ];
+    parse_author_names_test "library with 2 books from 1 author"
+      library_with_2books_1author
+      [   
+        ("First", "First Last");
+        ("First2", "First2 Last2");
+        ("Greatest", "Greatest Author");
+        ("Last", "First Last");
+        ("Last2", "First2 Last2");
+        ("Author", "Greatest Author");
+      ];
+      parse_author_names_test "library with same first name author" library_same_first_name [("First","First Last");("First","First Last2");("Last","First Last");("Last2","First Last2")];
+    parse_author_names_test "library with long name author" library_with_long_name_author [("My","My Name is is Slim Shady");("Name","My Name is is Slim Shady");("is","My Name is is Slim Shady");("Slim","My Name is is Slim Shady");("Shady","My Name is is Slim Shady")]
   ]
 
 let parse_commands_test (name : string) (input : string)

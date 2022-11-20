@@ -14,6 +14,7 @@ type command =
   | Borrowed_books
   | Favorite_books
   | Genre of Library.genre
+  | Author of string
   | Help
   | Logout  (**The representation of a command*)
 

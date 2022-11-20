@@ -28,7 +28,6 @@ let add_library d l =
   { d with libraries = List.sort_uniq Stdlib.compare new_libraries }
 
 (*TODO:No two students can have the same username *)
-
 let add_student_account d l =
   let new_students = l :: d.students in
   { d with students = List.sort_uniq Stdlib.compare new_students }
@@ -41,11 +40,6 @@ let add_librarian_account d l =
 let view_libraries d = d.libraries
 let view_student_accounts d = d.students
 let view_librarian_accounts d = d.librarians
-
-(**TODO:DELETE after changing main to get usernames and passwords at the same
-   time*)
-let student_user_names d =
-  view_student_accounts d |> List.map Student.get_username
 
 let students_login (d : database) =
   view_student_accounts d |> List.map Student.get_login_details
@@ -83,3 +77,29 @@ let subset_by_author d a =
       [] d.libraries
   in
   Library.sort_books list_with_dup
+
+(*mapping of author firstname:[list of author full names ] and lastname:[list of
+  author full names ]*)
+module AuthorNames = Map.Make (String)
+
+let author_names name d =
+  (*[add_to_map binding acc] is a map with all the bindings of [acc] with the
+    value of [fst(binding)] updated to contain [snd(binding)]*)
+  let add_to_map binding acc =
+    match AuthorNames.find_opt (fst binding |> String.lowercase_ascii) acc with
+    | None ->
+        AuthorNames.(
+          add (fst binding |> String.lowercase_ascii) [ snd binding ] acc
+          |> add (snd binding |> String.lowercase_ascii) [ snd binding ])
+    | Some k ->
+        AuthorNames.add
+          (fst binding |> String.lowercase_ascii)
+          (snd binding :: k) acc
+  in
+  (*[create_map l] is a mapping of*)
+  let create_map l =
+    List.fold_left (fun acc x -> add_to_map x acc) AuthorNames.empty l
+  in
+  d.libraries
+  |> List.fold_left (fun acc l -> Library.parse_author_names l @ acc) []
+  |> create_map |> AuthorNames.find_opt name

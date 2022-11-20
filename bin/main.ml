@@ -56,6 +56,20 @@ let print_book_details (l : Library.book list) =
           ("\n\t" ^ " There are currently no books of this genre"))
   | h :: t as all -> print_all_books all
 
+let parse_author_command n =
+  match Execute.get_author_books database n with
+  | exception UnknownAuthor n ->
+      ANSITerminal.(print_string [ red ] ("\n\t There are no books from " ^ n))
+  | exception MultipleAuthors authors ->
+      ANSITerminal.(
+        print_string [ red ]
+          ("\n\t There are multiple authors named " ^ n
+         ^ " please select one from the list"));
+      printer authors
+  | l ->
+      ANSITerminal.(print_string [ green ] ("\n\t Here are the books by " ^ n));
+      print_book_details l
+
 (** [student_browse s] allows student [s] to browse through the database.*)
 let rec student_browse s =
   try
@@ -90,8 +104,11 @@ let rec student_browse s =
       | Genre g ->
           Database.subset_by_genre database g |> print_book_details;
           rec_student_browse s
+      | Author n ->
+          parse_author_command n;
+          rec_student_browse s
       | _ ->
-          print_endline "Please type a valid command";
+          ANSITerminal.(print_string [ red ] "\t\tPlease type a valid command");
           rec_student_browse s
     in
     rec_student_browse s
@@ -188,7 +205,8 @@ and identify_user () =
   | Student -> student_login ()
   | Librarian -> librarian_login ()
   | _ ->
-      ANSITerminal.(print_string [ red ] "Please input a valid command\n\t>");
+      ANSITerminal.(
+        print_string [ red ] "\t\tPlease input a valid command\n\t>");
       identify_user ();
       ()
 

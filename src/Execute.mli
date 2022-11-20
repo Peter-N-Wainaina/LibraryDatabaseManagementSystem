@@ -1,5 +1,7 @@
 exception UserNameNotFound
 exception IncorrectPassword
+exception UnknownAuthor of string
+exception MultipleAuthors of string list
 
 val get_student : string -> string -> Database.database -> Student.student
 (**[get_student un pw db] is a student with username [un] and password [pw] in
@@ -12,3 +14,9 @@ val get_librarian : string -> string -> Database.database -> Librarian.lib
    in database [db]. Requires:[db] is a valid database Raises [UserNameNotFound]
    un if username [un] is not in [d] Raises [IncorrectPassword pw] if [pw] does
    not match [un]*)
+
+val get_author_books : Database.database -> string -> Library.book list
+(**[get_author_books d n] is a list of all books by author [n]
+   Raises:[UnknownAuthor n] if [n] is not a valid first, last or full name of an
+   author in [d] Raises: [MultipleAuthors(fullnames)] where fullnames is a list
+   of all authors in [d] with name [n]*)

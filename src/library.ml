@@ -114,6 +114,26 @@ let compare_books b1 b2 =
 
 let sort_books blst = List.sort_uniq compare_books blst
 let subset_genre bl gen = List.filter (fun x -> x.genre = gen) bl
+let subset_author bl auth = List.filter (fun x -> x.author = auth) bl
 
-let subset_author bl auth =
-  List.filter (fun x -> String.lowercase_ascii x.author = auth) bl
+let parse_author_names l =
+  let sort_pairs p1 p2 =
+    match
+      (String.compare (fst p1) (fst p2), String.compare (snd p1) (snd p2))
+    with
+    | 0, 0 -> 0
+    | 0, k -> k
+    | k, _ -> k
+  in
+  let rec create_pairs fn acc l =
+    match l with
+    | [] -> acc
+    | h :: t -> create_pairs fn ((h, fn) :: acc) t
+  in
+  let parse_names acc n =
+    let full_name = n |> String.trim in
+    full_name |> String.split_on_char ' ' |> create_pairs full_name acc
+  in
+  l.all_books
+  |> List.fold_left (fun acc bk -> parse_names acc bk.author) []
+  |> List.sort_uniq sort_pairs

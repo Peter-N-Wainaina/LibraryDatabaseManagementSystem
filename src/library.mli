@@ -79,3 +79,8 @@ val subset_author : book list -> string -> book list
 (**[subset_author blst auth] is a list of books in the booklist with author
    auth. Returns the empty list if there are no books with author [auth] in book
    list [blst]*)
+
+val parse_author_names : library -> (string * string) list
+(**[parse_author_names l] is a set-like association list mapping firstnames to
+   fullnames and lastnames to fullnames of the authors of the books in library
+   [l] *)
