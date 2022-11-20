@@ -47,6 +47,7 @@ let print_book_details (l : Library.book list) =
         print_book_details_helper "Description" (Library.book_description h);
         print_book_details_helper "Number of pages"
           (Library.book_length h |> string_of_int);
+        print_endline "\n";
         print_all_books t
   in
   match l with
@@ -212,9 +213,7 @@ and identify_user () =
 
 (** [read login ()] prints out the instruction on how to log in to the system.*)
 and read_login () =
-  ANSITerminal.(
-    print_string [ cyan ] "\t'Are you a Student or a Librarian'\n\n";
-    print_string [] "\tTo exit, type 'QUIT' or press 'Ctrl' + 'D'.\n\t> ");
+  ANSITerminal.(print_string [ cyan ] "\tAre you a Student or a Librarian\n\n");
   identify_user ();
   ()
 
@@ -223,11 +222,7 @@ and read_login () =
    valid*)
 let main () =
   ANSITerminal.resize 150 100;
-  ANSITerminal.(
-    print_string [ green ]
-      "\n\
-       \t\tWelcome to Cornell Library! \n\
-       \t\tType 'HELP' for help with commands\n");
+  ANSITerminal.(print_string [ green ] "\n\t\tWelcome to Cornell Library! \n\n");
   read_login ()
 
 (* Execute the dbms. *)

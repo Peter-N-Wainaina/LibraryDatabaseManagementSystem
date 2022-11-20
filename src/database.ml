@@ -94,7 +94,8 @@ let author_names name d =
     | Some k ->
         AuthorNames.add
           (fst binding |> String.lowercase_ascii)
-          (snd binding :: k) acc
+          (snd binding :: k |> List.sort_uniq String.compare)
+          acc
   in
   (*[create_map l] is a mapping of*)
   let create_map l =

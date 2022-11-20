@@ -144,9 +144,9 @@
                 {
                     "name": "A New Book",
                     "genre": "fiction",
-                    "author": "Jonathan Haids",
+                    "author": "Jonathan Haidt",
                     "pages": 213,
-                    "description": "A new fiction book written by Jonathan Haids"
+                    "description": "A new fiction book written by Jonathan Haidt"
                 }
             ]
         },
@@ -207,7 +207,7 @@
                     "genre": "philosophy",
                     "author": "Jonathan Haidt",
                     "pages": 419,
-                    "description": ""
+                    "description": "Why can't our political leaders work together as threats loom and problems mount? Why do people so readily assume the worst about the motives of their fellow citizens? In The Righteous Mind, social psychologist Jonathan Haidt explores the origins of our divisions and points the way forward to mutual understanding."
                 }
             ]
         }

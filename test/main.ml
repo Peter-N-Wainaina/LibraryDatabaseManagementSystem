@@ -61,7 +61,7 @@ let cmp_set_like_lists lst1 lst2 comp =
   && List.length lst2 = List.length uniq2
   && uniq1 = uniq2
 
-let rec string_of_pairs l = 
+let rec string_of_pairs l =
   match l with
   | [] -> ""
   | h :: t -> fst h ^ ":" ^ snd h ^ ", " ^ string_of_pairs t
@@ -265,13 +265,16 @@ let add_librarian_account_test (name : string) (d : Database.database)
        |> Database.view_librarian_accounts)
        compare)
 
-let rec string_of_list =function 
-|None|Some []->""
-|Some(h::t)-> h^ (string_of_list (Some t))
+let rec string_of_list = function
+  | None | Some [] -> ""
+  | Some (h :: t) -> h ^ string_of_list (Some t)
 
-let author_names_test (name:string)(key:string)(d:Database.database)(expected_output:string list option):test =
-  name >:: fun _ -> assert_equal expected_output (Database.author_names key d)~printer:string_of_list
-
+let author_names_test (name : string) (key : string) (d : Database.database)
+    (expected_output : string list option) : test =
+  name >:: fun _ ->
+  assert_equal expected_output
+    (Database.author_names key d)
+    ~printer:string_of_list
 
 let database_tests =
   [
@@ -299,11 +302,15 @@ let database_tests =
     add_librarian_account_test "Add an existing librarian"
       (Database.add_librarian_account db0 librarian1)
       librarian1 [ librarian1 ];
-      author_names_test "Author not there" "peter" db3 None;
-      author_names_test "Author present, access by firstname" "phil" db3 (Some (["Phil Knight"]));
-      author_names_test "Author present, access by fullname" "phil knight" db3 (Some (["Phil Knight"]));
-      author_names_test "Author present, access by lastname" "knight" db3 (Some (["Phil Knight"]));
-      author_names_test "Author present with one name" "vyasa" db3 (Some (["Vyasa"]));
+    author_names_test "Author not there" "peteros" db3 None;
+    author_names_test "Author present, access by firstname" "phil" db3
+      (Some [ "Phil Knight" ]);
+    author_names_test "Author present, access by fullname" "phil knight" db3
+      (Some [ "Phil Knight" ]);
+    author_names_test "Author present, access by lastname" "knight" db3
+      (Some [ "Phil Knight" ]);
+    author_names_test "Author present with one name" "vyasa" db3
+      (Some [ "Vyasa V" ]);
   ]
 
 let random_student_2 =
@@ -462,17 +469,16 @@ let subset_by_author_tests (name : string) (input : Database.database)
   name >:: fun _ ->
   assert_equal expected_output (Database.subset_by_author input auth)
 
-
-
 let parse_author_names_test (name : string) (l : Library.library)
     expected_output : test =
-    let sort_pairs p1 p2 =
-      match
-        (String.compare (fst p1) (fst p2), String.compare (snd p1) (snd p2))
-      with
-      | 0, 0 -> 0
-      | 0, k -> k 
-      | k, _ -> k in
+  let sort_pairs p1 p2 =
+    match
+      (String.compare (fst p1) (fst p2), String.compare (snd p1) (snd p2))
+    with
+    | 0, 0 -> 0
+    | 0, k -> k
+    | k, _ -> k
+  in
   name >:: fun _ ->
   assert_equal true
     (cmp_set_like_lists expected_output
@@ -481,15 +487,19 @@ let parse_author_names_test (name : string) (l : Library.library)
 
 let book_same_author =
   Library.create_book "book1" fiction "First Last" 100 "This is book1"
+
 let library_with_2books_1author = Library.add_book library3 book_same_author
 
-let book_same_first_name =   Library.create_book "book1" fiction "First Last2" 100 "This is book1"
+let book_same_first_name =
+  Library.create_book "book1" fiction "First Last2" 100 "This is book1"
+
 let library_same_first_name = Library.add_book library1 book_same_first_name
 
-let book_author_6names =   Library.create_book "book1" fiction "My Name is is Slim Shady   " 100 "This is book1"
-let library_with_long_name_author =  Library.add_book library0 book_author_6names
+let book_author_6names =
+  Library.create_book "book1" fiction "My Name is is Slim Shady   " 100
+    "This is book1"
 
-
+let library_with_long_name_author = Library.add_book library0 book_author_6names
 
 let library2_tests =
   [
@@ -533,7 +543,7 @@ let library2_tests =
       ];
     parse_author_names_test "library with 2 books from 1 author"
       library_with_2books_1author
-      [   
+      [
         ("First", "First Last");
         ("First2", "First2 Last2");
         ("Greatest", "Greatest Author");
@@ -541,8 +551,23 @@ let library2_tests =
         ("Last2", "First2 Last2");
         ("Author", "Greatest Author");
       ];
-      parse_author_names_test "library with same first name author" library_same_first_name [("First","First Last");("First","First Last2");("Last","First Last");("Last2","First Last2")];
-    parse_author_names_test "library with long name author" library_with_long_name_author [("My","My Name is is Slim Shady");("Name","My Name is is Slim Shady");("is","My Name is is Slim Shady");("Slim","My Name is is Slim Shady");("Shady","My Name is is Slim Shady")]
+    parse_author_names_test "library with same first name author"
+      library_same_first_name
+      [
+        ("First", "First Last");
+        ("First", "First Last2");
+        ("Last", "First Last");
+        ("Last2", "First Last2");
+      ];
+    parse_author_names_test "library with long name author"
+      library_with_long_name_author
+      [
+        ("My", "My Name is is Slim Shady");
+        ("Name", "My Name is is Slim Shady");
+        ("is", "My Name is is Slim Shady");
+        ("Slim", "My Name is is Slim Shady");
+        ("Shady", "My Name is is Slim Shady");
+      ];
   ]
 
 let parse_commands_test (name : string) (input : string)
