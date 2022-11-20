@@ -22,7 +22,7 @@ val create_genre : string -> genre
 
 val create_book : string -> genre -> string -> int -> string -> book
 (**[create_book n g a p d] is a book with name n, genre g ,author a , pages p,
-   description d*)
+   description d. *)
 
 val book_name : book -> string
 (**[book_name bk] returns the name of the book*)

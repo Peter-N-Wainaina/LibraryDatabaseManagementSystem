@@ -109,9 +109,9 @@ let book3 =
   Library.create_book "book3" mystery "Greatest Author" 2
     "Author was so great, he only needed 2 pages"
 
-let book4 = Library.create_book "book4" autobiography "a4" 100 "This is book4"
-let book5 = Library.create_book "book5" biography "a4" 100 "This is book5"
-let book6 = Library.create_book "book6" fantasy "a6" 100 "This is book6"
+let book4 = Library.create_book "book4" autobiography "a4 l" 100 "This is book4"
+let book5 = Library.create_book "book5" biography "a4 l" 100 "This is book5"
+let book6 = Library.create_book "book6" fantasy "a6 l" 100 "This is book6"
 let library1 = Library.create_library "Empty Library"
 let library2 = Library.add_book library1 book1
 let library3 = Library.add_book library2 book3
@@ -461,7 +461,7 @@ let library2_tests =
     subset_by_genre_tests "List of books with genre fiction in database" db_test
       fiction [ book1 ];
     subset_by_author_tests "List of books written by a4 in database" db_test
-      "a4" [ book4; book5 ];
+      "a4 l" [ book4; book5 ];
     subset_by_genre_tests "List of autobiographies in json database" db3
       autobiography [ database_book3 ];
   ]

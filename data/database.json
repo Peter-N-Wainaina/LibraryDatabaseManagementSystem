@@ -60,7 +60,7 @@
                 {
                     "name": "The Bhagavad Gita",
                     "genre": "Religion",
-                    "author": "Vyasa",
+                    "author": "Vyasa V",
                     "pages": 700,
                     "description": "The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata, dated to the second half of the first millennium BCE and is typical of the Hindu synthesis. It is considered to be one of the holy scriptures for Hinduism."
                 }
@@ -74,7 +74,7 @@
                 {
                     "name": "The Bhagavad Gita",
                     "genre": "Religion",
-                    "author": "Vyasa",
+                    "author": "Vyasa V",
                     "pages": 700,
                     "description": "The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata, dated to the second half of the first millennium BCE and is typical of the Hindu synthesis. It is considered to be one of the holy scriptures for Hinduism."
                 },
@@ -84,6 +84,69 @@
                     "author": "Phil Knight",
                     "pages": 386,
                     "description": "Shoe Dog is a memoir by Nike co-founder Phil Knight. The memoir chronicles the history of Nike from its founding as Blue Ribbon Sports and its early challenges to its evolution into one of the world’s most recognized and profitable companies"
+                },
+                {
+                    "name": "Fahrenheit 451",
+                    "genre": "Novel",
+                    "author": "Ray Bradbury",
+                    "pages": 256,
+                    "description": "Ray Bradbury’s 1953 novel Fahrenheit 451 is set in a dystopian society that burns books in order to control dangerous ideas and unhappy concepts. The novel tells the story of Guy Montag, a fireman who questions the book-burning policy and undergoes extraordinary suffering and transformation as a result."
+                },
+                {
+                    "name": "The Moonstone",
+                    "genre": "Mystery",
+                    "author": "Wilkie Collins",
+                    "pages": 420,
+                    "description": "The Moonstone by Wilkie Collins is a 19th-century British epistolary novel. It is an early example of the modern detective novel, and established many of the ground rules of the modern genre."
+                },
+                {
+                    "name": "The Calculating Stars",
+                    "genre": "ScienceFiction",
+                    "author": "Mary Kowal",
+                    "pages": 432,
+                    "description": "On a cold spring night in 1952, a huge meteorite fell to earth and obliterated much of the east coast of the United States, including Washington D.C. The ensuing climate cataclysm will soon render the earth inhospitable for humanity, as the last such meteorite did for the dinosaurs. This looming threat calls for a radically accelerated effort to colonize space, and requires a much larger share of humanity to take part in the process."
+                },
+                {
+                    "name": "Becoming",
+                    "genre": "memoir",
+                    "author": "Michelle Obama",
+                    "pages": 448,
+                    "description": "Becoming is the memoir of former first lady of the United States Michelle Obama, published in 2018. Described by the author as a deeply personal experience, the book talks about her roots and how she found her voice, as well as her time in the White House, her public health campaign, and her role as a mother."
+                },
+                {
+                    "name": "Braunwald's Heart Disease: A Textbook of Cardiovascular Medicineoming",
+                    "genre": "textbook",
+                    "author": "Peter Libby",
+                    "pages": 2128,
+                    "description": "Trusted by generations of cardiologists for the latest, most reliable guidance in the field, Braunwald's Heart Disease, 11th Edition, remains your #1 source of information on rapidly changing clinical science, clinical and translational research, and evidence-based medicine."
+                },
+                {
+                    "name": "The Great Gatsby",
+                    "genre": "fiction",
+                    "author": "Francis Fitzgerald",
+                    "pages": 208,
+                    "description": "The novel depicts first-person narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby and Gatsby's obsession to reunite with his former lover, Daisy Buchanan."
+                },
+                {
+                    "name": "Outliers",
+                    "genre": "philosophy",
+                    "author": "Jonathan Haidt",
+                    "pages": 419,
+                    "description": "Why can't our political leaders work together as threats loom and problems mount? Why do people so readily assume the worst about the motives of their fellow citizens? In The Righteous Mind, social psychologist Jonathan Haidt explores the origins of our divisions and points the way forward to mutual understanding."
+                },
+                {
+                    "name": "Righteous Mind",
+                    "genre": "philosophy",
+                    "author": "Jonathan Haidt",
+                    "pages": 419,
+                    "description": ""
+                },
+                {
+                    "name": "A New Book",
+                    "genre": "fiction",
+                    "author": "Jonathan Haids",
+                    "pages": 213,
+                    "description": "A new fiction book written by Jonathan Haids"
                 }
             ]
         },
@@ -96,6 +159,55 @@
                     "author": "Alex Trebek",
                     "pages": 419,
                     "description": "The book combines illuminating personal anecdotes with Trebek’s thoughts on a range of topics, including marriage, parenthood, education, success, spirituality, and philanthropy. Trebek also addresses the questions he gets asked most often by Jeopardy! fans, such as what prompted him to shave his signature mustache, his insights on legendary players like Ken Jennings and James Holzhauer, and his opinion of Will Ferrell’s Saturday Night Live impersonation. The book uses a novel structure inspired by Jeopardy!, with each chapter title in the form of a question, and features dozens of never-before-seen photos that candidly capture Trebek over the years."
+                },
+                {
+                    "name": "War and Peace",
+                    "genre": "HistoricalFiction",
+                    "author": "Leo Tolstoy",
+                    "pages": 1225,
+                    "description": "War and Peace broadly focuses on Napoleon’s invasion of Russia in 1812 and follows three of the most well-known characters in literature."
+                },
+                {
+                    "name": "Einstein: His Life and Universe",
+                    "genre": "Biography",
+                    "author": "Walter Issacson",
+                    "pages": 675,
+                    "description": "Based on newly released personal letters of Einstein, this book explores how an imaginative, impertinent patent clerk—a struggling father in a difficult marriage who couldn’t get a teaching job or a doctorate—became the mind reader of the creator of the cosmos, the locksmith of the mysteries of the atom, and the universe. "
+                },
+                {
+                    "name": "The Fellowship of the Ring",
+                    "genre": "Fantasy",
+                    "author": "JRR Tolkien",
+                    "pages": 423,
+                    "description": "The Fellowship of the Ring is the first of three volumes in The Lord of the Rings, an epic set in the fictional world of Middle-earth. The Lord of the Rings is an entity named Sauron, the Dark Lord, who long ago lost the One Ring that contains much of his power. "
+                },
+                {
+                    "name": "The Diary of a Young Girl",
+                    "genre": "autobiography",
+                    "author": "Anne Frank",
+                    "pages": 283,
+                    "description": "With the threat of WWII breathing down her neck, Anne Frank received a diary for her 13th birthday. Little did she know that she would spend two years in hiding with her parents and sister and record every brave, terrified and beautiful moment they spent together. Written in Dutch, it was later translated into English with much acclaim. "
+                },
+                {
+                    "name": "The Secret Life of the Mind: How Your Brain Thinks, Feels, and Decides",
+                    "genre": "nonfiction",
+                    "author": "Mariano Sigman",
+                    "pages": 288,
+                    "description": "Over the course of his 20-year career investigating the inner workings of the human brain, Dr. Sigman has cultivated a remarkable interdisciplinary vision. He draws on research in physics, linguistics, psychology, education, and beyond to explain why people who speak more than one language are less prone to dementia; how infants can recognize by sight objects they've previously only touched; how babies, even before they utter their first word, have an innate sense of right and wrong; and how we can read the thoughts of vegetative patients by decoding patterns in their brain activity."
+                },
+                {
+                    "name": "The Republic",
+                    "genre": "philosophy",
+                    "author": "Plato P",
+                    "pages": 692,
+                    "description": "The Republic is a Socratic dialogue, authored by Plato around 375 BC, concerning justice, the order and character of the just city-state, and the just man."
+                },
+                {
+                    "name": "Righteous Mind",
+                    "genre": "philosophy",
+                    "author": "Jonathan Haidt",
+                    "pages": 419,
+                    "description": ""
                 }
             ]
         }

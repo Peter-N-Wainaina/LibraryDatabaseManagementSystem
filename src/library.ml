@@ -13,6 +13,7 @@ type genre =
   | Philosophy
   | Religion
   | ScienceFiction
+  | Textbook
   | Thriller
 
 type book = {
@@ -38,9 +39,11 @@ let create_genre s =
   | "historicalfiction" -> HistoricalFiction
   | "fantasy" -> Fantasy
   | "novel" -> Novel
+  | "textbook" -> Textbook
   | _ -> raise (Failure "invalid")
 
 exception UnknownBook of book
+exception InvalidAuthor of string
 
 (*name is the name of the library all_books is the list of all the books in the
   library*)
@@ -100,7 +103,8 @@ let genre_to_int = function
   | Philosophy -> 10
   | Religion -> 11
   | ScienceFiction -> 12
-  | Thriller -> 13
+  | Textbook -> 13
+  | Thriller -> 14
 
 let compare_genre g1 g2 =
   let i1, i2 = (genre_to_int g1, genre_to_int g2) in
