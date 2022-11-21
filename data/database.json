@@ -12,7 +12,7 @@
                         "genre": "philosophy",
                         "author": "Jonathan Haidt",
                         "pages": 419,
-                        "description": ""
+                        "description": "Why can't our political leaders work together as threats loom and problems mount? Why do people so readily assume the worst about the motives of their fellow citizens? In The Righteous Mind, social psychologist Jonathan Haidt explores the origins of our divisions and points the way forward to mutual understanding."
                     },
                     "Days remaining": 4
                 },
@@ -60,7 +60,7 @@
                 {
                     "name": "The Bhagavad Gita",
                     "genre": "Religion",
-                    "author": "Vyasa V",
+                    "author": "Vyasa",
                     "pages": 700,
                     "description": "The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata, dated to the second half of the first millennium BCE and is typical of the Hindu synthesis. It is considered to be one of the holy scriptures for Hinduism."
                 }
@@ -74,7 +74,7 @@
                 {
                     "name": "The Bhagavad Gita",
                     "genre": "Religion",
-                    "author": "Vyasa V",
+                    "author": "Vyasa",
                     "pages": 700,
                     "description": "The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata, dated to the second half of the first millennium BCE and is typical of the Hindu synthesis. It is considered to be one of the holy scriptures for Hinduism."
                 },
@@ -139,7 +139,7 @@
                     "genre": "philosophy",
                     "author": "Jonathan Haidt",
                     "pages": 419,
-                    "description": ""
+                    "description": "Why can't our political leaders work together as threats loom and problems mount? Why do people so readily assume the worst about the motives of their fellow citizens? In The Righteous Mind, social psychologist Jonathan Haidt explores the origins of our divisions and points the way forward to mutual understanding."
                 },
                 {
                     "name": "A New Book",
@@ -147,6 +147,34 @@
                     "author": "Jonathan Haidt",
                     "pages": 213,
                     "description": "A new fiction book written by Jonathan Haidt"
+                },
+                {
+                    "name": "The Shining",
+                    "genre": "novel",
+                    "author": "Stephen King",
+                    "pages": 607,
+                    "description": "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future."
+                },
+                {
+                    "name": "A Brief History of Time",
+                    "genre": "ScienceFiction",
+                    "author": "Stephen Hawking",
+                    "pages": 256,
+                    "description": "Hawking writes in non-technical terms about the structure, origin, development and eventual fate of the Universe, which is the object of study of astronomy and modern physics."
+                },
+                {
+                    "name": "Leaving Atlanta",
+                    "genre": "novel",
+                    "author": "Tayari Jones",
+                    "pages": 180,
+                    "description": "The book focuses on the lives and experiences of three fictional fifth graders at Oglethorpe Elementary: Tasha Baxter, Rodney Green, and Octavia Fuller."
+                },
+                {
+                    "name": "Us Three",
+                    "genre": "novel",
+                    "author": "Ruth Jones",
+                    "pages": 377,
+                    "description": "Us Three follows the lives of three best friends, Judith, Lana And Catrin who, when primary aged children, swear on a Curly Wurly wrapper to always be there for each other."
                 }
             ]
         },
@@ -198,7 +226,7 @@
                 {
                     "name": "The Republic",
                     "genre": "philosophy",
-                    "author": "Plato P",
+                    "author": "Plato",
                     "pages": 692,
                     "description": "The Republic is a Socratic dialogue, authored by Plato around 375 BC, concerning justice, the order and character of the just city-state, and the just man."
                 },
@@ -208,6 +236,20 @@
                     "author": "Jonathan Haidt",
                     "pages": 419,
                     "description": "Why can't our political leaders work together as threats loom and problems mount? Why do people so readily assume the worst about the motives of their fellow citizens? In The Righteous Mind, social psychologist Jonathan Haidt explores the origins of our divisions and points the way forward to mutual understanding."
+                },
+                {
+                    "name": "The Grand Design",
+                    "genre": "nonfiction",
+                    "author": "Stephen Hawking",
+                    "pages": 132,
+                    "description": "The book examines the history of scientific knowledge about the universe and explains eleven-dimensional M-theory."
+                },
+                {
+                    "name": "A Promised Land",
+                    "genre": "memoir",
+                    "author": "Barack Obama",
+                    "pages": 768,
+                    "description": "The memoir, remaining focused on Obama's political life, begins with his early life, details his first campaigns, and stretches through most of his first term as president."
                 }
             ]
         }
