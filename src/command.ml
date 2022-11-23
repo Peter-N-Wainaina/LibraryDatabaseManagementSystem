@@ -15,24 +15,17 @@ type command =
   | Logout
 
 let book_categories =
-  "1. To access book categories: \n\t\t Borrowed Books\n \t\t Favorite Books\n"
+  "1. The following are the commands to access your book categories: \n\
+   \t\t * Borrowed Books\n\
+  \ \t\t * Favorite Books\n"
 
 let genres =
   "2. To access books by genre: \n\
-  \ \t\tFiction \n\
-  \  \t\tAutobiography\n\
-  \ \t\tBiography \n\
-   \t\tPhilosophy;\n\
-  \     \t\tFantasy\n\
-  \ \t\tHistoricalFiction \n\
-  \ \t\tMemoir\n\
-  \ \t\tMystery \n\
-  \ \t\tNonFiction\n\
-  \ \t\tNovel\n\
-  \ \t\tReligion\n\
-  \ \t\tScienceFiction \n\
-  \ \t\tThriller\n\n\
-  \   "
+  \ \t\t* Fiction * Autobiography * Biography * Philosophy\n\
+  \   \t\t* Fantasy * HistoricalFiction * Memoir  * Mystery \n\
+  \   \t\t* NonFiction  * Novel * Religion  * ScienceFiction \n\
+  \    \t\t* Thriller\n\
+  \     "
 
 let author_books =
   "3. To access books by a specific author, type in the author's name prefaced \
@@ -43,24 +36,10 @@ let student_options () = [ book_categories; genres; author_books ]
 
 let student_help () =
   [
-    "1. Borrowed books: Lists the names of all the books you have borrowed";
+    "1. Borrowed books: Lists the names of all the books you have borrowed\n";
     "2. Favorite books: Lists the names of the books you have marked as \
-     favorite ";
-    "3. You can access books by any of the following genre by typing :\n\
-    \  \t\tAutobiography\n\
-     \t\tBiography\n\
-     \t\tFantasy \n\
-     \t\tFiction\n\
-    \  \t\tHistoricalFiction\n\
-    \  \t\tMemoir\n\
-    \     \t\tMystery\n\
-    \  \t\tNonFiction\n\
-    \  \t\tNovel\n\
-    \  \t\tPhilosophy\n\
-    \  \t\tReligion \n\
-     \t\tScienceFiction\n\
-     \t\tThriller\n\
-    \     ";
+     favorite \n";
+    "3. Author Name: Lists the books by witten by Name";
   ]
 
 let librarian_options () = []
