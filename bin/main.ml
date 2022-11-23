@@ -14,7 +14,7 @@ let database =
     (Yojson.Basic.from_file (data_dir_prefix ^ "database.json"))
 
 let exit_db () =
-  print_endline "Goodbye!";
+  ANSITerminal.(print_string [ cyan ] "Goodbye!\n");
   exit 0
 
 let show_options () = print_endline "\n\t\tBorrowed Books\n\t\tFavorite Books\n"
@@ -68,8 +68,9 @@ let parse_author_command n =
          ^ " please select one from the list"));
       printer authors
   | l ->
-      ANSITerminal.(print_string [ green ] ("\n\t Here are the books by " ^ n));
-      print_book_details l
+      ANSITerminal.(
+        print_string [ green ] ("\n\t Here are the books by " ^ fst l));
+      print_book_details (snd l)
 
 (** [student_browse s] allows student [s] to browse through the database.*)
 let rec student_browse s =

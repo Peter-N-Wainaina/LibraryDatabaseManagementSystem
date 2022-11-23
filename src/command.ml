@@ -43,9 +43,10 @@ let student_options () = [ book_categories; genres; author_books ]
 
 let student_help () =
   [
-    "Borrowed books: Lists the names of all the books you have borrowed";
-    "Favorite books: Lists the names of the books you have marked as favorite ";
-    "You can access books by any of the following genre by typing :\n\
+    "1. Borrowed books: Lists the names of all the books you have borrowed";
+    "2. Favorite books: Lists the names of the books you have marked as \
+     favorite ";
+    "3. You can access books by any of the following genre by typing :\n\
     \  \t\tAutobiography\n\
      \t\tBiography\n\
      \t\tFantasy \n\

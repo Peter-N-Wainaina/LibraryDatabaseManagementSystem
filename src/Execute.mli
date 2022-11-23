@@ -15,8 +15,9 @@ val get_librarian : string -> string -> Database.database -> Librarian.lib
    un if username [un] is not in [d] Raises [IncorrectPassword pw] if [pw] does
    not match [un]*)
 
-val get_author_books : Database.database -> string -> Library.book list
-(**[get_author_books d n] is a list of all books by author [n]
-   Raises:[UnknownAuthor n] if [n] is not a valid first, last or full name of an
-   author in [d] Raises: [MultipleAuthors(fullnames)] where fullnames is a list
-   of all authors in [d] with name [n]*)
+val get_author_books : Database.database -> string -> string * Library.book list
+(**[get_author_books d n] is an association list of the full name of author [n]
+   and list of all books by author [n] Raises:[UnknownAuthor n] if [n] is not a
+   valid first, last or full name of an author in [d] Raises:
+   [MultipleAuthors(fullnames)] where fullnames is a list of all authors in [d]
+   with name [n]*)

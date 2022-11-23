@@ -25,4 +25,6 @@ let get_author_books d n =
   | None -> raise (UnknownAuthor n)
   | Some k ->
       if List.length k > 1 then raise (MultipleAuthors k)
-      else Database.subset_by_author d (List.nth k 0)
+      else
+        let fn = List.nth k 0 in
+        (fn, Database.subset_by_author d fn)

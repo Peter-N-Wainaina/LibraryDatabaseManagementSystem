@@ -97,7 +97,6 @@ let author_names name d =
           (snd binding :: k |> List.sort_uniq String.compare)
           acc
   in
-  (*[create_map l] is a mapping of*)
   let create_map l =
     List.fold_left (fun acc x -> add_to_map x acc) AuthorNames.empty l
   in
