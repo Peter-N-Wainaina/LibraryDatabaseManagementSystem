@@ -310,7 +310,7 @@ let database_tests =
     author_names_test "Author present, access by lastname" "knight" db3
       (Some [ "Phil Knight" ]);
     author_names_test "Author present with one name" "vyasa" db3
-      (Some [ "Vyasa V" ]);
+      (Some [ "Vyasa" ]);
   ]
 
 let random_student_2 =
@@ -531,44 +531,64 @@ let library2_tests =
       autobiography [ database_book3 ];
     parse_author_names_test "library with no books" library0 [];
     parse_author_names_test "library with 1 book" library1
-      [ ("First", "First Last"); ("Last", "First Last") ];
-    parse_author_names_test "library with more than 1 book" library3
-      [
-        ("Author", "Greatest Author");
-        ("First", "First Last");
-        ("First2", "First2 Last2");
-        ("Greatest", "Greatest Author");
-        ("Last", "First Last");
-        ("Last2", "First2 Last2");
-      ];
-    parse_author_names_test "library with 2 books from 1 author"
-      library_with_2books_1author
-      [
-        ("First", "First Last");
-        ("First2", "First2 Last2");
-        ("Greatest", "Greatest Author");
-        ("Last", "First Last");
-        ("Last2", "First2 Last2");
-        ("Author", "Greatest Author");
-      ];
-    parse_author_names_test "library with same first name author"
-      library_same_first_name
-      [
-        ("First", "First Last");
-        ("First", "First Last2");
-        ("Last", "First Last");
-        ("Last2", "First Last2");
-      ];
-    parse_author_names_test "library with long name author"
-      library_with_long_name_author
-      [
+      [ ("First", "First Last"); ("Last", "First Last") ;("First Last","First Last");("Last First","First Last")];
+     parse_author_names_test "library with more than 1 book" library3 [
+      ("First", "First Last"); ("Last", "First Last") ;("First Last","First Last");("Last First","First Last");
+      ("First2", "First2 Last2"); ("Last2", "First2 Last2") ;("First2 Last2","First2 Last2");("Last2 First2","First2 Last2");
+       ("Author", "Greatest Author");
+         ("Greatest", "Greatest Author");
+         ("Greatest Author", "Greatest Author");
+         ("Author Greatest", "Greatest Author")];
+         parse_author_names_test "library with 2
+       books from 1 author" library_with_2books_1author  [
+        ("First", "First Last"); ("Last", "First Last") ;("First Last","First Last");("Last First","First Last");
+        ("First2", "First2 Last2"); ("Last2", "First2 Last2") ;("First2 Last2","First2 Last2");("Last2 First2","First2 Last2");
+         ("Author", "Greatest Author");
+           ("Greatest", "Greatest Author");
+           ("Greatest Author", "Greatest Author");
+           ("Author Greatest", "Greatest Author")]; 
+           parse_author_names_test "library with same first name
+           author" library_same_first_name [ 
+            ("First", "First Last"); 
+            ("First Last", "First Last"); 
+            ("Last First", "First Last"); 
+            ("Last", "First Last");
+
+            ("First", "First Last2"); 
+            ("First Last2", "First Last2"); 
+            ("Last2 First", "First Last2"); 
+            ("Last2", "First Last2");
+           ];
+          parse_author_names_test "library with long name author"
+       library_with_long_name_author [ 
         ("My", "My Name is is Slim Shady");
-        ("Name", "My Name is is Slim Shady");
+       ("Name", "My Name is is Slim Shady");
         ("is", "My Name is is Slim Shady");
-        ("Slim", "My Name is is Slim Shady");
+       ("Slim", "My Name is is Slim Shady");
         ("Shady", "My Name is is Slim Shady");
-      ];
-  ]
+        ("My Name", "My Name is is Slim Shady");
+        ("Name My", "My Name is is Slim Shady");
+        ("My is", "My Name is is Slim Shady");
+        ("is My", "My Name is is Slim Shady");
+        ("My Slim", "My Name is is Slim Shady");
+        ("Slim My", "My Name is is Slim Shady");
+        ("My Shady", "My Name is is Slim Shady");
+        ("Shady My", "My Name is is Slim Shady");
+        ("Name is", "My Name is is Slim Shady");
+        ("is Name", "My Name is is Slim Shady");
+        ("Name Slim", "My Name is is Slim Shady");
+        ("Slim Name", "My Name is is Slim Shady");
+        ("Name Shady", "My Name is is Slim Shady");
+        ("Shady Name", "My Name is is Slim Shady");
+        ("is Slim", "My Name is is Slim Shady");
+        ("Slim is", "My Name is is Slim Shady");
+        ("is Shady", "My Name is is Slim Shady");
+        ("Shady is", "My Name is is Slim Shady");
+        ("Slim Shady", "My Name is is Slim Shady");
+        ("Shady Slim", "My Name is is Slim Shady");
+         ]
+]
+  
 
 let parse_commands_test (name : string) (input : string)
     (expected_output : string) : test =

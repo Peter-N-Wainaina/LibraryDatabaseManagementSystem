@@ -37,7 +37,7 @@ let print_books s lst =
 (**[print_book_details] prints all [books] in [l]*)
 let print_book_details (l : Library.book list) =
   let print_book_details_helper t d =
-    ANSITerminal.(print_string [ blue ] ("\n\t" ^ t ^ " : " ^ d))
+    ANSITerminal.(print_string [ yellow ] ("\n\t" ^ t ^ " : " ^ d))
   in
   let rec print_all_books = function
     | [] -> print_endline ""
@@ -132,10 +132,10 @@ and student_login () =
         | _ -> (
             match Execute.get_student username password database with
             | exception UserNameNotFound ->
-                print_endline "Incorrect Username";
+                ANSITerminal.(print_string [ red ] "Incorrect Username");
                 student_login ()
             | exception IncorrectPassword ->
-                print_endline "Incorrect Password";
+                ANSITerminal.(print_string [ red ] "Incorrect Password");
                 student_login ()
             | student -> student_browse student))
   with end_of_file -> exit_db ()
@@ -150,7 +150,7 @@ and librarian_browse l =
     let rec rec_librarian_browse l =
       print_endline
         "\n\
-         \t\tType 'Options' to see the options \n\
+         \tType 'Options' to see the options \n\
          \tTo learn about the command options, please type 'HELP'\n\
          \tTo log out, type 'Log out' or 'Quit'\n";
       print_string "\t> ";

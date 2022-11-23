@@ -119,7 +119,19 @@ let compare_books b1 b2 =
 let sort_books blst = List.sort_uniq compare_books blst
 let subset_genre bl gen = List.filter (fun x -> x.genre = gen) bl
 let subset_author bl auth = List.filter (fun x -> x.author = auth) bl
-let create_subsets fn = fn
+
+(*[create_subsets fn] is a set-like list of the permutations of the strings in
+  [fn] Example create_subsets ["eman";"abdu"] is ["eman";"abdu";"eman
+  abdu"];"abdu eman"*)
+let create_subsets fn =
+  let rec comb str lst acc =
+    match lst with
+    | [] -> acc |> List.sort_uniq String.compare
+    | h :: t ->
+        if h <> str then comb str t ((str ^ " " ^ h) :: (h ^ " " ^ str) :: acc)
+        else comb str t acc
+  in
+  List.fold_left (fun acc x -> acc @ comb x fn []) fn fn
 
 let parse_author_names l =
   let sort_pairs p1 p2 =

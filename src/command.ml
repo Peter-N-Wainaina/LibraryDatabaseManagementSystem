@@ -18,7 +18,7 @@ let book_categories =
   "1. To access book categories: \n\t\t Borrowed Books\n \t\t Favorite Books\n"
 
 let genres =
-  "2. To access books be genre: \n\
+  "2. To access books by genre: \n\
   \ \t\tFiction \n\
   \  \t\tAutobiography\n\
   \ \t\tBiography \n\
