@@ -90,6 +90,22 @@ let remove_book l bk =
     let books = List.filter (fun x -> x <> bk) l.all_books in
     { l with all_books = books }
 
+let string_of_genre = function
+  | Autobiography -> "Autobiography"
+  | Biography -> "Biography"
+  | Fantasy -> "Fantasy"
+  | Fiction -> "Fiction"
+  | HistoricalFiction -> "Historical Fiction"
+  | Memoir -> "Memoir"
+  | Mystery -> "Mystery"
+  | NonFiction -> "NonFiction"
+  | Novel -> "Novel"
+  | Philosophy -> "Philosophy"
+  | Religion -> "Religion"
+  | ScienceFiction -> "Science Fiction"
+  | Textbook -> "Textbook"
+  | Thriller -> "Thriller"
+
 let genre_to_int = function
   | Autobiography -> 1
   | Biography -> 2
