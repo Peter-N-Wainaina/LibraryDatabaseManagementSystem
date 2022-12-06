@@ -13,6 +13,7 @@ type command =
   | Author of string
   | Help
   | Logout
+  | All_Books
 
 let book_categories =
   "1. The following are the commands to access your book categories: \n\
@@ -30,20 +31,23 @@ let genres =
 let author_books =
   "3. To access books by a specific author, type in the author's name prefaced \
    by Author e.g \n\
-   \t\t Author Alex Trebek"
+   \t\t Author Alex Trebek\n"
 
-let student_options () = [ book_categories; genres; author_books ]
+let all_books = "To access all books in the database, type All Books."
+
+let student_options () = [ book_categories; genres; author_books; "4. "^all_books ]
 
 let student_help () =
   [
     "1. Borrowed books: Lists the names of all the books you have borrowed\n";
     "2. Favorite books: Lists the names of the books you have marked as \
      favorite \n";
-    "3. Author Name: Lists the books by witten by Name";
+    "3. Author Name: Lists the books by witten by Name\n";
+    "4. All books : Lists all the books in the database"
   ]
 
-let librarian_options () = []
-let librarian_help () = []
+let librarian_options () = ["1. "^all_books]
+let librarian_help () = ["4. All books : Lists all the books in the database"]
 
 let parse_commands s =
   let str_lst =
@@ -108,4 +112,5 @@ let options t =
   | "sciencefiction" as g -> Genre (Library.create_genre g)
   | "thriller" as g -> Genre (Library.create_genre g)
   | "help" -> Help
+  | "all books" -> All_Books
   | x -> parse_author_name x

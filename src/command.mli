@@ -16,7 +16,8 @@ type command =
   | Genre of Library.genre
   | Author of string
   | Help
-  | Logout  (**The representation of a command*)
+  | Logout 
+  | All_Books
 
 val logging : string -> command
 (**[logging t] parses the user input and returns a [command]. Raises
