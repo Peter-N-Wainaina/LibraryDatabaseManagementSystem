@@ -58,9 +58,9 @@ val remove_book : library -> book -> library
 val genre_to_int : genre -> int
 (**[genre_to_int g2] assigns an int i based on the alphabetical order of genres.
    Starts at i = 1*)
+
 val string_of_genre : genre -> string
-(**[string_of_genre g] is the string associated with the genre. 
-    Requires g is a valid genre*)
+(**[string_of_genre g] is the string associated with the genre.*)
 
 val compare_genre : genre -> genre -> int
 (**[compare_genre g1 g2] compares genres based on Stdlib compare function.

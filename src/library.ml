@@ -90,22 +90,6 @@ let remove_book l bk =
     let books = List.filter (fun x -> x <> bk) l.all_books in
     { l with all_books = books }
 
-let string_of_genre = function
-  | Autobiography -> "Autobiography"
-  | Biography -> "Biography"
-  | Fantasy -> "Fantasy"
-  | Fiction -> "Fiction"
-  | HistoricalFiction -> "Historical Fiction"
-  | Memoir -> "Memoir"
-  | Mystery -> "Mystery"
-  | NonFiction -> "NonFiction"
-  | Novel -> "Novel"
-  | Philosophy -> "Philosophy"
-  | Religion -> "Religion"
-  | ScienceFiction -> "Science Fiction"
-  | Textbook -> "Textbook"
-  | Thriller -> "Thriller"
-
 let genre_to_int = function
   | Autobiography -> 1
   | Biography -> 2
@@ -121,6 +105,22 @@ let genre_to_int = function
   | ScienceFiction -> 12
   | Textbook -> 13
   | Thriller -> 14
+
+let string_of_genre = function
+  | Autobiography -> "Autobiography"
+  | Biography -> "Biography"
+  | Fantasy -> "Fantasy"
+  | Fiction -> "Fiction"
+  | HistoricalFiction -> "Historical Fiction"
+  | Memoir -> "Memoir"
+  | Mystery -> "Mystery"
+  | NonFiction -> "NonFiction"
+  | Novel -> "Novel"
+  | Philosophy -> "Philosophy"
+  | Religion -> "Religion"
+  | ScienceFiction -> "Science Fiction"
+  | Textbook -> "Textbook"
+  | Thriller -> "Thriller"
 
 let compare_genre g1 g2 =
   let i1, i2 = (genre_to_int g1, genre_to_int g2) in
