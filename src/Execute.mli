@@ -1,5 +1,5 @@
-(** This module is acts as an API that defines how the user interface interacts with the database *)
-
+(** This module acts as an API that defines how the user interface interacts
+    with the database *)
 
 exception UserNameNotFound
 exception IncorrectPassword
