@@ -106,6 +106,7 @@ let options t =
   | "philosophy" as g -> Genre (Library.create_genre g)
   | "religion" as g -> Genre (Library.create_genre g)
   | "sciencefiction" as g -> Genre (Library.create_genre g)
+  | "textbook" as g -> Genre (Library.create_genre g)
   | "thriller" as g -> Genre (Library.create_genre g)
   | "help" -> Help
   | x -> parse_author_name x
