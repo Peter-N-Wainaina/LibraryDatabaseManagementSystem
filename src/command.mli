@@ -16,7 +16,7 @@ type command =
   | Genre of Library.genre
   | Author of string
   | Help
-  | Logout 
+  | Logout
   | All_Books
 
 val logging : string -> command

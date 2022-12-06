@@ -59,14 +59,13 @@ val sort_all_books : database -> Library.book list
    duplicates. *)
 
 val subset_by_genre : database -> Library.genre -> Library.book list
-(**[genre_subset d g] is the list of all books with genre g in the database. The
-   list returned contains no duplicates. If there are no books with genre g, the
-   empty list is returned.*)
+(**[genre_subset d g] is the list of all books with genre g in the database. If
+   there are no books with genre g, the empty list is returned.*)
 
 val subset_by_author : database -> string -> Library.book list
 (**[subset_by_author d a] is the list of all books written by author a in the
-   database. The list returned contains no duplicates. If there are no books
-   written by author a, the empty list is returned.*)
+   database. If there are no books written by author a, the empty list is
+   returned.*)
 
 val author_names : string -> database -> string list option
 (**[author_names n d] is a optional list of all authors with name [n] in

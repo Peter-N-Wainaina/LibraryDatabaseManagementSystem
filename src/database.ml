@@ -68,12 +68,9 @@ let subset_by_genre d g =
       [] d.libraries
   
 let subset_by_author d a =
-  let list_with_dup =
-    List.fold_left
-      (fun acc x -> Library.subset_author (Library.view_books x) a @ acc)
-      [] d.libraries
-  in
-  Library.sort_books list_with_dup
+  List.fold_left
+    (fun acc x -> Library.subset_author (Library.view_books x) a @ acc)
+    [] d.libraries
 
 (*mapping of author firstname:[list of author full names ] and lastname:[list of
   author full names ]*)

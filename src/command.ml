@@ -35,7 +35,8 @@ let author_books =
 
 let all_books = "To access all books in the database, type All Books."
 
-let student_options () = [ book_categories; genres; author_books; "4. "^all_books ]
+let student_options () =
+  [ book_categories; genres; author_books; "4. " ^ all_books ]
 
 let student_help () =
   [
@@ -43,11 +44,11 @@ let student_help () =
     "2. Favorite books: Lists the names of the books you have marked as \
      favorite \n";
     "3. Author Name: Lists the books by witten by Name\n";
-    "4. All books : Lists all the books in the database"
+    "4. All books : Lists all the books in the database";
   ]
 
-let librarian_options () = ["1. "^all_books]
-let librarian_help () = ["4. All books : Lists all the books in the database"]
+let librarian_options () = [ "1. " ^ all_books ]
+let librarian_help () = [ "4. All books : Lists all the books in the database" ]
 
 let parse_commands s =
   let str_lst =
