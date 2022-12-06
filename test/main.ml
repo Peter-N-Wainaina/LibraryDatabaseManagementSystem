@@ -17,14 +17,13 @@
     tested the command, Borrowed Books, and made sure that the output were the
     names of the books in the borrowed_books list.
 
-    names of the books in the borrowed_books list. it allowed us to first test
-    the functionality in test/main.ml, before creating the commands, and writing
-    the code in bin/main.ml to allow the user to use the functionality. Then in
-    the terminal, we tested if the commands were implemented correctly, and we
-    got the expected results for the accounts in the json. Using both OUnit
-    testing and manual testing allowed us to track any regressions as we
-    continued to add functionality, commands, and code in bin/main.ml for the
-    user's use*)
+    This allowed us to first test the functionality in test/main.ml, before 
+    creating the commands, and writing the code in bin/main.ml to allow the 
+    user to use the functionality. Then in the terminal, we tested if the 
+    commands were implemented correctly, and we got the expected results for 
+    the accounts in the json. Using both OUnit testing and manual testing 
+    allowed us to track any regressions as we continued to add functionality, 
+    commands, and code in bin/main.ml for the user's use*)
 
 open OUnit2
 open Dbms
