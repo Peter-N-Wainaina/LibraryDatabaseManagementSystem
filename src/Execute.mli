@@ -1,3 +1,6 @@
+(** This module is acts as an API that defines how the user interface interacts with the database *)
+
+
 exception UserNameNotFound
 exception IncorrectPassword
 exception UnknownAuthor of string

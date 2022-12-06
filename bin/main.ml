@@ -35,7 +35,7 @@ let rec printer lst =
 (** [print_books lst s] prints out the books in [lst] in section [s].*)
 let print_books s lst =
   if lst = [] then
-    print_endline ("\tYou currently don't have books in " ^ s ^ " section.\n")
+    ANSITerminal.(print_string [cyan] ("\tYou currently don't have books in " ^ s ^ " section.\n"))
   else printer lst
 (**[print_book_details] prints all [books] in [l]*)
 let print_book_details (l : Library.book list) =
@@ -93,7 +93,7 @@ let rec student_browse s =
       | Quit -> exit_db ()
       | Log_out ->
         ANSITerminal.(print_string [ magenta;Bold ] "Goodbye!\n");
-        read_login ()
+        main ()
       | Options ->
           Command.student_options () |> printer;
           rec_student_browse s
@@ -112,6 +112,8 @@ let rec student_browse s =
       | Author n ->
           parse_author_command n;
           rec_student_browse s
+      | All_Books -> Database.sort_all_books database |> print_book_details;
+        rec_student_browse s
       | _ ->
           print_invalid_command ();
           rec_student_browse s
@@ -165,6 +167,10 @@ and librarian_browse l =
       | Options ->
           Command.librarian_options () |> printer;
           rec_librarian_browse l
+
+      | All_Books -> Database.sort_all_books database |> print_book_details;
+      rec_librarian_browse l
+
       | Help ->
           Command.librarian_help () |> printer;
           rec_librarian_browse l;
@@ -186,7 +192,7 @@ and librarian_login () =
     | Back -> read_login ()
     | Quit -> exit_db ()
     | _ -> (
-        print_endline "\n\tPassword:";
+      ANSITerminal.(print_string [cyan] "\n\tPassword:");
         let password = read_line () in
         match options password with
         | Quit -> exit_db ()
@@ -194,11 +200,11 @@ and librarian_login () =
         | _ -> (
             match Execute.get_librarian username password database with
             | exception UserNameNotFound ->
-                print_endline "\n\tIncorrect Username\n";
-                librarian_login ()
+              ANSITerminal.(print_string [ red ] "\n\tIncorrect Username\n");
+              librarian_login ()
             | exception IncorrectPassword ->
-                print_endline "\n\tIncorrect Password\n";
-                librarian_login ()
+              ANSITerminal.(print_string [ red ] "\n\tIncorrect Password\n");
+              librarian_login ()
             | librarian -> librarian_browse librarian))
   with end_of_file -> exit_db ()
 
@@ -223,7 +229,7 @@ and read_login () =
 (* [main ()] prompts the user to log in to their account or create an account if
    its their first time. And then calls read_login to check if their input is
    valid*)
-let main () =
+ and main () =
   ANSITerminal.resize 150 100;
   ANSITerminal.(print_string [ green;Bold ] "\n\t\tWelcome to Cornell Library! \n\n");
   read_login ()
