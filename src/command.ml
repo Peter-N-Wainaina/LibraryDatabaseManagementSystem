@@ -25,7 +25,7 @@ let genres =
   \ \t\t* Fiction * Autobiography * Biography * Philosophy\n\
   \   \t\t* Fantasy * HistoricalFiction * Memoir  * Mystery \n\
   \   \t\t* NonFiction  * Novel * Religion  * ScienceFiction \n\
-  \    \t\t* Thriller\n\
+  \    \t\t* Thriller *Textbook\n\
   \     "
 
 let author_books =

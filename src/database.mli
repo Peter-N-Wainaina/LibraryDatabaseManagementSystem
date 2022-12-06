@@ -71,3 +71,5 @@ val subset_by_author : database -> string -> Library.book list
 val author_names : string -> database -> string list option
 (**[author_names n d] is a optional list of all authors with name [n] in
    database [d]*)
+
+val popular_category: database -> string 

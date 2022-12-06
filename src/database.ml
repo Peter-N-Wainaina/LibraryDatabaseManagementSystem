@@ -63,13 +63,10 @@ let sort_all_books d =
   sort_helper bll []
 
 let subset_by_genre d g =
-  let list_with_dup =
     List.fold_left
       (fun acc x -> Library.subset_genre (Library.view_books x) g @ acc)
       [] d.libraries
-  in
-  Library.sort_books list_with_dup
-
+  
 let subset_by_author d a =
   let list_with_dup =
     List.fold_left
@@ -103,3 +100,6 @@ let author_names name d =
   d.libraries
   |> List.fold_left (fun acc l -> Library.parse_author_names l @ acc) []
   |> create_map |> AuthorNames.find_opt name
+
+
+let popular_category d = ""
