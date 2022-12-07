@@ -46,6 +46,7 @@ let print_book_details (l : Library.book list) =
     | [] -> print_endline ""
     | h :: t ->
         print_book_details_helper "Name" (Library.book_name h);
+        print_book_details_helper "Genre" (Library.string_of_genre (Library.book_genre  h));
         print_book_details_helper "Author" (Library.book_author h);
         print_book_details_helper "Description" (h|>Library.book_description);
         print_book_details_helper "Number of pages"

@@ -106,21 +106,22 @@ let genre_to_int = function
   | Textbook -> 13
   | Thriller -> 14
 
-  let genre_to_string = function
+
+let string_of_genre = function
   | Autobiography -> "Autobiography"
-  | Biography -> "Biography "
+  | Biography -> "Biography"
   | Fantasy -> "Fantasy"
-  | Fiction -> "Fiction "
-  | HistoricalFiction -> " HistoricalFiction"
+  | Fiction -> "Fiction"
+  | HistoricalFiction -> "Historical Fiction"
   | Memoir -> "Memoir"
   | Mystery -> "Mystery"
   | NonFiction -> "NonFiction"
-  | Novel -> " Novel "
+  | Novel -> "Novel"
   | Philosophy -> "Philosophy"
   | Religion -> "Religion"
-  | ScienceFiction -> "ScienceFiction"
+  | ScienceFiction -> "Science Fiction"
   | Textbook -> "Textbook"
-  | Thriller -> "Thriller "
+  | Thriller -> "Thriller"
 
 let compare_genre g1 g2 =
   let i1, i2 = (genre_to_int g1, genre_to_int g2) in
