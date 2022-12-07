@@ -99,4 +99,17 @@ let author_names name d =
   |> create_map |> AuthorNames.find_opt name
 
 
-let popular_category d = ""
+let borrowed_categories (d:database) =
+  let get_borrowed_books  list = List.map (fun x -> fst x)  list in 
+  let books = List.fold_left (fun acc s -> acc @ ((Student.get_borrowed s)|>get_borrowed_books) ) []  d.students in 
+  let add_genre (g:Library.genre) (acc:(Library.genre*int) list) = 
+        match List.assoc_opt g acc with 
+        | None -> (g,1)::acc
+        | Some i-> let new_lst=(List.remove_assoc g acc)in (g,i+1)::new_lst in 
+  let genres = List.map (fun bk -> Library.book_genre bk ) books in
+  let result =  List.fold_left (fun acc g -> add_genre g acc) [] genres in 
+  List.sort_uniq (fun x y -> Library.compare_genre (fst x) (fst y) ) result
+
+    
+
+

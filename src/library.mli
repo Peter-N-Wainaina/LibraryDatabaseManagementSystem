@@ -59,6 +59,9 @@ val genre_to_int : genre -> int
 (**[genre_to_int g2] assigns an int i based on the alphabetical order of genres.
    Starts at i = 1*)
 
+val genre_to_string : genre -> string
+(**[genre_to_string g is a string representation of genre [g]]*)
+
 val compare_genre : genre -> genre -> int
 (**[compare_genre g1 g2] compares genres based on Stdlib compare function.
    Orders genres in alphabetical order.*)

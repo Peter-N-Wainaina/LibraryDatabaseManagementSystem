@@ -71,4 +71,6 @@ val author_names : string -> database -> string list option
 (**[author_names n d] is a optional list of all authors with name [n] in
    database [d]*)
 
-val popular_category: database -> string 
+val borrowed_categories: database -> (Library.genre*int) list 
+(**[borrowed_categories d] is a set-like association list of genres and number of 
+    times each genre appears in the borrowed books section of all students in database [d]*)

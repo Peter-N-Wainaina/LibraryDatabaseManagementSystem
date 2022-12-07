@@ -14,6 +14,7 @@ type command =
   | Help
   | Logout
   | All_Books
+  | Borrowed_Genres
 
 let book_categories =
   "1. The following are the commands to access your book categories: \n\
@@ -47,8 +48,12 @@ let student_help () =
     "4. All books : Lists all the books in the database";
   ]
 
-let librarian_options () = [ "1. " ^ all_books ]
-let librarian_help () = [ "4. All books : Lists all the books in the database" ]
+
+let librarian_options () = [ "1. " ^ all_books; "";"2. To view most borrowed genres in order, type Borrowed Genres" ]
+let librarian_help () = [
+   "1. All books : Lists all the books in the database";
+   "2. Borrowed Genres: Lists all borrowed genres and the number of times books of that genre have been borrowed from any library"
+ ]
 
 let parse_commands s =
   let str_lst =
@@ -103,7 +108,7 @@ let options t =
   | "autobiography" as g -> Genre (Library.create_genre g)
   | "biography" as g -> Genre (Library.create_genre g)
   | "fantasy" as g -> Genre (Library.create_genre g)
-  | "historicalfiction " as g -> Genre (Library.create_genre g)
+  | "historicalfiction" as g -> Genre (Library.create_genre g)
   | "nonfiction" as g -> Genre (Library.create_genre g)
   | "mystery" as g -> Genre (Library.create_genre g)
   | "novel" as g -> Genre (Library.create_genre g)
@@ -115,4 +120,5 @@ let options t =
   | "thriller" as g -> Genre (Library.create_genre g)
   | "help" -> Help
   | "all books" -> All_Books
+  | "borrowed genres" -> Borrowed_Genres
   | x -> parse_author_name x
