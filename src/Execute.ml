@@ -36,5 +36,5 @@ let get_borrowed_categories d =
   let bs_books = (
      match bg_books with 
     |[] -> raise (NoBorrowedBooks)
-    | l -> List.map (fun (g,n) -> (Library.genre_to_string g,n) ) bg_books )
+    | l -> List.map (fun (g,n) -> (Library.string_of_genre g,n) ) bg_books )
 in List.sort_uniq (fun (_,i1) (_,i2) -> i1 - i2 ) bs_books
