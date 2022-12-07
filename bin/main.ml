@@ -76,17 +76,14 @@ let parse_author_command n =
         print_string [ green ] ("\n\t Here are the books by " ^ fst l^"\n"));
       print_book_details (snd l)
 
-let rec print_borrowed_books = function
-|[] -> print_endline "\n"
-|h::t -> ANSITerminal.(print_string [yellow]( "\n\t"^(fst h) ^ " books have been borrowed " ^(string_of_int (snd h)) ^ " times."));
-        print_borrowed_books t
-
 let parse_borrowed_categories l = 
+  let rec print_borrowed_books = function
+|[] -> print_endline "\n"
+|h::t -> ANSITerminal.(print_string [yellow]( "\n\t"^(fst h) ^ " books have been borrowed "  ^ (if (snd h = 1)then "once" else (string_of_int (snd h))^" times" )));
+        print_borrowed_books t in
   match  Execute.get_borrowed_categories l with 
   |exception NoBorrowedBooks -> ANSITerminal.(print_string [ red ] ("\n\t There are no borrowed books from this database\n"))
   |l -> print_borrowed_books l
-
-
 
 (** [student_browse s] allows student [s] to browse through the database.*)
 let rec student_browse s =

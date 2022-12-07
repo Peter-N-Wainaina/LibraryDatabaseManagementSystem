@@ -33,7 +33,38 @@
             "username": "iqra",
             "password": "yousuf",
             "student_id": 5260152,
-            "borrowed_books": [],
+            "borrowed_books": [
+                {
+                    "book detail":   {
+                        "name": "The Bhagavad Gita",
+                        "genre": "Religion",
+                        "author": "Vyasa",
+                        "pages": 700,
+                        "description": "The Bhagavad Gita, often referred to as the Gita, is a 700-verse Hindu scripture that is part of the epic Mahabharata, dated to the second half of the first millennium BCE and is typical of the Hindu synthesis. It is considered to be one of the holy scriptures for Hinduism."
+                    },
+                    "Days remaining": 4
+                },
+                {
+                    "book detail":  {
+                        "name": "The Shining",
+                        "genre": "novel",
+                        "author": "Stephen King",
+                        "pages": 607,
+                        "description": "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future."
+                    },
+                    "Days remaining": 10
+                },
+                {
+                    "book detail": {
+                        "name": "The Moonstone",
+                        "genre": "Mystery",
+                        "author": "Wilkie Collins",
+                        "pages": 420,
+                        "description": "The Moonstone by Wilkie Collins is a 19th-century British epistolary novel. It is an early example of the modern detective novel, and established many of the ground rules of the modern genre."
+                    },
+                    "Days remaining": 15
+                }
+            ],
             "favorite_books": [
                 {
                     "name": "The answer is",
@@ -55,7 +86,38 @@
             "username": "peter",
             "password": "wainaina",
             "student_id": 5322557,
-            "borrowed_books": [],
+            "borrowed_books": [ 
+                {
+                    "book detail":   {
+                        "name": "Braunwald's Heart Disease: A Textbook of Cardiovascular Medicine Timing",
+                        "genre": "textbook",
+                        "author": "Peter Libby",
+                        "pages": 2128,
+                        "description": "Trusted by generations of cardiologists for the latest, most reliable guidance in the field, Braunwald's Heart Disease, 11th Edition, remains your #1 source of information on rapidly changing clinical science, clinical and translational research, and evidence-based medicine."
+                      },
+                    "Days remaining": 12
+                },
+                {
+                    "book detail":   {
+                        "name": "The Great Gatsby",
+                        "genre": "fiction",
+                        "author": "Francis Fitzgerald",
+                        "pages": 208,
+                        "description": "The novel depicts first-person narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby and Gatsby's obsession to reunite with his former lover, Daisy Buchanan."
+                    },
+                    "Days remaining": 10
+                },
+                {
+                    "book detail":{
+                        "name": "Us Three",
+                        "genre": "novel",
+                        "author": "Ruth Jones",
+                        "pages": 377,
+                        "description": "Us Three follows the lives of three best friends, Judith, Lana And Catrin who, when primary aged children, swear on a Curly Wurly wrapper to always be there for each other."
+                    },
+                    "Days remaining": 15
+                }     
+            ],
             "favorite_books": [
                 {
                     "name": "The Bhagavad Gita",
