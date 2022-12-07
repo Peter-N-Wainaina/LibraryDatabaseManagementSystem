@@ -17,13 +17,19 @@
     tested the command, Borrowed Books, and made sure that the output were the
     names of the books in the borrowed_books list.
 
-    This allowed us to first test the functionality in test/main.ml, before 
-    creating the commands, and writing the code in bin/main.ml to allow the 
-    user to use the functionality. Then in the terminal, we tested if the 
-    commands were implemented correctly, and we got the expected results for 
-    the accounts in the json. Using both OUnit testing and manual testing 
-    allowed us to track any regressions as we continued to add functionality, 
-    commands, and code in bin/main.ml for the user's use*)
+    This allowed us to first test the functionality in test/main.ml, before
+
+    creating the commands, and writing the code in bin/main.ml to allow the user
+
+    to use the functionality. Then in the terminal, we tested if the commands
+
+    were implemented correctly, and we got the expected results for the accounts
+
+    in the json. Using both OUnit testing and manual testing allowed us to track
+
+    any regressions as we continued to add functionality, commands, and code in
+
+    bin/main.ml for the user's use*)
 
 open OUnit2
 open Dbms
@@ -393,6 +399,15 @@ let database_book4 =
      and its early challenges to its evolution into one of the world’s most \
      recognized and profitable companies"
 
+let database_book5 =
+  Library.create_book "The Diary of a Young Girl" autobiography "Anne Frank" 283
+    "With the threat of WWII breathing down her neck, Anne Frank received a \
+     diary for her 13th birthday. Little did she know that she would spend two \
+     years in hiding with her parents and sister and record every brave, \
+     terrified and beautiful moment they spent together. Written in Dutch, it \
+     was later translated into English with much acclaim. "
+
+
 let student_tests =
   [
     favorite_book_tests "Favorites of empty list" random_student [];
@@ -448,7 +463,14 @@ let favorite_sorted_tests (name : string) (input : student)
 let subset_genre_tests (name : string) (input : book list) (gen : Library.genre)
     (expected_output : book list) : test =
   name >:: fun _ ->
-  assert_equal expected_output (Library.subset_genre input gen)
+  assert_equal true
+
+    (cmp_set_like_lists expected_output
+
+       (Library.subset_genre input gen)
+
+       compare)
+
 
 let subset_author_tests (name : string) (input : book list) (auth : string)
     (expected_output : book list) : test =
@@ -461,7 +483,14 @@ let sort_all_books_tests (name : string) (input : Database.database)
 let subset_by_genre_tests (name : string) (input : Database.database)
     (gen : Library.genre) (expected_output : book list) : test =
   name >:: fun _ ->
-  assert_equal expected_output (Database.subset_by_genre input gen)
+  assert_equal true
+
+    (cmp_set_like_lists expected_output
+
+       (Database.subset_by_genre input gen)
+
+       compare)
+
 
 let subset_by_author_tests (name : string) (input : Database.database)
     (auth : string) (expected_output : book list) : test =
@@ -522,48 +551,78 @@ let library2_tests =
     sort_all_books_tests "List of books sorted in database with 5 unique books"
       db_test
       [ book4; book5; book1; book3; book2 ];
-    subset_by_genre_tests "List of books with genre fiction in database" db_test
-      fiction [ book1 ];
+    subset_by_genre_tests "List of books with genre nonfiction in database" db_test
+      nonfiction [ book2 ];
     subset_by_author_tests "List of books written by a4 in database" db_test
       "a4 l" [ book4; book5 ];
     subset_by_genre_tests "List of autobiographies in json database" db3
-      autobiography [ database_book3 ];
+      autobiography
+      [ database_book3; database_book5 ];
     parse_author_names_test "library with no books" library0 [];
     parse_author_names_test "library with 1 book" library1
-      [ ("First", "First Last"); ("Last", "First Last") ;("First Last","First Last");("Last First","First Last")];
-     parse_author_names_test "library with more than 1 book" library3 [
-      ("First", "First Last"); ("Last", "First Last") ;("First Last","First Last");("Last First","First Last");
-      ("First2", "First2 Last2"); ("Last2", "First2 Last2") ;("First2 Last2","First2 Last2");("Last2 First2","First2 Last2");
-       ("Author", "Greatest Author");
-         ("Greatest", "Greatest Author");
-         ("Greatest Author", "Greatest Author");
-         ("Author Greatest", "Greatest Author")];
-         parse_author_names_test "library with 2
-       books from 1 author" library_with_2books_1author  [
-        ("First", "First Last"); ("Last", "First Last") ;("First Last","First Last");("Last First","First Last");
-        ("First2", "First2 Last2"); ("Last2", "First2 Last2") ;("First2 Last2","First2 Last2");("Last2 First2","First2 Last2");
-         ("Author", "Greatest Author");
-           ("Greatest", "Greatest Author");
-           ("Greatest Author", "Greatest Author");
-           ("Author Greatest", "Greatest Author")]; 
-           parse_author_names_test "library with same first name
-           author" library_same_first_name [ 
-            ("First", "First Last"); 
-            ("First Last", "First Last"); 
-            ("Last First", "First Last"); 
-            ("Last", "First Last");
+      [
+        ("First", "First Last");
+        ("Last", "First Last");
+        ("First Last", "First Last");
+        ("Last First", "First Last");
+      ];
+    parse_author_names_test "library with more than 1 book" library3
+      [
+        ("First", "First Last");
+        ("Last", "First Last");
+        ("First Last", "First Last");
+        ("Last First", "First Last");
+        ("First2", "First2 Last2");
+        ("Last2", "First2 Last2");
+        ("First2 Last2", "First2 Last2");
+        ("Last2 First2", "First2 Last2");
+        ("Author", "Greatest Author");
+        ("Greatest", "Greatest Author");
+        ("Greatest Author", "Greatest Author");
+        ("Author Greatest", "Greatest Author");
+      ];
+    parse_author_names_test
 
-            ("First", "First Last2"); 
-            ("First Last2", "First Last2"); 
-            ("Last2 First", "First Last2"); 
-            ("Last2", "First Last2");
-           ];
-          parse_author_names_test "library with long name author"
-       library_with_long_name_author [ 
+      "library with 2
+\n\n\n\n\n       books from 1 author"
+
+      library_with_2books_1author
+      [
+        ("First", "First Last");
+        ("Last", "First Last");
+        ("First Last", "First Last");
+        ("Last First", "First Last");
+        ("First2", "First2 Last2");
+        ("Last2", "First2 Last2");
+        ("First2 Last2", "First2 Last2");
+        ("Last2 First2", "First2 Last2");
+        ("Author", "Greatest Author");
+        ("Greatest", "Greatest Author");
+        ("Greatest Author", "Greatest Author");
+        ("Author Greatest", "Greatest Author");
+      ];
+    parse_author_names_test
+      "library with same first name
+\n\n\n\n\n           author"
+
+      library_same_first_name
+      [
+        ("First", "First Last");
+        ("First Last", "First Last");
+        ("Last First", "First Last");
+        ("Last", "First Last");
+        ("First", "First Last2");
+        ("First Last2", "First Last2");
+        ("Last2 First", "First Last2");
+        ("Last2", "First Last2");
+      ];
+    parse_author_names_test "library with long name author"
+      library_with_long_name_author
+      [
         ("My", "My Name is is Slim Shady");
-       ("Name", "My Name is is Slim Shady");
+        ("Name", "My Name is is Slim Shady");
         ("is", "My Name is is Slim Shady");
-       ("Slim", "My Name is is Slim Shady");
+        ("Slim", "My Name is is Slim Shady");
         ("Shady", "My Name is is Slim Shady");
         ("My Name", "My Name is is Slim Shady");
         ("Name My", "My Name is is Slim Shady");
@@ -585,9 +644,8 @@ let library2_tests =
         ("Shady is", "My Name is is Slim Shady");
         ("Slim Shady", "My Name is is Slim Shady");
         ("Shady Slim", "My Name is is Slim Shady");
-         ]
-]
-  
+      ];
+  ]
 
 let parse_commands_test (name : string) (input : string)
     (expected_output : string) : test =
