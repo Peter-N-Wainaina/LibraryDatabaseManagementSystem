@@ -21,5 +21,3 @@
 val hours_worked : int list
 (** [hours_worked] is the number of hours you worked on this assignment. *)
 
-(*TODO:Delete this function*)
-val total_hours : int list -> int

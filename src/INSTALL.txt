@@ -12,5 +12,11 @@ To use this database:
          password : abdu
       c) username : peter
          password : wainaina 
+   - Current librarian login details
+      a) username : librarian1
+         password : password1
+      b) username : librarian2
+         password : password2
   -Commmand 'Help' will tell you which commands can be used 
-  -Command 'Quit' will log you out
+  -Command 'Quit' will quit the database out
+  Command 'Log out' will log out of the account 

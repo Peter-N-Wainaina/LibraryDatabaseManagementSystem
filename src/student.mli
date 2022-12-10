@@ -1,4 +1,4 @@
-(*This module represent the account of a student.
+(**This module represent the account of a student.
 
   It handles borrowing books, viewing the list of borrowed books, save books as
   favorite, remove books from favorite list, see the average number of pages
