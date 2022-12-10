@@ -172,7 +172,7 @@ and librarian_browse l =
       match Command.options (read_line ()) with
       | Quit -> exit_db ()
       | Log_out ->
-          print_endline "Goodbye!";
+        ANSITerminal.(print_string [ magenta;Bold ] "Goodbye!\n");
           read_login ()
       | Options ->
           Command.librarian_options () |> printer;
